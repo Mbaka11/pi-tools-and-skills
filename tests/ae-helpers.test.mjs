@@ -26,8 +26,12 @@ async function verify(dir, manifest) {
   assert.ifError(result.error);
   return { result, report: JSON.parse(result.stdout) };
 }
-function ps(script, args) {
-  return spawnSync('powershell.exe', ['-NoProfile', '-NonInteractive', '-ExecutionPolicy', 'Bypass', '-File', script, ...args], { encoding: 'utf8', timeout: 20000 });
+function ps(script, args, overrides = {}) {
+  // Hosted CI starts npm from PowerShell 7. Windows PowerShell 5 must rebuild
+  // its own module path rather than inherit incompatible pwsh module entries.
+  const env = { ...process.env, ...overrides };
+  for (const key of Object.keys(env)) if (key.toLowerCase() === 'psmodulepath') delete env[key];
+  return spawnSync('powershell.exe', ['-NoProfile', '-NonInteractive', '-ExecutionPolicy', 'Bypass', '-File', script, ...args], { env, encoding: 'utf8', timeout: 20000 });
 }
 
 test('AE manifest verifier accepts exact canonical bytes without opening After Effects', async t => {
@@ -83,10 +87,10 @@ test('AE checkpoint refuses an unconfirmed save and leaves the source untouched'
   assert.deepEqual(await readdir(f.dir), ['Fixture.aep']);
 });
 
-test('AE checkpoint copies exact fixture bytes and refuses to overwrite a receipt', { skip: process.platform !== 'win32' }, async t => {
+test('AE checkpoint isolates parent module paths, copies exact bytes and refuses receipt overwrite', { skip: process.platform !== 'win32' }, async t => {
   const f = await fixture(t);
   const receipt = path.join(f.dir, 'receipt.json');
-  const result = ps(checkpoint, ['-ProjectPath', f.project, '-Label', 'fixture', '-ReceiptPath', receipt, '-ConfirmedSaved']);
+  const result = ps(checkpoint, ['-ProjectPath', f.project, '-Label', 'fixture', '-ReceiptPath', receipt, '-ConfirmedSaved'], { PSModulePath: path.join(f.dir, 'not-a-module-directory') });
   assert.equal(result.status, 0, result.stderr);
   const report = JSON.parse((await readFile(receipt, 'utf8')).replace(/^\uFEFF/, ''));
   assert.equal(report.ok, true);
