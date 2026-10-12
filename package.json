@@ -1,0 +1,21 @@
+{
+  "name": "pi-tools-and-skills",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Reusable personal Pi skills and pinned reverse-engineering tool references.",
+  "type": "module",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Mbaka11/pi-tools-and-skills.git"
+  },
+  "engines": { "node": ">=22.19.0" },
+  "keywords": ["pi-package", "skills", "reverse-engineering"],
+  "pi": { "skills": ["./skills"] },
+  "scripts": {
+    "check": "node scripts/check.mjs",
+    "test": "node scripts/check.mjs && node --test tests/*.test.mjs",
+    "updates:check": "node scripts/check-updates.mjs"
+  },
+  "files": ["skills/", "vendor/", "tools/", "scripts/", "tests/", "docs/", "README.md", "CHANGELOG.md", "SOURCES.md", "RIGHTS.md", "THIRD_PARTY_NOTICES.md"]
+}

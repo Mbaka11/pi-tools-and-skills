@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "upstreams": {
+    "rea": {
+      "repository": "https://github.com/morluto/rea",
+      "version": "6.4.0",
+      "tag": "rea-agents-6.4.0",
+      "commit": "a56f7bb668ab23fec8d33f7af353ac7ed2fe1895",
+      "license": "MIT",
+      "npmPackage": "rea-agents",
+      "tarball": "https://registry.npmjs.org/rea-agents/-/rea-agents-6.4.0.tgz",
+      "integrity": "sha512-Vj1zWfSlna5bphGoaoI/TcVBuYvze9u+OyPC3Shz8YkBqaCTqB4COnnRoX7XDwMpwI24ZlFEel2yEj0k8LTWEQ==",
+      "mode": "optional-cli-or-mcp",
+      "files": {
+        "vendor/rea/LICENSE": "798f9e4d18e49b30bf2f12696c8ced73dc4e1413da375a333d01281543a1ea8b",
+        "vendor/rea/skills/reverse-engineer-anything/references/android-applications.md": "412d9cb462d85b07f6fdbc2453dd741ca3da2c0dbba627867d5624df94afa74c",
+        "vendor/rea/skills/reverse-engineer-anything/references/connection-and-recovery.md": "668e421e2a27b63058f42ebd36bec04db73404c136e5f47611119ab9d4b4f607",
+        "vendor/rea/skills/reverse-engineer-anything/references/evidence-workflows.md": "dd23217d55342bbe3e98a2bf47a7f208b35a4b41c98645ac160a4d0aac5316f9",
+        "vendor/rea/skills/reverse-engineer-anything/references/javascript-applications.md": "04cc298e2485d1db7925b8789097fc5fdd042e937ed11980d3eabc29cb176e59",
+        "vendor/rea/skills/reverse-engineer-anything/references/native-and-artifacts.md": "1947af57448ba7be6a0736ffbe976c7ecdab4105f315ecc06c830727cc5205fe",
+        "vendor/rea/skills/reverse-engineer-anything/references/runtime-observation.md": "b3eea94dd7d0c6474634de22ac3ccae317f42ba1ba2389d93535ee8dae7d94e1",
+        "vendor/rea/skills/reverse-engineer-anything/SKILL.md": "46b495fe6459c283c1432294ebe67799a54391cd2ded197ee7df3f8ac0a8ac8f"
+      }
+    },
+    "reverse-api-engineer": {
+      "repository": "https://github.com/kalil0321/reverse-api-engineer",
+      "version": "0.14.0",
+      "tag": "v0.14.0",
+      "commit": "ab9919b652eca1c7b323c3f7c7b37ded3cef12a0",
+      "license": "MIT",
+      "mode": "reference-only-not-executed",
+      "files": {
+        "vendor/reverse-api-engineer/LICENSE": "05b4c6033716d2f2c5e427a9ecc7ccb78d6d041bc303473cb6cd48197e8c4112"
+      }
+    }
+  }
+}
