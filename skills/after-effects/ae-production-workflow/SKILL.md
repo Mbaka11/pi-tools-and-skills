@@ -4,7 +4,7 @@ description: Disciplined professional After Effects production workflow for buil
 compatibility: Pi on Windows with Adobe After Effects. PowerShell 5+ and Python 3 support bundled helpers; FFmpeg and the Higgsfield AE bridge are optional but recommended.
 metadata:
   short-description: Safe, organized, auditable After Effects production
-  version: "1.0.1"
+  version: "1.0.2"
 ---
 
 # After Effects Production Workflow
@@ -297,3 +297,13 @@ Do not say “finished” until all applicable statements are true:
 - no temp comps or render-queue items remain;
 - delivery receipt and manifest verified;
 - residual risks are stated without exaggerating verification.
+
+## Related toolbox skills
+
+This skill governs discipline, not look or format. Pair it with:
+
+- [ae-vox-editorial](../ae-vox-editorial/SKILL.md) for the editorial collage look;
+- [ae-expressions-rigs](../ae-expressions-rigs/SKILL.md) for controls and robust expressions;
+- [ae-vfx-compositing](../ae-vfx-compositing/SKILL.md) for keying, tracking and integration;
+- [led-signage-content](../../montage/led-signage-content/SKILL.md) for LED roll-ups and walls;
+- [video-delivery-qc](../../montage/video-delivery-qc/SKILL.md) for decode-based QC of encoded files.

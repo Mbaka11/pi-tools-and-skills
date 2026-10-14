@@ -1,0 +1,66 @@
+{
+  "schema": "vox-style-passport/1",
+  "project": "<PROJECT>_<MODULE>",
+  "format": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "target": "web-16x9 | vertical-9x16 | led-roll-up-516x1032 | led-wall-1032x1032 | led-wall-1548x1032",
+    "loop": false,
+    "audio": "narration | music-only | silent"
+  },
+  "palette": {
+    "paper": "#DAD9D5",
+    "ink": "#1A1A1A",
+    "accent": "#E04329",
+    "secondary": "#F2C230",
+    "notes": "Replace with client brand values; keep two or three colours plus paper and ink."
+  },
+  "paper_ground": {
+    "source": "scan | procedural",
+    "file": "Assets/02_Photos/paper_scan_01.png",
+    "licence_evidence": "",
+    "fibre_layer": true
+  },
+  "cutouts": {
+    "sticker_border_px": 10,
+    "marker_stroke_offset_px": [24, 8],
+    "marker_stroke_colour": "accent",
+    "drop_shadow": { "opacity": 28, "distance": 8, "softness": 22, "direction": 150 }
+  },
+  "halftone": {
+    "method": "photoshop-still | native-threshold | none",
+    "cell_px": 10,
+    "ink": "ink",
+    "paper": "paper"
+  },
+  "texture": {
+    "grain": "subtle",
+    "gate_weave_px": 0.8,
+    "vignette": true
+  },
+  "motion": {
+    "stepped_fps_for_elements": 12,
+    "entrance_frames": [10, 18],
+    "stagger_frames": [4, 16],
+    "easing": "settle-weighted bezier (bridge default unless a reference dictates otherwise)",
+    "camera": "3d-multiplane | 2d-parallax | none"
+  },
+  "typography": [
+    { "role": "headline", "family": "", "style": "Bold/Condensed", "licence_file": "Assets/03_Fonts/…" },
+    { "role": "document", "family": "", "style": "Regular", "licence_file": "" },
+    { "role": "annotation", "family": "", "style": "Handwritten", "licence_file": "" }
+  ],
+  "generation": {
+    "style_descriptor": "",
+    "max_generated_assets": 6,
+    "ledger": "_planning/<MODULE>_BUILD/generation_ledger.json"
+  },
+  "led_overrides": {
+    "min_text_cap_height_px": null,
+    "min_stroke_px": 4,
+    "drop_fine_fibres": true,
+    "max_white_area_percent": 40
+  },
+  "decisions": []
+}

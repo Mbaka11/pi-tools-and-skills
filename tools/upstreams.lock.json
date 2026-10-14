@@ -32,6 +32,79 @@
       "files": {
         "vendor/reverse-api-engineer/LICENSE": "05b4c6033716d2f2c5e427a9ecc7ccb78d6d041bc303473cb6cd48197e8c4112"
       }
+    },
+    "vox-editorial": {
+      "repository": "https://github.com/jaredcassoutt/vox-editorial",
+      "version": "unreleased",
+      "branch": "main",
+      "snapshotDate": "2026-09-02",
+      "commit": "f394e925f7ccbd6df3e6b3403fcb260194bbece3",
+      "license": "MIT",
+      "mode": "vendored-reference-copy-into-project-before-running",
+      "excluded": [
+        "skills/*/docs/ (demo MP4/GIF/JPG)",
+        "skills/vox-skill/example/ (sample Remotion film)",
+        "skills/vox-editorial/library/sprites/ and manifest.json (24 MB of generated PNG sprites)",
+        ".gitignore files"
+      ],
+      "files": {
+        "vendor/vox-editorial/README.md": "40c94f024b15774e75f4f3494088502952f0b469e73ddab804cc7479ed2ef977",
+        "vendor/vox-editorial/skills/vox-editorial/LICENSE": "97a8e086b6250fd6cd83fce1cab60a01debda6f2ff28d65a45b7e1d96db1d70d",
+        "vendor/vox-editorial/skills/vox-editorial/NOTICE": "8b10e51b187eb376adebbeaa97599e2c6f5cedc4e406db2946fac29b44ddb2cf",
+        "vendor/vox-editorial/skills/vox-editorial/README.md": "f9fc21da60a2740ed724a96c3edda421d2100a96bb6956df422eabacc33e490e",
+        "vendor/vox-editorial/skills/vox-editorial/SKILL.md": "be8166a67bee56b672bf9c0c78644e24d703139af8f342c1dac6cfc5eb1cdd82",
+        "vendor/vox-editorial/skills/vox-editorial/library/library.py": "8834fdd1979a6bbc03c2382a6ee465da6e9871c810c3628f484b0e74144e723e",
+        "vendor/vox-editorial/skills/vox-editorial/library/paper.py": "12d6f4235715692af9ac509a52096b6798c2542555f1a1de03768f4d7488782e",
+        "vendor/vox-editorial/skills/vox-editorial/references/auto_elements.py": "b282300f98892066f0c56aa433c6056b7cbb42371a426623745a63e2082f11f1",
+        "vendor/vox-editorial/skills/vox-editorial/references/chroma_sprites.py": "06eb709b437f1a09efbfaabf4844b94d070d020695bb75353238ed33084a6f0b",
+        "vendor/vox-editorial/skills/vox-editorial/references/element_motion.py": "7c5039596e20ed479979197ab9bbffd26e3b2d2f53d25a53f4667f23950f9199",
+        "vendor/vox-editorial/skills/vox-editorial/references/hook-library.md": "52234378ba84180c4e04dfece05bb3e9a408564e645a7cef57fb38aab8a5fcc3",
+        "vendor/vox-editorial/skills/vox-editorial/references/kinetic_overlays.py": "76f28563f4ebf36ca4cc1bb1983f8ad2d40768526e14b6943642ed6ee14dfe74",
+        "vendor/vox-editorial/skills/vox-editorial/references/lift_cutouts.py": "6bb88d9b932a670edffaee09b9c5b178ea2424a8dc106921abc46df1ad52cccc",
+        "vendor/vox-editorial/skills/vox-editorial/references/map-beats.md": "7fcc62a1b2f08dc47a40f7f0da49ccf672d8ff444a480eabba2e8ecd480249f8",
+        "vendor/vox-editorial/skills/vox-editorial/references/multiplane.py": "b6bcf78f31ef00cf2be8a6757a13312718793c9d9c618b2b1655484b434fa568",
+        "vendor/vox-editorial/skills/vox-editorial/references/narrative-arcs.md": "801e6ced9b2cbe96e077b0a90308951b4e360313cd2ee8a56fcfb3de91b9741a",
+        "vendor/vox-editorial/skills/vox-editorial/references/real-subject-cutouts.md": "3dbef6a3cdd4ff7b6aab949990df7d1f81c67d9cc57b22954937738ec7e81882",
+        "vendor/vox-editorial/skills/vox-editorial/references/scene_graph.py": "f8f55dffc7c899f112e0e38281f56694969881fb0ba7fa4a56bd8c89a936161b",
+        "vendor/vox-editorial/skills/vox-editorial/references/sprite_sheets.py": "c3eb89d82c13003872c5f40595296ce42f1d363d8da8e492aa24e1e85b9d6d05",
+        "vendor/vox-editorial/skills/vox-editorial/references/sticker.py": "5bc47f35a6da7e297bf462b6e01fd5d4eedfecf0e4b5ed045dfcf9ca2b890a5f",
+        "vendor/vox-editorial/skills/vox-editorial/references/style-variants.md": "c0ca78ee9c5035f9749ae518a73c644271e7335cad0a87f63d191c852d1e278d",
+        "vendor/vox-editorial/skills/vox-editorial/references/subject_cutout.swift": "f9c0a8a1dab40500e684a2103d9b25231b27f1d39d48c9d4cd61bcd894203557",
+        "vendor/vox-editorial/skills/vox-editorial/references/vivid_collage.py": "b32ff984e12bf94d6a332639f4bce1559a5f5f8296a55d968f10d91284e9fbb3",
+        "vendor/vox-editorial/skills/vox-skill/LICENSE": "97a8e086b6250fd6cd83fce1cab60a01debda6f2ff28d65a45b7e1d96db1d70d",
+        "vendor/vox-editorial/skills/vox-skill/README.md": "cd6e32fa754bf18ae409f3c639ae0e6522cfed0c2bfff096c0a0fd97c997ca38",
+        "vendor/vox-editorial/skills/vox-skill/SKILL.md": "e23e7a2cefbe65c0d409947e2085ef19809ffca686cea2054548f9b3ebc35066",
+        "vendor/vox-editorial/skills/vox-skill/references/scene-patterns.md": "2df1531d81d682eb3bfb3e7fc265f6c14331749a73b2da0671d01c0f206019f5",
+        "vendor/vox-editorial/skills/vox-skill/references/vertical.md": "30f5e3e7ec8d55baeb81b1b36d93b14c22e09038c03bccd6681b17fa8dc414fb",
+        "vendor/vox-editorial/skills/vox-skill/references/visual-system.md": "36e0ea0a64a1e794052401946694715fb836c8fd70402ce2e1a84f22ec869544",
+        "vendor/vox-editorial/skills/vox-skill/scripts/captions.py": "05f738260d55da1bbb2c8e147d0bbb08b40d2a4fa435c525acef4efd3602ee78",
+        "vendor/vox-editorial/skills/vox-skill/scripts/cutout.swift": "610bbedd18da3cdcdad5df557cf4493634cb373a8da3e15bab867d2e76fb2326",
+        "vendor/vox-editorial/skills/vox-skill/scripts/gen_vo.py": "18078d807f9d822332dc1eea280faf11d64474221eec01bb9fa0e8c7eb016291",
+        "vendor/vox-editorial/skills/vox-skill/scripts/halftone.py": "6e953c1abe9d0f6a82f61023a285f3eaf7b885977e99ce98ade6ad178a799645",
+        "vendor/vox-editorial/skills/vox-skill/scripts/mix_audio.sh": "1f2fc38d3a6fe8df13db56aaf49684b48e75f675b5865b39399802908f7ec642",
+        "vendor/vox-editorial/skills/vox-skill/scripts/pick_thumbnail.py": "b475d09cc12c1ab502e36d79ebd761e18ff6dfe49557f1b39aaaf402aef3a9ab",
+        "vendor/vox-editorial/skills/vox-skill/scripts/scaffold.sh": "ce4c7acb7e6b1ca63ee61b39677f2ecbf27562691243afb43b56da2cc5efe692",
+        "vendor/vox-editorial/skills/vox-skill/scripts/score.py": "3d8ef24287308c2c2a2754c7bfe62d493c037422b583211ef5c64513461d8826",
+        "vendor/vox-editorial/skills/vox-skill/scripts/sync_timing.py": "d2b590043f53f3ff092bd4aa65c950193146d5f1252b3f8ff6b43d480e38cb5c"
+      }
+    },
+    "cinematic-score-and-sfx": {
+      "repository": "https://github.com/thenpceo/cinematic-score-and-sfx-skill",
+      "version": "unreleased",
+      "branch": "main",
+      "snapshotDate": "2026-08-13",
+      "commit": "d48bb343ce087a76e04183a1344b915f269401ee",
+      "license": "MIT",
+      "mode": "vendored-reference-instructions-only",
+      "excluded": [
+        "SECURITY.md",
+        ".gitignore"
+      ],
+      "files": {
+        "vendor/cinematic-score-and-sfx/LICENSE": "0126d391f83cbb63cbe9e65c29ee4c8bed45198523c9602db8d736a4172e51be",
+        "vendor/cinematic-score-and-sfx/README.md": "a6a5a83936cafce5b046eb45ef6bab3f902cba1e9af9ba75e7e10b31744eae37",
+        "vendor/cinematic-score-and-sfx/SKILL.md": "c16f4913e655fe1817ab6b34915d1cc7d06cd68612dc4d27ebe77b5d51e54aa5"
+      }
     }
   }
 }

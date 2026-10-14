@@ -1,8 +1,8 @@
 {
   "name": "pi-tools-and-skills",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
-  "description": "Reusable personal Pi skills and pinned reverse-engineering tool references.",
+  "description": "Reusable personal Pi skills, pinned reverse-engineering references, and an After Effects / montage toolbox for LED signage and video work.",
   "type": "module",
   "license": "UNLICENSED",
   "repository": {
@@ -10,7 +10,7 @@
     "url": "https://github.com/Mbaka11/pi-tools-and-skills.git"
   },
   "engines": { "node": ">=22.19.0" },
-  "keywords": ["pi-package", "skills", "reverse-engineering"],
+  "keywords": ["pi-package", "skills", "reverse-engineering", "after-effects", "motion-design", "video-editing", "led-signage"],
   "pi": { "skills": ["./skills"] },
   "scripts": {
     "check": "node scripts/check.mjs",

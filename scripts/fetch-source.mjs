@@ -6,7 +6,7 @@ import { pathToFileURL } from 'node:url';
 import { ROOT, readLock, rejectSymlinks } from './upstreams.mjs';
 
 export function sourcePlan(lock, name) {
-  if (!Object.hasOwn(lock.upstreams, name)) throw new Error('Choose rea or reverse-api-engineer.');
+  if (!Object.hasOwn(lock.upstreams, name)) throw new Error(`Choose one of: ${Object.keys(lock.upstreams).join(', ')}.`);
   const item = lock.upstreams[name];
   return {
     name, repository: item.repository, commit: item.commit,
@@ -32,7 +32,7 @@ async function git(args, cwd) {
 }
 
 export async function main(args) {
-  if (args.length < 1 || args.length > 2 || (args[1] && args[1] !== '--fetch')) throw new Error('Usage: node scripts/fetch-source.mjs rea|reverse-api-engineer [--fetch]');
+  if (args.length < 1 || args.length > 2 || (args[1] && args[1] !== '--fetch')) throw new Error('Usage: node scripts/fetch-source.mjs <upstream-name-from-tools/upstreams.lock.json> [--fetch]');
   const plan = sourcePlan(await readLock(), args[0]);
   console.log(JSON.stringify({ ...plan, mode: args[1] ? 'fetch' : 'plan-only' }, null, 2));
   if (!args[1]) return;

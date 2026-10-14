@@ -5,11 +5,13 @@
 Install a release at user scope:
 
 ```bash
-pi install git:github.com/Mbaka11/pi-tools-and-skills@v0.1.0
+pi install git:github.com/Mbaka11/pi-tools-and-skills@v0.2.0
 ```
 
 Or clone and run `pi install .` from the checkout. Do not enable both a local and
-git-installed copy. Review duplicates in `pi config`, especially the previously
+git-installed copy. Package filters in settings use paths inside the package;
+since 0.2.0 the AE and montage skills live under `skills/after-effects/` and
+`skills/montage/`, so update explicit paths when upgrading. Review duplicates in `pi config`, especially the previously
 standalone `ae-production-workflow`. Installation is optional and does not happen
 when this repository is merely cloned or pushed.
 
@@ -23,8 +25,9 @@ versions and constraints described in [its guide](../tools/rea/README.md).
 npm run updates:check
 ```
 
-This reads npm metadata for REA and GitHub's latest release metadata for Reverse
-API Engineer. It sends no local captures or configuration, uses no credential,
+This reads npm metadata for REA, GitHub's latest release metadata for Reverse
+API Engineer, and the tracked branch's latest commit for unreleased snapshots
+(vox-editorial, cinematic-score-and-sfx). It sends no local captures or configuration, uses no credential,
 and applies no changes. A differing version is a review signal, not a command
 to upgrade; rate limits or network failures leave pins unchanged and return a
 nonzero exit status. No OS scheduler or automatic polling service is installed.
@@ -65,9 +68,19 @@ The source checkout helper uses the lock's full SHA. It is plan-only by default;
 existing directories. An interrupted checkout is retained for inspection, not
 silently deleted and recreated.
 
+### Unreleased snapshots
+
+Repositories without releases are pinned as `"version": "unreleased"` with
+`branch`, `snapshotDate` and the full `commit`. To update one: fetch the new
+commit into `.local/upstreams/`, diff it against the vendored files, copy the
+selected files from the git blobs (`git cat-file blob <commit>:<path>`; this
+avoids local CRLF conversion), recompute SHA-256 hashes, and update the lock,
+SOURCES, notices and adapter together. Vendored scripts are reference copies:
+adapters tell users to copy a pipeline into their project before running it.
+
 ## Roll back
 
-Reinstall a known-good tag with `pi install git:github.com/Mbaka11/pi-tools-and-skills@v0.1.0`
+Reinstall a known-good tag with `pi install git:github.com/Mbaka11/pi-tools-and-skills@v0.2.0`
 and reload pi. A local checkout can use a separate worktree at that tag so that
 uncommitted edits are not discarded. If the separately installed REA engine or
 MCP entry was upgraded, restore its matching version too after backing up the

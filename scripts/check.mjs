@@ -10,12 +10,45 @@ export function frontmatter(text) {
   if (!match) throw new Error('Missing skill frontmatter.');
   const fields = {};
   for (const line of match[1].split(/\r?\n/)) {
-    const field = line.match(/^([a-z][a-z-]*):\s*(.*?)\s*$/);
-    if (field) fields[field[1]] = field[2].replace(/^"(.*)"$/, '$1');
+    const entry = line.match(/^(\s*)([a-z][a-z-]*):\s*(.*?)\s*$/);
+    if (!entry) continue;
+    const raw = entry[3];
+    // Plain (unquoted) YAML scalars break on ': ', ' #' or a leading indicator;
+    // pi then skips the skill with only a warning.
+    if (raw && !/^["']/.test(raw) && (/: |\s#/.test(raw) || /^[[\]{}&*!|>%@`,?:-]\s?/.test(raw))) throw new Error(`Frontmatter value of '${entry[2]}' must be quoted or reworded for YAML.`);
+    if (!entry[1]) fields[entry[2]] = raw.replace(/^"(.*)"$/, '$1');
   }
   if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(fields.name || '') || fields.name.length > 64) throw new Error('Invalid skill name.');
   if (!fields.description || fields.description.length > 1024) throw new Error('Invalid skill description.');
   return fields;
+}
+
+// Deliberate inventory: adding, removing or renaming a skill must update this list.
+export const EXPECTED_SKILLS = [
+  'market-research', 'research-reporting', 'backlog-execution',
+  'rea-investigation', 'reverse-api-investigation',
+  'ae-production-workflow', 'ae-vox-editorial', 'ae-expressions-rigs', 'ae-vfx-compositing',
+  'led-signage-content', 'video-delivery-qc', 'sound-design-sfx', 'montage-editing-craft', 'vox-explainer-pipelines',
+];
+
+// skills/<skill>/SKILL.md or skills/<category>/<skill>/SKILL.md. A category folder
+// holds only skill folders plus an optional README.md (never loaded as a skill).
+async function collectSkillFiles(errors) {
+  const found = [];
+  async function visit(dir, rel, depth) {
+    const entries = await readdir(dir, { withFileTypes: true });
+    if (depth > 0 && entries.some(entry => entry.isFile() && entry.name === 'SKILL.md')) { found.push(`${rel}/SKILL.md`); return; }
+    if (depth > 0 && !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(path.basename(dir))) errors.push(`Invalid category name: ${rel}`);
+    if (depth >= 2) { errors.push(`Folder without SKILL.md nested too deeply: ${rel}`); return; }
+    let children = 0;
+    for (const entry of entries) {
+      if (entry.isDirectory()) { children++; await visit(path.join(dir, entry.name), `${rel}/${entry.name}`, depth + 1); }
+      else if (!(depth === 1 && entry.name === 'README.md')) errors.push(`Unexpected skill entry: ${rel}/${entry.name}`);
+    }
+    if (depth === 1 && !children) errors.push(`Empty skill category: ${rel}`);
+  }
+  await visit(path.join(ROOT, 'skills'), 'skills', 0);
+  return found.sort();
 }
 
 export async function validate() {
@@ -25,17 +58,14 @@ export async function validate() {
   if (pkg.license !== 'UNLICENSED' || pkg.private !== true) errors.push('Personal licensing/publication policy changed. Review RIGHTS.md.');
   if (pkg.dependencies || pkg.scripts?.postinstall || pkg.scripts?.prepare) errors.push('Unexpected automatic dependency or install hook.');
   if (JSON.stringify(pkg.pi) !== JSON.stringify({ skills: ['./skills'] })) errors.push('Unexpected package resource exposure.');
-  const dirs = await readdir(path.join(ROOT, 'skills'), { withFileTypes: true });
-  for (const dir of dirs) {
-    if (!dir.isDirectory()) { errors.push(`Unexpected skill entry: ${dir.name}`); continue; }
-    const file = `skills/${dir.name}/SKILL.md`;
+  for (const file of await collectSkillFiles(errors)) {
     try {
       const meta = frontmatter(await readFile(path.join(ROOT, file), 'utf8'));
-      if (meta.name !== dir.name || skills.includes(meta.name)) errors.push(`Skill name mismatch/collision: ${file}`);
+      if (meta.name !== path.posix.basename(path.posix.dirname(file)) || skills.includes(meta.name)) errors.push(`Skill name mismatch/collision: ${file}`);
       skills.push(meta.name);
     } catch (error) { errors.push(`${file}: ${error.message}`); }
   }
-  if (skills.length !== 6) errors.push('Expected six curated skills. Update checks deliberately when adding more.');
+  if (JSON.stringify([...skills].sort()) !== JSON.stringify([...EXPECTED_SKILLS].sort())) errors.push(`Expected exactly ${EXPECTED_SKILLS.length} curated skills (${EXPECTED_SKILLS.join(', ')}). Update checks deliberately when adding more.`);
   const lock = await readLock();
   const lockedFiles = new Set();
   for (const [name, item] of Object.entries(lock.upstreams)) {

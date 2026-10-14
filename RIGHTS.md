@@ -13,6 +13,8 @@ expresses that choice. It is not the permissive Unlicense license.
 This policy does **not** override or remove any rights already granted by
 third-party licenses. Files under `vendor/rea/` retain REA's MIT license.
 `vendor/reverse-api-engineer/LICENSE` preserves the upstream MIT notice.
+Files under `vendor/vox-editorial/` and `vendor/cinematic-score-and-sfx/` retain
+their MIT licenses and notices.
 See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for precise attribution and
 [SOURCES.md](SOURCES.md) for provenance.
 

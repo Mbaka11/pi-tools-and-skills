@@ -1,0 +1,4 @@
+time,file,gain_db,fade_in,fade_out,trim_start,length,label
+f0,sfx/paper_slide_01.wav,-8,0,0.2,0,,paper ground settles (example - replace)
+f42,sfx/whoosh_soft_02.wav,-10,0.05,0.25,0,,whoosh peaks on cut to beat 2
+00:00:03:10,sfx/stamp_thud_01.wav,-4,0,0,0,,stamp lands on price

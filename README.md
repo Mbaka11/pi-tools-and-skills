@@ -1,11 +1,11 @@
 # Pi Tools & Skills
 
-[![Version](https://img.shields.io/badge/version-0.1.0-blue)](https://github.com/Mbaka11/pi-tools-and-skills/releases/latest)
+[![Version](https://img.shields.io/badge/version-0.2.0-blue)](https://github.com/Mbaka11/pi-tools-and-skills/releases/latest)
 [![Checks](https://github.com/Mbaka11/pi-tools-and-skills/actions/workflows/check.yml/badge.svg)](https://github.com/Mbaka11/pi-tools-and-skills/actions/workflows/check.yml)
 
-A personal, cross-project collection of reusable [pi](https://github.com/earendil-works/pi) skills, small offline helpers, and pinned reverse-engineering tool references.
+A personal, cross-project collection of reusable [pi](https://github.com/earendil-works/pi) skills, small offline helpers, pinned reverse-engineering tool references, and an After Effects / montage toolbox for LED-signage and video work.
 
-**Six skills · No automatic tool installation · No credentials or project data**
+**Fourteen skills · No automatic tool installation · No credentials or project data**
 
 This is a toolbox, not an ApplyPilot dependency and not a backup of an entire pi
 profile. It contains reusable instructions and helpers, not browser sessions,
@@ -13,9 +13,32 @@ model authentication, private captures, or previous project deliverables.
 
 ## Included skills
 
+Skills live in `skills/`; related skills are grouped in category folders
+(`skills/after-effects/`, `skills/montage/`), which pi discovers recursively.
+
+### After Effects — `skills/after-effects/`
+
 | Skill | Use | Origin |
 | --- | --- | --- |
 | `ae-production-workflow` | Reversible After Effects production, checkpoints, RAM gates, native QA, delivery verification | Existing personal skill, with its scripts and templates |
+| `ae-vox-editorial` | Vox-style editorial collage (paper, cut-outs, halftone, highlights, maps, multiplane) built natively and editably in AE | New personal skill |
+| `ae-expressions-rigs` | Vetted expressions, CTRL rigs, auto-sizing boxes, French price formatting, LED-safe layout, Essential Properties/MOGRT | New personal skill |
+| `ae-vfx-compositing` | Keying, roto, cleanup, tracking, screen/LED mockups, integration QA, AI options with licence checks | New personal skill |
+
+### Montage — `skills/montage/`
+
+| Skill | Use | Origin |
+| --- | --- | --- |
+| `led-signage-content` | PixaNova LED roll-ups (516×1032) and walls: profiles, text size from pitch and distance, guides, exports, per-screen splits, test cards | New personal skill + `led_tool.py` |
+| `video-delivery-qc` | Decode-based QC: frames, black/freeze, loudness, loop seam, contact sheets; platform specs; FFmpeg recipes | New personal skill + `media_qc.py` |
+| `sound-design-sfx` | Spotting, licensed SFX/music, generation options, frame-accurate cue stems, mix targets | New personal skill + `sfx_place.py`; routes to a vendored score-to-picture workflow |
+| `montage-editing-craft` | Edit workflow, pacing, Premiere via the Higgsfield bridge, reframes, versions, French captions and client notes | New personal skill + `srt_check.py` |
+| `vox-explainer-pipelines` | Pinned Remotion and Python Vox pipelines plus hosted options, with Windows, licence and LED adaptations | Personal adapter + unchanged MIT upstream snapshot |
+
+### Research and investigation — `skills/`
+
+| Skill | Use | Origin |
+| --- | --- | --- |
 | `market-research` | Sourced market sizing, competition, regulations, and opportunity comparisons | Generalized from personal Cowgorithm research skill |
 | `research-reporting` | Briefs, executive summaries, full reports, and reviewed PDF exports | Generalized from personal Cowgorithm report skill |
 | `backlog-execution` | Bounded on-demand task execution and evidence-based completion | Generalized from personal Cowgorithm task reference |
@@ -24,13 +47,14 @@ model authentication, private captures, or previous project deliverables.
 
 Original sources and exact revisions: [SOURCES.md](SOURCES.md).
 Other installed third-party skills are listed in [the external catalog](docs/external-skills.md), not copied or presented as personal creations.
+Researched After Effects, Vox, motion, SFX, VFX and editing tools (with pins, licences and verdicts) are in [the montage tools catalog](docs/montage-catalog.md).
 
 ## Recover on another machine
 
 Requires pi and Git. For an immutable version:
 
 ```bash
-pi install git:github.com/Mbaka11/pi-tools-and-skills@v0.1.0
+pi install git:github.com/Mbaka11/pi-tools-and-skills@v0.2.0
 ```
 
 Restart pi or run `/reload`. Skills are registered at **user scope**, so they are
@@ -68,11 +92,52 @@ Ask pi normally, or select a workflow explicitly:
 /skill:rea-investigation Explain this owned Electron package's import flow.
 /skill:reverse-api-investigation Map the API from this reviewed test capture.
 /skill:ae-production-workflow Preflight the current AE project without changing it.
+/skill:ae-vox-editorial Build a 20 s Vox-style loop for a 516x1032 roll-up from this brief.
+/skill:led-signage-content Check this export for the three-screen PixaNova wall.
+/skill:video-delivery-qc Verify the final MP4 before sending it to the client.
+/skill:sound-design-sfx Spot this cut and place whooshes and hits on the cuts.
 ```
 
 Skills are instructions, not access grants. Unavailable host tools and engines
 remain unavailable. Targets, live actions, credentials, and output directories
 must be established for each project.
+
+If your pi settings narrow this package with a `skills` filter, add the new
+paths explicitly (for example `skills/montage/led-signage-content/SKILL.md` or
+`skills/after-effects/ae-vox-editorial/SKILL.md`), or remove the filter to load
+all fourteen. Run `/reload` afterwards.
+
+## After Effects and montage toolbox
+
+Built for LED-signage work (PixaNova digital roll-ups and walls) and general
+client montages. The helpers use only the Python standard library; FFmpeg is
+found through `$FFMPEG`, `PATH`, or the `imageio-ffmpeg` Python package. Each
+helper prints a JSON plan with `--dry-run`, never modifies inputs, and refuses
+to overwrite existing outputs.
+
+```bash
+# LED: text sizes, guide overlay, pixel-exact export, wall split, device test card
+python skills/montage/led-signage-content/scripts/led_tool.py text-size --profile pixanova-rollup-1x --distance 4
+python skills/montage/led-signage-content/scripts/led_tool.py guides --profile pixanova-wall-3x --out guides.png
+python skills/montage/led-signage-content/scripts/led_tool.py export --profile pixanova-rollup-1x --input master.mov --output out.mp4 --dry-run
+python skills/montage/led-signage-content/scripts/led_tool.py split --profile pixanova-wall-3x --input wall.mov --outdir deliver/
+python skills/montage/led-signage-content/scripts/led_tool.py testcard --profile pixanova-rollup-1x --out-png card.png --out-mp4 card.mp4
+
+# QC of any encoded file: full decode, frames, black/freeze, loudness, loop seam, contact sheet
+python skills/montage/video-delivery-qc/scripts/media_qc.py out.mp4 --expect-width 516 --expect-height 1032 --expect-fps 30 --expect-audio no --loop-check --contact-sheet sheet.jpg
+
+# SFX cue sheet -> zero-aligned WAV stem; French caption checks
+python skills/montage/sound-design-sfx/scripts/sfx_place.py --cues cues.csv --video cut.mp4 --fps 30 --snap --out sfx_stem.wav
+python skills/montage/montage-editing-craft/scripts/srt_check.py captions.srt --preset social-vertical --french fr-CA
+```
+
+Two MIT-licensed upstream skill sets are vendored unchanged at pinned commits
+and reached through adapters: Jared Cassoutt's Vox pipelines (Remotion and
+Python) via `vox-explainer-pipelines`, and the score-to-picture workflow via
+`sound-design-sfx`. Copy a vendored pipeline into the project before running
+its scripts. Full upstream sources can be retrieved separately with
+`node scripts/fetch-source.mjs vox-editorial` (plan) and `--fetch`. Higgsfield-hosted workflows and other researched tools are listed,
+not installed, in [the montage tools catalog](docs/montage-catalog.md).
 
 ## Reverse-engineering tools
 
@@ -132,7 +197,8 @@ npm test
 npm run updates:check
 ```
 
-The update check only reads public release metadata. It never pulls, installs,
+The update check only reads public release metadata (or, for unreleased
+snapshots, the tracked branch's latest commit). It never pulls, installs,
 changes pins, or rewrites skills. No scheduled task is created. Run it periodically
 or before an investigation; review changes and tests before a deliberate update.
 
@@ -150,4 +216,6 @@ A public GitHub repository is not by itself an open-source license. See
 it does not make this GitHub repository private.
 
 Third-party material retains its existing MIT license and attribution. See
-[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). PixaNova, Adobe, Higgsfield and
+other product names identify compatible products only; no affiliation or
+endorsement is implied.

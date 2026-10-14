@@ -7,9 +7,9 @@ import { createHash } from 'node:crypto';
 import { spawnSync } from 'node:child_process';
 import { ROOT } from '../scripts/upstreams.mjs';
 
-const verifier = path.join(ROOT, 'skills/ae-production-workflow/scripts/verify-delivery-manifest.py');
-const checkpoint = path.join(ROOT, 'skills/ae-production-workflow/scripts/checkpoint-aep.ps1');
-const ram = path.join(ROOT, 'skills/ae-production-workflow/scripts/ram-snapshot.ps1');
+const verifier = path.join(ROOT, 'skills/after-effects/ae-production-workflow/scripts/verify-delivery-manifest.py');
+const checkpoint = path.join(ROOT, 'skills/after-effects/ae-production-workflow/scripts/checkpoint-aep.ps1');
+const ram = path.join(ROOT, 'skills/after-effects/ae-production-workflow/scripts/ram-snapshot.ps1');
 const sha = data => createHash('sha256').update(data).digest('hex');
 async function fixture(t) {
   const dir = await mkdtemp(path.join(tmpdir(), 'pi-toolbox-ae-'));

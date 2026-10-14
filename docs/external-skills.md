@@ -22,7 +22,10 @@ private pi configuration.
 On another machine, consult each package's current documentation and choose an
 exact reviewed version before installation. Installing them may load executable
 extensions, unlike this skills-only package. Do not blindly restore every old
-extension or assume it is needed by the six curated skills here.
+extension or assume it is needed by the curated skills here.
 
 System skills supplied with another agent (for example Codex's skill installer
 or creator) are also not treated as user-authored content and are not redistributed.
+
+Researched but not installed After Effects, Vox, motion, SFX, VFX and editing
+tools are reviewed separately in [the montage catalog](montage-catalog.md).
