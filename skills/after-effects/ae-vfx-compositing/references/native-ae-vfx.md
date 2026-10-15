@@ -56,7 +56,7 @@ verify with a test grid layer before placing hero content.
 
 ## Screen replacement and LED roll-up mockups
 
-Common for proposals: show the client's content on a PixaNova roll-up in a venue
+Common for proposals: show the client's content on a digital roll-up in a venue
 photo or video.
 
 1. Track the screen's four corners (Mocha planar or a still photo's corners).

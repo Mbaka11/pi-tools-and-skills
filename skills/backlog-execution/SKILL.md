@@ -8,6 +8,8 @@ metadata:
 
 # Backlog Execution
 
+[Tiny example — bounded two-task status with a blocker](../../examples/README.md#backlog-execution).
+
 ## Bound the work
 
 Read the project's instructions and authoritative backlog. Establish which tasks,

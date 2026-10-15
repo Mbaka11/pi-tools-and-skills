@@ -9,6 +9,8 @@ metadata:
 
 # Vox-style editorial motion in After Effects
 
+[Tiny example — 3 s original collage mockup, not a native AE render](../../../examples/README.md#ae-vox-editorial).
+
 This skill supplies the **visual grammar and native AE recipes** for the
 editorial "Vox" look. It does not replace the production discipline or the
 bridge doctrine:
@@ -96,8 +98,8 @@ Full layer stacks, effect match names and tuning live in `references/ae-recipes.
 
 ## LED and vertical adaptations
 
-- Build at the exact device pixel size (for PixaNova roll-ups 516×1032 per
-  screen). Never design at 1080×1920 and hope the player downsizes cleanly.
+- Build at the exact device pixel size (for example 516×1032 per
+  screen on a compatible 1:2 panel; confirm the device). Never design at 1080×1920 and hope the player downsizes cleanly.
 - Halftone dots, paper fibres and grain below about 3 px shimmer or vanish on a
   P1.86 grid. Enlarge the pattern or drop it on the smallest elements.
 - Strokes and underlines at least 3–4 px; text sizes from the LED skill's

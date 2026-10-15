@@ -1,0 +1,18 @@
+{
+  "file": "captions-fixed.srt",
+  "preset": "broadcast",
+  "rules": {
+    "max_chars": 42,
+    "max_lines": 2,
+    "max_cps": 17.0,
+    "min_dur": 0.833,
+    "max_dur": 7.0,
+    "min_gap": 0.083
+  },
+  "french": "fr-CA",
+  "subtitles": 1,
+  "errors": 0,
+  "warnings": 0,
+  "issues": [],
+  "fixed_copy": null
+}

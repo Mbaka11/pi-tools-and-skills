@@ -4,6 +4,7 @@ import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { pathToFileURL } from 'node:url';
 import { ROOT, readLock, rejectSymlinks } from './upstreams.mjs';
+import { validateExamples } from './check-examples.mjs';
 
 export function frontmatter(text) {
   const match = text.match(/^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/);
@@ -66,6 +67,8 @@ export async function validate() {
     } catch (error) { errors.push(`${file}: ${error.message}`); }
   }
   if (JSON.stringify([...skills].sort()) !== JSON.stringify([...EXPECTED_SKILLS].sort())) errors.push(`Expected exactly ${EXPECTED_SKILLS.length} curated skills (${EXPECTED_SKILLS.join(', ')}). Update checks deliberately when adding more.`);
+  const examples = await validateExamples(ROOT, EXPECTED_SKILLS);
+  errors.push(...examples.errors);
   const lock = await readLock();
   const lockedFiles = new Set();
   for (const [name, item] of Object.entries(lock.upstreams)) {
@@ -91,8 +94,9 @@ export async function validate() {
       const rel = prefix + entry.name, file = path.join(dir, entry.name);
       if (entry.isSymbolicLink()) { errors.push(`Symlink is not portable: ${rel}`); continue; }
       if (entry.isDirectory()) { await walk(file, `${rel}/`); continue; }
-      if (/\.(?:har|jsonl|sqlite|db|pem|key|pfx|pcap|pcapng|aep|aepx|mp4|pdf|log|tgz|zip|pyc)$/i.test(rel) || /^(?:\.env(?:\..*)?|auth\.json|mcp-auth\.json|settings\.json|mcp\.json)$/i.test(entry.name)) errors.push(`Private/generated artifact outside .local: ${rel}`);
+      if (!examples.mediaPaths.has(rel) && (/\.(?:har|jsonl|sqlite|db|pem|key|pfx|pcap|pcapng|aep|aepx|mp4|mov|wav|mp3|gif|png|jpe?g|webp|pdf|log|tgz|zip|pyc)$/i.test(rel) || /^(?:\.env(?:\..*)?|auth\.json|mcp-auth\.json|settings\.json|mcp\.json)$/i.test(entry.name))) errors.push(`Private/generated artifact outside .local or example manifest: ${rel}`);
       if (rel.startsWith('vendor/') && !lockedFiles.has(rel)) errors.push(`Untracked vendor snapshot: ${rel}`);
+      if (examples.mediaPaths.has(rel)) continue; // Exact allowlist; signatures, sizes and hashes checked above.
       const stat = await lstat(file);
       if (stat.size > 512 * 1024) { errors.push(`Unexpected large file: ${rel}`); continue; }
       const text = await readFile(file, 'utf8');

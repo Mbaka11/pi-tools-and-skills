@@ -8,7 +8,7 @@
 | 9:16 | 1080×1920 | Reels, Shorts, TikTok, Stories | subject centred; text in the central safe zone |
 | 1:1 | 1080×1080 | feeds | tighter framing |
 | 4:5 | 1080×1350 | Instagram/LinkedIn feed | more vertical space than 1:1 |
-| 1:2 LED | 516×1032 per PixaNova screen | roll-ups | rebuild graphics at device size |
+| 1:2 LED | e.g. 516×1032 per screen (confirm hardware) | roll-ups | rebuild graphics at device size |
 | 1:1 LED wall | 1032×1032 | two roll-ups | seam at x = 516 |
 | 3:2 LED wall | 1548×1032 | three roll-ups | seams at x = 516 and 1032 |
 

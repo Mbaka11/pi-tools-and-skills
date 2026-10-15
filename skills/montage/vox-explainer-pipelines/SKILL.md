@@ -10,6 +10,8 @@ metadata:
 
 # Vox explainer pipelines (code and generated)
 
+[Tiny example — 3 s beat-sheet mockup, not an upstream pipeline render](../../../examples/README.md#vox-explainer-pipelines).
+
 This is a routing and adaptation guide. The two upstream skills are preserved
 unchanged (MIT) in the pinned snapshot:
 
@@ -81,7 +83,8 @@ Install dependencies inside the project (virtual environment, local
 
 ## LED and other formats
 
-- PixaNova roll-ups are **1:2** (516×1032), not 9:16. A 1080×1920 render cannot
+- A 516×1032 roll-up is **1:2**, not 9:16. Confirm the actual device format.
+  A 1080×1920 render cannot
   be scaled to 516×1032 without distortion or cropping.
 - Route B: after scaffolding, set the composition to 516×1032 (or 1032×2064 and
   reduce exactly 2:1 with `led_tool.py export`), and recompute the dead zones —

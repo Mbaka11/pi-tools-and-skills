@@ -2,6 +2,20 @@
 
 Versioned releases use Semantic Versioning. Published tags are not moved.
 
+## 0.3.0
+
+- Replace vendor-specific LED labels with generic, resolution-based reference
+  profiles. Update commands to `led-rollup-516x1032`, `led-wall-2x-516x1032`
+  or `led-wall-3x-516x1032`; old branded profile IDs are no longer accepted.
+  Confirm pixel map, pitch, player and synchronization on the actual device.
+- Add a short, synthetic example for every included skill and tool: animated
+  previews, a three-second sound sample, real helper outputs and concise
+  illustrative reports. Native AE/REA/cloud execution is not claimed.
+- Keep example media in an explicit size-bounded, hash-checked manifest;
+  no client assets, downloaded media or automatic dependency installs.
+- Clean current documentation and the previous release description. Published
+  Git history and earlier tags remain unchanged.
+
 ## 0.2.0
 
 - Add an After Effects and montage toolbox: eight new skills in category folders
@@ -9,7 +23,7 @@ Versioned releases use Semantic Versioning. Published tags are not moved.
 - After Effects: `ae-vox-editorial` (native Vox-style editorial collage),
   `ae-expressions-rigs` (language-independent expressions and control rigs),
   `ae-vfx-compositing` (native-first compositing with licence-checked AI options).
-- Montage: `led-signage-content` with `led_tool.py` (PixaNova roll-up and wall
+- Montage: `led-signage-content` with `led_tool.py` (LED roll-up and wall
   profiles, text-size calculator, guide overlays, pixel-exact exports, per-screen
   splits, device test cards), `video-delivery-qc` with `media_qc.py` (full decode,
   black/freeze, loudness, loop seam, contact sheets), `sound-design-sfx` with

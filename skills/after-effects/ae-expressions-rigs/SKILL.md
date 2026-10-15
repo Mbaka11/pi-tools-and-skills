@@ -9,6 +9,8 @@ metadata:
 
 # After Effects expressions and rigs
 
+[Tiny example — 3 s auto-box mockup and expression snippet](../../../examples/README.md#ae-expressions-rigs).
+
 Use expressions to make client projects **editable and robust**, not to show off.
 Every expression here is written for the JavaScript engine and avoids
 language-dependent names.

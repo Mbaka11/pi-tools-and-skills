@@ -9,6 +9,8 @@ metadata:
 
 # VFX compositing in After Effects
 
+[Tiny example — 3 s synthetic screen-replacement mockup](../../../examples/README.md#ae-vfx-compositing).
+
 A composite is finished when nobody notices it. That is measured, not hoped:
 edges, black levels, grain, light direction, motion blur and temporal stability
 must match the plate.

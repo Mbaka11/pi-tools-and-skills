@@ -1,5 +1,8 @@
 # REA integration
 
+[Very short illustrative output](../../examples/reports.md#rea-investigation)
+— a fictitious import-flow report, not a recorded REA session.
+
 Source: https://github.com/morluto/rea
 
 Pinned package: `rea-agents@6.4.0` · source commit:

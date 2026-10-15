@@ -1,11 +1,15 @@
 # Pi Tools & Skills
 
-[![Version](https://img.shields.io/badge/version-0.2.0-blue)](https://github.com/Mbaka11/pi-tools-and-skills/releases/latest)
+[![Version](https://img.shields.io/badge/version-0.3.0-blue)](https://github.com/Mbaka11/pi-tools-and-skills/releases/latest)
 [![Checks](https://github.com/Mbaka11/pi-tools-and-skills/actions/workflows/check.yml/badge.svg)](https://github.com/Mbaka11/pi-tools-and-skills/actions/workflows/check.yml)
 
 A personal, cross-project collection of reusable [pi](https://github.com/earendil-works/pi) skills, small offline helpers, pinned reverse-engineering tool references, and an After Effects / montage toolbox for LED-signage and video work.
 
 **Fourteen skills · No automatic tool installation · No credentials or project data**
+
+**[Voir la galerie d'exemples très courts](examples/README.md)** — animations de
+3 secondes, audio, sorties réelles des helpers et mini-rapports fictifs.
+Chaque skill et outil inclus a un exemple, avec ses limites clairement indiquées.
 
 This is a toolbox, not an ApplyPilot dependency and not a backup of an entire pi
 profile. It contains reusable instructions and helpers, not browser sessions,
@@ -29,7 +33,7 @@ Skills live in `skills/`; related skills are grouped in category folders
 
 | Skill | Use | Origin |
 | --- | --- | --- |
-| `led-signage-content` | PixaNova LED roll-ups (516×1032) and walls: profiles, text size from pitch and distance, guides, exports, per-screen splits, test cards | New personal skill + `led_tool.py` |
+| `led-signage-content` | Generic LED roll-ups (e.g. 516×1032) and walls: profiles, text size from pitch and distance, guides, exports, per-screen splits, test cards | New personal skill + `led_tool.py` |
 | `video-delivery-qc` | Decode-based QC: frames, black/freeze, loudness, loop seam, contact sheets; platform specs; FFmpeg recipes | New personal skill + `media_qc.py` |
 | `sound-design-sfx` | Spotting, licensed SFX/music, generation options, frame-accurate cue stems, mix targets | New personal skill + `sfx_place.py`; routes to a vendored score-to-picture workflow |
 | `montage-editing-craft` | Edit workflow, pacing, Premiere via the Higgsfield bridge, reframes, versions, French captions and client notes | New personal skill + `srt_check.py` |
@@ -49,12 +53,21 @@ Original sources and exact revisions: [SOURCES.md](SOURCES.md).
 Other installed third-party skills are listed in [the external catalog](docs/external-skills.md), not copied or presented as personal creations.
 Researched After Effects, Vox, motion, SFX, VFX and editing tools (with pins, licences and verdicts) are in [the montage tools catalog](docs/montage-catalog.md).
 
+## Short examples
+
+[![Original editorial-collage mockup, 3 seconds](examples/media/ae-vox.gif)](examples/README.md#ae-vox-editorial)
+
+[Full gallery: all 14 skills](examples/README.md) ·
+[One micro-example per included tool](examples/tools.md).
+Original synthetic media only. AE previews are explicitly labelled mockups;
+LED, QC, SFX, subtitle and manifest examples include actual helper outputs.
+
 ## Recover on another machine
 
 Requires pi and Git. For an immutable version:
 
 ```bash
-pi install git:github.com/Mbaka11/pi-tools-and-skills@v0.2.0
+pi install git:github.com/Mbaka11/pi-tools-and-skills@v0.3.0
 ```
 
 Restart pi or run `/reload`. Skills are registered at **user scope**, so they are
@@ -93,7 +106,7 @@ Ask pi normally, or select a workflow explicitly:
 /skill:reverse-api-investigation Map the API from this reviewed test capture.
 /skill:ae-production-workflow Preflight the current AE project without changing it.
 /skill:ae-vox-editorial Build a 20 s Vox-style loop for a 516x1032 roll-up from this brief.
-/skill:led-signage-content Check this export for the three-screen PixaNova wall.
+/skill:led-signage-content Check this export for a three-screen LED wall.
 /skill:video-delivery-qc Verify the final MP4 before sending it to the client.
 /skill:sound-design-sfx Spot this cut and place whooshes and hits on the cuts.
 ```
@@ -109,7 +122,7 @@ all fourteen. Run `/reload` afterwards.
 
 ## After Effects and montage toolbox
 
-Built for LED-signage work (PixaNova digital roll-ups and walls) and general
+Built for LED-signage work (digital roll-ups and walls) and general
 client montages. The helpers use only the Python standard library; FFmpeg is
 found through `$FFMPEG`, `PATH`, or the `imageio-ffmpeg` Python package. Each
 helper prints a JSON plan with `--dry-run`, never modifies inputs, and refuses
@@ -117,11 +130,11 @@ to overwrite existing outputs.
 
 ```bash
 # LED: text sizes, guide overlay, pixel-exact export, wall split, device test card
-python skills/montage/led-signage-content/scripts/led_tool.py text-size --profile pixanova-rollup-1x --distance 4
-python skills/montage/led-signage-content/scripts/led_tool.py guides --profile pixanova-wall-3x --out guides.png
-python skills/montage/led-signage-content/scripts/led_tool.py export --profile pixanova-rollup-1x --input master.mov --output out.mp4 --dry-run
-python skills/montage/led-signage-content/scripts/led_tool.py split --profile pixanova-wall-3x --input wall.mov --outdir deliver/
-python skills/montage/led-signage-content/scripts/led_tool.py testcard --profile pixanova-rollup-1x --out-png card.png --out-mp4 card.mp4
+python skills/montage/led-signage-content/scripts/led_tool.py text-size --profile led-rollup-516x1032 --distance 4
+python skills/montage/led-signage-content/scripts/led_tool.py guides --profile led-wall-3x-516x1032 --out guides.png
+python skills/montage/led-signage-content/scripts/led_tool.py export --profile led-rollup-516x1032 --input master.mov --output out.mp4 --dry-run
+python skills/montage/led-signage-content/scripts/led_tool.py split --profile led-wall-3x-516x1032 --input wall.mov --outdir deliver/
+python skills/montage/led-signage-content/scripts/led_tool.py testcard --profile led-rollup-516x1032 --out-png card.png --out-mp4 card.mp4
 
 # QC of any encoded file: full decode, frames, black/freeze, loudness, loop seam, contact sheet
 python skills/montage/video-delivery-qc/scripts/media_qc.py out.mp4 --expect-width 516 --expect-height 1032 --expect-fps 30 --expect-audio no --loop-check --contact-sheet sheet.jpg
@@ -216,6 +229,6 @@ A public GitHub repository is not by itself an open-source license. See
 it does not make this GitHub repository private.
 
 Third-party material retains its existing MIT license and attribution. See
-[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). PixaNova, Adobe, Higgsfield and
+[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Adobe, Higgsfield and
 other product names identify compatible products only; no affiliation or
 endorsement is implied.

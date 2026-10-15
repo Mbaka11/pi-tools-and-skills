@@ -8,6 +8,8 @@ metadata:
 
 # Market Research
 
+[Tiny example — fictitious bottom-up calculation, not market evidence](../../examples/README.md#market-research).
+
 ## Establish the scope
 
 Read the current project's instructions and existing research first. Determine the

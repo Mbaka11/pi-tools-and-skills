@@ -1,0 +1,2 @@
+Synthetic canonical byte fixture for manifest verification.
+This is not an After Effects project or evidence of native AE QA.

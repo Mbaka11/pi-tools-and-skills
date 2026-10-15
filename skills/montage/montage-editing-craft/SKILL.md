@@ -9,6 +9,8 @@ metadata:
 
 # Montage editing craft
 
+[Tiny example — 3 s editing mockup and real subtitle correction](../../../examples/README.md#montage-editing-craft).
+
 The edit decides what the audience understands. Software is the easy part;
 choices about what to keep, how long to hold and where to cut are the job.
 

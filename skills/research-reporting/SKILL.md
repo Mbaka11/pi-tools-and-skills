@@ -8,6 +8,8 @@ metadata:
 
 # Research Reporting
 
+[Tiny example — a four-line fictitious decision brief](../../examples/README.md#research-reporting).
+
 Read the project's instructions and the selected source documents. Establish the
 audience, purpose, output language, length, format, and destination. Preserve
 source-language quotations where necessary; do not translate user data or change

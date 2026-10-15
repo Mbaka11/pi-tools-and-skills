@@ -43,13 +43,13 @@ async function wav(file, seconds, channels = 1, rate = 48000) {
 }
 
 // ------------------------------------------------------------- led_tool.py
-test('LED profiles expose the PixaNova pixel maps and divide into screens', () => {
+test('LED profiles expose generic pixel maps and divide into screens', () => {
   const r = py(LED, ['profiles']);
   assert.equal(r.status, 0, r.stderr);
   const { profiles } = out(r);
-  assert.deepEqual([profiles['pixanova-rollup-1x'].width, profiles['pixanova-rollup-1x'].height], [516, 1032]);
-  assert.deepEqual([profiles['pixanova-wall-2x'].width, profiles['pixanova-wall-2x'].height], [1032, 1032]);
-  assert.deepEqual([profiles['pixanova-wall-3x'].width, profiles['pixanova-wall-3x'].height], [1548, 1032]);
+  assert.deepEqual([profiles['led-rollup-516x1032'].width, profiles['led-rollup-516x1032'].height], [516, 1032]);
+  assert.deepEqual([profiles['led-wall-2x-516x1032'].width, profiles['led-wall-2x-516x1032'].height], [1032, 1032]);
+  assert.deepEqual([profiles['led-wall-3x-516x1032'].width, profiles['led-wall-3x-516x1032'].height], [1548, 1032]);
   for (const [name, p] of Object.entries(profiles)) {
     assert.equal(p.width % p.screens[0], 0, name);
     assert.equal(p.height % p.screens[1], 0, name);
@@ -61,9 +61,9 @@ test('LED text sizes follow the distance/150 x movement method', () => {
   const generic = out(py(LED, ['text-size', '--pitch', '4', '--distance', '6', '--movement', 'pedestrian']));
   assert.equal(generic.tiers.detail.cap_height_mm, 48);
   assert.equal(generic.tiers.detail.cap_height_px, 12);
-  const pixanova = out(py(LED, ['text-size', '--profile', 'pixanova-rollup-1x', '--distance', '4']));
-  assert.deepEqual(Object.values(pixanova.tiers).map(t => t.cap_height_px), [18, 26, 44]);
-  assert.deepEqual(pixanova.screen_mm, [960, 1920]);
+  const rollup = out(py(LED, ['text-size', '--profile', 'led-rollup-516x1032', '--distance', '4']));
+  assert.deepEqual(Object.values(rollup.tiers).map(t => t.cap_height_px), [18, 26, 44]);
+  assert.deepEqual(rollup.screen_mm, [960, 1920]);
   const bad = py(LED, ['text-size', '--pitch', '0', '--distance', '4']);
   assert.equal(bad.status, 2);
 });
@@ -71,16 +71,16 @@ test('LED text sizes follow the distance/150 x movement method', () => {
 test('LED guides and test card are valid PNGs at the device size and are never overwritten', async t => {
   const dir = await temp(t);
   const file = path.join(dir, 'guides.png');
-  assert.equal(py(LED, ['guides', '--profile', 'pixanova-wall-3x', '--out', file]).status, 0);
+  assert.equal(py(LED, ['guides', '--profile', 'led-wall-3x-516x1032', '--out', file]).status, 0);
   const png = await readFile(file);
   assert.equal(png.subarray(1, 4).toString(), 'PNG');
   assert.equal(png.readUInt32BE(16), 1548);
   assert.equal(png.readUInt32BE(20), 1032);
-  const again = py(LED, ['guides', '--profile', 'pixanova-wall-3x', '--out', file]);
+  const again = py(LED, ['guides', '--profile', 'led-wall-3x-516x1032', '--out', file]);
   assert.equal(again.status, 2);
   assert.deepEqual(await readFile(file), png);
   const card = path.join(dir, 'card.png');
-  assert.equal(py(LED, ['testcard', '--profile', 'pixanova-rollup-1x', '--out-png', card]).status, 0);
+  assert.equal(py(LED, ['testcard', '--profile', 'led-rollup-516x1032', '--out-png', card]).status, 0);
   const cardPng = await readFile(card);
   assert.equal(cardPng.readUInt32BE(16), 516);
   assert.equal(cardPng.readUInt32BE(20), 1032);
@@ -90,15 +90,15 @@ test('LED export plan is pixel-exact, silent, BT.709, CFR and refuses unsafe out
   const dir = await temp(t);
   const input = path.join(dir, 'master.mov');
   await writeFile(input, 'not a real video - dry run only');
-  const plan = out(py(LED, ['export', '--profile', 'pixanova-rollup-1x', '--input', input, '--output', path.join(dir, 'out.mp4'), '--dry-run']));
+  const plan = out(py(LED, ['export', '--profile', 'led-rollup-516x1032', '--input', input, '--output', path.join(dir, 'out.mp4'), '--dry-run']));
   const cmd = plan.command.join(' ');
   for (const part of ['scale=516:1032', 'out_color_matrix=bt709', 'fps=30', 'libx264', 'yuv420p', '-an', '+faststart', '-map_metadata -1']) assert.ok(cmd.includes(part), part);
   assert.ok(plan.command.includes('-n'));
-  const cover = out(py(LED, ['export', '--profile', 'pixanova-rollup-1x', '--input', input, '--output', path.join(dir, 'c.mp4'), '--fit', 'cover', '--dry-run']));
+  const cover = out(py(LED, ['export', '--profile', 'led-rollup-516x1032', '--input', input, '--output', path.join(dir, 'c.mp4'), '--fit', 'cover', '--dry-run']));
   assert.ok(cover.command.join(' ').includes('force_original_aspect_ratio=increase'));
-  assert.equal(py(LED, ['export', '--profile', 'pixanova-rollup-1x', '--input', input, '--output', input, '--dry-run']).status, 2);
+  assert.equal(py(LED, ['export', '--profile', 'led-rollup-516x1032', '--input', input, '--output', input, '--dry-run']).status, 2);
   await writeFile(path.join(dir, 'exists.mp4'), 'x');
-  assert.equal(py(LED, ['export', '--profile', 'pixanova-rollup-1x', '--input', input, '--output', path.join(dir, 'exists.mp4'), '--dry-run']).status, 2);
+  assert.equal(py(LED, ['export', '--profile', 'led-rollup-516x1032', '--input', input, '--output', path.join(dir, 'exists.mp4'), '--dry-run']).status, 2);
   assert.equal(py(LED, ['export', '--profile', 'nope', '--input', input, '--output', path.join(dir, 'o.mp4'), '--dry-run']).status, 2);
 });
 
@@ -106,11 +106,11 @@ test('LED wall split crops one decode into per-screen files', async t => {
   const dir = await temp(t);
   const input = path.join(dir, 'wall.mov');
   await writeFile(input, 'dry run');
-  const plan = out(py(LED, ['split', '--profile', 'pixanova-wall-3x', '--input', input, '--outdir', path.join(dir, 'deliver'), '--dry-run']));
+  const plan = out(py(LED, ['split', '--profile', 'led-wall-3x-516x1032', '--input', input, '--outdir', path.join(dir, 'deliver'), '--dry-run']));
   assert.deepEqual(plan.screen_size, [516, 1032]);
   assert.deepEqual(plan.outputs.map(o => o.crop[2]), [0, 516, 1032]);
   assert.ok(plan.command.join(' ').includes('split=3'));
-  assert.equal(py(LED, ['split', '--profile', 'pixanova-rollup-1x', '--input', input, '--outdir', dir, '--dry-run']).status, 2);
+  assert.equal(py(LED, ['split', '--profile', 'led-rollup-516x1032', '--input', input, '--outdir', dir, '--dry-run']).status, 2);
 });
 
 // ------------------------------------------------------------- media_qc.py
@@ -179,9 +179,9 @@ test('LED export, check, media QC and SFX render work end to end', { skip: !FFMP
   const gen = spawnSync(FFMPEG, ['-hide_banner', '-loglevel', 'error', '-f', 'lavfi', '-i', 'testsrc2=size=1032x2064:rate=30:duration=2', '-c:v', 'libx264', '-pix_fmt', 'yuv420p', master], { encoding: 'utf8', timeout: 120000 });
   assert.equal(gen.status, 0, gen.stderr);
   const exported = path.join(dir, 'CLIENT_MSG_516x1032_30p_v01.mp4');
-  const e = py(LED, ['export', '--profile', 'pixanova-rollup-1x', '--input', master, '--output', exported], { env: { ...env, FFMPEG } });
+  const e = py(LED, ['export', '--profile', 'led-rollup-516x1032', '--input', master, '--output', exported], { env: { ...env, FFMPEG } });
   assert.equal(e.status, 0, e.stdout);
-  const c = out(py(LED, ['check', '--profile', 'pixanova-rollup-1x', '--input', exported], { env: { ...env, FFMPEG } }));
+  const c = out(py(LED, ['check', '--profile', 'led-rollup-516x1032', '--input', exported], { env: { ...env, FFMPEG } }));
   assert.equal(c.ok, true, JSON.stringify(c.checks));
   const sheet = path.join(dir, 'sheet.jpg');
   const q = py(QC, [exported, '--expect-width', '516', '--expect-height', '1032', '--expect-fps', '30', '--expect-frames', '60', '--expect-audio', 'no', '--contact-sheet', sheet], { env: { ...env, FFMPEG } });

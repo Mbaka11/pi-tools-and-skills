@@ -1,0 +1,46 @@
+{
+  "input": "sfx.wav",
+  "size_bytes": 864102,
+  "sha256": "ab4eb6196e2c6bbaf1ba0b8003bb157a3558163af538e76f78d9329783b7bc31",
+  "probe": {
+    "via": "ffmpeg-banner",
+    "duration_s": 3.0,
+    "video": null,
+    "audio": [
+      {
+        "codec": "pcm_s24le",
+        "sample_rate": 48000,
+        "layout": "stereo"
+      }
+    ]
+  },
+  "video": null,
+  "audio": {
+    "integrated_lufs": -24.2,
+    "lra_lu": 20.0,
+    "true_peak_dbfs": -11.9,
+    "silence_segments": []
+  },
+  "loop": null,
+  "contact_sheet": null,
+  "checks": [
+    {
+      "check": "audio_only",
+      "ok": true,
+      "severity": "info",
+      "detail": "no video stream: audio-file checks only"
+    },
+    {
+      "check": "true_peak",
+      "ok": true,
+      "severity": "error",
+      "detail": "-11.9 dBTP vs max -1.0"
+    }
+  ],
+  "ok": true,
+  "not_verified": [
+    "viewing on the target display",
+    "human listening",
+    "player compatibility"
+  ]
+}

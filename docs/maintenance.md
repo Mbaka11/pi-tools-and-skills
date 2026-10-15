@@ -5,7 +5,7 @@
 Install a release at user scope:
 
 ```bash
-pi install git:github.com/Mbaka11/pi-tools-and-skills@v0.2.0
+pi install git:github.com/Mbaka11/pi-tools-and-skills@v0.3.0
 ```
 
 Or clone and run `pi install .` from the checkout. Do not enable both a local and
@@ -77,6 +77,23 @@ selected files from the git blobs (`git cat-file blob <commit>:<path>`; this
 avoids local CRLF conversion), recompute SHA-256 hashes, and update the lock,
 SOURCES, notices and adapter together. Vendored scripts are reference copies:
 adapters tell users to copy a pipeline into their project before running it.
+
+## Example gallery maintenance
+
+Regenerate with `python examples/build.py --out .local/examples-new` only after
+Pillow, FFmpeg and a licensed local font are available. This never installs
+anything and refuses existing directories. Review all stills/animations, decode
+MP4/WAV outputs, inspect reports, and distinguish automated audio analysis from
+human listening. Copy only approved media and path-normalized reports to
+`examples/`; update `examples/manifest.json` with the generator's media hashes.
+The validator allows only individually declared synthetic GIF/PNG/MP4/WAV files,
+at most 1 MiB each and 8 MiB total. Other media and private artifacts remain
+forbidden. Keep one example per skill and per included helper/tool reference.
+
+Since 0.3.0, LED profiles use generic IDs: `led-rollup-516x1032`,
+`led-wall-2x-516x1032`, `led-wall-3x-516x1032`. Update older commands/custom
+wrappers; no branded aliases are kept. Dimensions are examples, not a hardware
+certification. Earlier tags remain immutable.
 
 ## Roll back
 

@@ -1,0 +1,15 @@
+{
+  "_fixture": "Wholly synthetic, never captured from a browser. Reserved .invalid domain; no credentials or personal data.",
+  "log": {
+    "entries": [
+      {
+        "request": {"method": "GET", "url": "https://catalog.invalid/v1/items?page=1"},
+        "response": {"status": 200, "content": {"mimeType": "application/json"}}
+      },
+      {
+        "request": {"method": "GET", "url": "https://catalog.invalid/v1/items?page=2"},
+        "response": {"status": 200, "content": {"mimeType": "application/json"}}
+      }
+    ]
+  }
+}

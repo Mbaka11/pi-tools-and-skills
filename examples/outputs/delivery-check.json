@@ -1,0 +1,8 @@
+{
+  "ok": true,
+  "manifest": "delivery-manifest.json",
+  "root": ".",
+  "entriesChecked": 1,
+  "canonicalOk": true,
+  "failures": []
+}

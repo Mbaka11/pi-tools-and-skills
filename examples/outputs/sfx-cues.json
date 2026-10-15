@@ -1,0 +1,24 @@
+{
+  "kind": "measured-excerpt",
+  "duration_s": 3.0,
+  "sample_rate": 48000,
+  "cues": [
+    {
+      "time_s": 0.3,
+      "frame": 9.0,
+      "label": "reveal"
+    },
+    {
+      "time_s": 1.0,
+      "frame": 30.0,
+      "label": "cut"
+    },
+    {
+      "time_s": 2.0,
+      "frame": 60.0,
+      "label": "resolve"
+    }
+  ],
+  "human_audio_audition": false,
+  "note": "Command and temporary absolute input paths omitted."
+}

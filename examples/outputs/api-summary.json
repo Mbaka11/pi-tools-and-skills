@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "mode": "structure-only",
+  "reviewRequired": true,
+  "limitations": "Opaque identities and counts only; insufficient to reconstruct API semantics. This is not a sanitized HAR or a guarantee that derived usage statistics are non-sensitive.",
+  "totalEntries": 2,
+  "skippedEntries": 0,
+  "hostCount": 1,
+  "endpoints": [
+    {
+      "id": "endpoint_1",
+      "host": "host_1",
+      "method": "GET",
+      "pathDepth": 2,
+      "requests": 2,
+      "statuses": {
+        "200": 2
+      },
+      "responseTypes": {
+        "application/json": 2
+      },
+      "maxQueryParameterCount": 1
+    }
+  ],
+  "sourceSha256": "a520e58e82e0b5100c828d15e4ae35a27aa9a0e5473bcb5a463bbcc4bb5cfaeb"
+}

@@ -23,6 +23,9 @@ browser-profiles/
 *.aep
 *.aepx
 *.mp4
+# Reviewed synthetic examples only; all other MP4s stay ignored.
+!/examples/media/led-loop.mp4
+!/examples/media/sfx-preview.mp4
 *.pdf
 *.log
 *.tgz

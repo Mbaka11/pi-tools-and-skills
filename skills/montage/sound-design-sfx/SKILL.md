@@ -9,6 +9,8 @@ metadata:
 
 # Sound design and SFX
 
+[Tiny example — original 3 s sweep, impact and chime, with cue report](../../../examples/README.md#sound-design-sfx).
+
 Sound sells motion — when it exists. Decide first whether the deliverable
 plays with sound, then design only the sounds that carry meaning.
 

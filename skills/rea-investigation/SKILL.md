@@ -10,6 +10,8 @@ metadata:
 
 # REA Investigation
 
+[Tiny example — illustrative import-flow report, REA not executed](../../examples/README.md#rea-investigation).
+
 This is a personal integration guide, not a replacement engine or a promise of
 support for every target. The original MIT-licensed REA skill and references are
 preserved unchanged in [the versioned snapshot](../../vendor/rea/skills/reverse-engineer-anything/SKILL.md).

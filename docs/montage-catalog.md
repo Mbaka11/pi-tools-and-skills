@@ -1,6 +1,6 @@
 # Montage, After Effects, VFX and SFX tools: reviewed catalog
 
-Research snapshot from **2026-10-14** for PixaNova LED work (roll-ups, walls)
+Research snapshot from **2026-10-14** for LED work (roll-ups, walls)
 and general montage. Listing a project here is **not** an installation,
 endorsement or licence grant. Commits are the revisions that were looked at;
 review again before installing anything, and prefer that exact commit.
@@ -95,8 +95,56 @@ RIFE, Real-ESRGAN, Wan) are summarised in
   pixels, light-on-dark, H.264, 25/30/60 fps progressive).
 - NovaStar Taurus and Huidu A-series player specifications (H.264 decoding far
   above roll-up sizes; publishing tools may transcode).
-- PixaNova public specifications: P1.86, vertical 6'5" × 3'3" per screen,
-  assemblable into walls.
+- Generic reference pixel maps: 516×1032 per vertical panel, 1032×1032 or
+  1548×1032 for two/three panels. These are examples, not universal standards;
+  confirm the actual pixel pitch, cabinet size, mapping and player.
+
+## Micro-examples for catalog-only tools
+
+These are **illustrative output briefs**, not samples rendered by those tools.
+They do not establish installation, runtime compatibility or commercial rights.
+Actual original media and measured toolbox-helper results are in the
+[short-example gallery](../examples/README.md). Follow each project's linked
+README above for its own demonstrations; no external demo media is copied here.
+
+| Catalog item | Very short example of the intended result |
+| --- | --- |
+| Higgsfield bridge | Editable 3 s AE title reveal or a Premiere three-shot cut. |
+| Higgsfield MCP workflows | 3 s paper-collage clip from one brief, with separately approved credits. |
+| Photoshop MCP | One still treated with two-colour halftone for a collage. |
+| jaredcassoutt/vox-editorial | Question → evidence card → answer, timed to narration. |
+| EricTechPro/vox | One hosted editorial shot mixing a cutout and caption. |
+| Alisa0808/vox-director | One narrated explainer beat assembled from generated elements. |
+| CK42BB/vox-explainer-skill | One cut-paper scene with a synchronised voice line. |
+| pyang5166/gbro-collage-broll | 3 s halftone collage insert over a talking-head edit. |
+| Anil-matcha/vox-ai-motion-graphics-generator | One generated documentary-style motion shot. |
+| JUNKDOGE-JOE/after-effects-mcp | Create a title layer and inspect a preview frame. |
+| yumehiko/ae-agent-skills | Declarative title card with editable layers. |
+| Engine-Room-Games/after-effects-mcp | Short AE shape-and-text animation. |
+| Arman-Luthra/aftr | Render-review-adjust cycle on a 3 s title. |
+| TheLlamainator/after-effects-mcp | JSX-driven text reveal with a local preview. |
+| LobzyJay/motion-design-with-claude | Three-second lower third plus a design critique. |
+| iart-ai/motion-design-skills | Reusable title rig and a delivery checklist. |
+| heygen-com/hyperframes | HTML/CSS card turns into a 3 s MP4 promo. |
+| remotion-dev/skills | Typed composition with three timed title beats. |
+| diffusionstudio/lottie | Tiny looping checkmark in Lottie JSON. |
+| digitalsamba/claude-code-video-toolkit | Code-built montage with a title and captions. |
+| Barty-Bart/motion-graphics | Subject cutout in front of an editorial title. |
+| imMamdouhaboammar/motion-graphics-skills | HTML motion card with a selected transition sound. |
+| zhuyansen/awesome-claude-video-skills | Shortlist of three skills for a given visual task; index, not renderer. |
+| thenpceo/cinematic-score-and-sfx-skill | Three-event cue plan, stems and a handoff note. |
+| elevenlabs/skills | One approved 1 s whoosh or a short music cue. |
+| thedomid/sfx-finder | Top three locally matched sounds for “soft paper slide”. |
+| hkchengrex/MMAudio | Short Foley bed for a test video, non-commercial weights caveat. |
+| Tencent-Hunyuan/HunyuanVideo-Foley | Foley timed to one test action, subject to territory/licence limits. |
+| Sonniss bundles | One licensed impact selected for a cut; no standalone sample redistribution. |
+| Comfy-Org/comfy-mcp | Run an approved local matting workflow on one test frame. |
+| sideshowroberto/vfx-agent-toolkit | Prepare a one-shot compositing scene in a supported host. |
+| hetpatel-11/Adobe_Premiere_Pro_MCP | Three clips assembled with one J-cut. |
+| muhammaddadu/ffmpeg-skill | Three-second clip encoded to the requested dimensions. |
+| Nummax text-height method | At 4 m and P1.86, compute an 18 px minimum detail cap height. |
+| Q-lite layout guidance | One high-contrast message, exact pixel map, no fractional-pixel strokes. |
+| NovaStar Taurus / Huidu player references | On-device playback check of a 3 s test card; no device certification implied. |
 
 ## Installing a catalog item in pi (after review)
 

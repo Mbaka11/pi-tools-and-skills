@@ -10,6 +10,8 @@ metadata:
 
 # Reverse API Investigation
 
+[Tiny example — real structural summary from synthetic events](../../examples/README.md#reverse-api-investigation).
+
 A pi-native workflow inspired by Reverse API Engineer's network-evidence-to-client
 approach. **This is not its CLI, a fork, or a compatibility claim.** Its autonomous
 agent is not run by this skill. See [upstream evaluation](../../tools/reverse-api-engineer/README.md).

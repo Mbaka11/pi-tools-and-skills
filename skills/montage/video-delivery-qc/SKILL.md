@@ -9,6 +9,8 @@ metadata:
 
 # Video delivery QC
 
+[Tiny example — real decode report and contact sheet](../../../examples/README.md#video-delivery-qc).
+
 The encoded file is the deliverable. AE or Premiere previews, render logs and
 container durations are not proof. Decode the whole file, count frames, look at
 frames extracted from the file, and measure the audio.

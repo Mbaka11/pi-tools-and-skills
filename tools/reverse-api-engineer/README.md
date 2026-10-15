@@ -1,5 +1,9 @@
 # Reverse API Engineer reference
 
+[Very short illustrative output](../../examples/reports.md#reverse-api-investigation)
+— a fictitious endpoint map and real structural helper output on synthetic data;
+no upstream agent or live API was executed.
+
 Source: https://github.com/kalil0321/reverse-api-engineer
 
 Reviewed release: `v0.14.0` · commit:

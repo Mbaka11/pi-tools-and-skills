@@ -1,0 +1,11 @@
+{
+  "canonical": "canonical.txt",
+  "canonical_sha256": "6a8cd126f76e0948c99cab011966472caeee4e6535a0e5d77ea6cfd719ac358a",
+  "files": [
+    {
+      "path": "canonical.txt",
+      "size": 126,
+      "sha256": "6a8cd126f76e0948c99cab011966472caeee4e6535a0e5d77ea6cfd719ac358a"
+    }
+  ]
+}

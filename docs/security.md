@@ -59,6 +59,21 @@ A skill, project-trust decision, or prompt instruction is not a security sandbox
 Use an isolated environment for untrusted artifacts. No new scheduled tasks,
 background agents, telemetry services, or auto-updaters are configured here.
 
+## Synthetic gallery exception
+
+`examples/` contains purpose-built fixtures and original media, never client
+assets or saved browser evidence. The only permitted committed media are exact
+paths declared in `examples/manifest.json`, with provenance, a size limit and
+SHA-256. GIF/PNG/MP4/WAV signatures are checked; each file is limited to 1 MiB,
+the collection to 8 MiB, and animated/audio examples to four seconds. Tests
+fully decode animations/audio when FFmpeg is present. This narrow exception is
+not permission to add other project media. Review paths and generated reports
+before publication. A digest proves byte identity, not copyright or privacy.
+
+Maquettes and illustrative reports must be labelled as such: they are not proof
+of native Adobe execution, a tested external pipeline or a live investigation.
+No external media was copied into this gallery.
+
 ## Publishing
 
 Run tests and inspect both staged names and contents. Confirm no evidence,

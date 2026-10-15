@@ -1,7 +1,8 @@
 # Rights and licensing
 
 No license has been selected or granted for the original personal skills,
-adaptations, documentation, tests, and helpers in this repository at this time.
+adaptations, documentation, tests, helpers, and original synthetic examples
+(including generated images, animations and audio) in this repository at this time.
 All rights in that original material are reserved by their respective holders,
 subject to applicable law and the hosting platform's terms.
 

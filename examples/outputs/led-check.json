@@ -1,0 +1,71 @@
+{
+  "action": "check",
+  "profile": "led-rollup-516x1032",
+  "file": "led-loop.mp4",
+  "probe": {
+    "via": "ffmpeg-banner",
+    "duration_s": 3.0,
+    "video": {
+      "codec": "h264",
+      "profile": "High",
+      "pix_fmt": "yuv420p",
+      "width": 516,
+      "height": 1032,
+      "fps": 30.0,
+      "color_space": "bt709"
+    },
+    "audio_streams": 0
+  },
+  "checks": [
+    {
+      "check": "video_stream",
+      "ok": true,
+      "severity": "error",
+      "detail": "video stream present"
+    },
+    {
+      "check": "size",
+      "ok": true,
+      "severity": "error",
+      "detail": "516x1032 vs 516x1032"
+    },
+    {
+      "check": "codec",
+      "ok": true,
+      "severity": "error",
+      "detail": "codec h264"
+    },
+    {
+      "check": "pix_fmt",
+      "ok": true,
+      "severity": "error",
+      "detail": "pix_fmt yuv420p"
+    },
+    {
+      "check": "fps",
+      "ok": true,
+      "severity": "error",
+      "detail": "fps 30.0 vs 30"
+    },
+    {
+      "check": "audio",
+      "ok": true,
+      "severity": "warning",
+      "detail": "0 audio stream(s); LED profile expects none"
+    },
+    {
+      "check": "colour_tags",
+      "ok": true,
+      "severity": "warning",
+      "detail": "colour space bt709"
+    },
+    {
+      "check": "duration",
+      "ok": true,
+      "severity": "error",
+      "detail": "3.0 s"
+    }
+  ],
+  "ok": true,
+  "next": "Run video-delivery-qc media_qc.py for full decode, black/freeze detection and loop seam."
+}

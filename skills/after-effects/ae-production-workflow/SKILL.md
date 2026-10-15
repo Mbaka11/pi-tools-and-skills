@@ -9,6 +9,8 @@ metadata:
 
 # After Effects Production Workflow
 
+[Tiny example — verified synthetic manifest, not native AE QA](../../../examples/README.md#ae-production-workflow).
+
 Use this skill to make AE work **organized, reversible, measurable, and deliverable**. Match the project's creative brief; do not impose a visual style. This skill governs production discipline, not design taste.
 
 ## Core contract

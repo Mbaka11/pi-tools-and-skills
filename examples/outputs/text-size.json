@@ -1,0 +1,30 @@
+{
+  "pitch_mm": 1.86,
+  "distance_m": 4.0,
+  "movement_coefficient": 1.2,
+  "cap_ratio": 0.7,
+  "tiers": {
+    "detail": {
+      "cap_height_mm": 32.0,
+      "cap_height_px": 18,
+      "ae_font_size_px": 26
+    },
+    "information": {
+      "cap_height_mm": 48.0,
+      "cap_height_px": 26,
+      "ae_font_size_px": 38
+    },
+    "hook": {
+      "cap_height_mm": 80.0,
+      "cap_height_px": 44,
+      "ae_font_size_px": 63
+    }
+  },
+  "method": "detail line = distance/150 x movement coefficient (Nummax); information x1.5 and hook x2.5 are toolbox heuristics",
+  "verify": "Measure the cap height of the chosen font in AE (sourceRectAtTime of 'H') and test on the real screen at the real distance.",
+  "profile": "led-rollup-516x1032",
+  "screen_mm": [
+    960,
+    1920
+  ]
+}

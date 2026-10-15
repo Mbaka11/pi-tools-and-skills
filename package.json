@@ -1,6 +1,6 @@
 {
   "name": "pi-tools-and-skills",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "description": "Reusable personal Pi skills, pinned reverse-engineering references, and an After Effects / montage toolbox for LED signage and video work.",
   "type": "module",
@@ -17,5 +17,5 @@
     "test": "node scripts/check.mjs && node --test tests/*.test.mjs",
     "updates:check": "node scripts/check-updates.mjs"
   },
-  "files": ["skills/", "vendor/", "tools/", "scripts/", "tests/", "docs/", "README.md", "CHANGELOG.md", "SOURCES.md", "RIGHTS.md", "THIRD_PARTY_NOTICES.md"]
+  "files": ["examples/", "skills/", "vendor/", "tools/", "scripts/", "tests/", "docs/", "README.md", "CHANGELOG.md", "SOURCES.md", "RIGHTS.md", "THIRD_PARTY_NOTICES.md"]
 }

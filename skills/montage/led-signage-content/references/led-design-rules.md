@@ -3,8 +3,9 @@
 ## Pixels, pitch and size
 
 - **Pixel pitch** (mm between LED centres) fixes the pixel map:
-  `pixels = physical size (mm) / pitch (mm)`. PixaNova roll-ups are P1.86:
-  960 × 1920 mm active area → 516 × 1032 px per screen.
+  `pixels = physical size (mm) / pitch (mm)`. An example P1.86 panel with
+  approximately 960 × 1920 mm active area can have a 516 × 1032 px map.
+  Use the actual module/controller pixel count, not rounded cabinet dimensions.
 - **Author at the pixel map.** A 1080×1920 design downscaled to 516×1032 loses
   half its detail and blurs thin type. If a higher-resolution master is useful
   for other deliverables, build the LED version separately.

@@ -1,0 +1,117 @@
+{
+  "input": "led-loop.mp4",
+  "size_bytes": 66902,
+  "sha256": "a1b20c3e039d508cf06b02b0303a7dc5dd6f97522cc70f7e8680183c388b5e15",
+  "probe": {
+    "via": "ffmpeg-banner",
+    "duration_s": 3.0,
+    "video": {
+      "codec": "h264",
+      "pix_fmt": "yuv420p",
+      "width": 516,
+      "height": 1032,
+      "fps": 30.0,
+      "color_space": "bt709"
+    },
+    "audio": []
+  },
+  "video": {
+    "decoded_frames": 90,
+    "black_segments": [],
+    "freeze_segments": [],
+    "decode_error_lines": 0,
+    "decode_error_sample": [],
+    "ffmpeg_returncode": 0
+  },
+  "audio": null,
+  "loop": {
+    "ok": true,
+    "seam_ssim": 0.98168,
+    "consecutive_median": 0.98532,
+    "consecutive_p5": 0.98145,
+    "verdict": "seam behaves like a normal frame step"
+  },
+  "contact_sheet": {
+    "path": "media\\qc-contact.png",
+    "frames": [
+      0,
+      44,
+      89
+    ],
+    "ok": true
+  },
+  "checks": [
+    {
+      "check": "video_stream",
+      "ok": true,
+      "severity": "error",
+      "detail": "video stream present"
+    },
+    {
+      "check": "size",
+      "ok": true,
+      "severity": "error",
+      "detail": "516x1032"
+    },
+    {
+      "check": "fps",
+      "ok": true,
+      "severity": "error",
+      "detail": "30.0 fps"
+    },
+    {
+      "check": "full_decode",
+      "ok": true,
+      "severity": "error",
+      "detail": "90 frames decoded, 0 decoder error line(s)"
+    },
+    {
+      "check": "frame_count_vs_duration",
+      "ok": true,
+      "severity": "warning",
+      "detail": "90 decoded vs ~90.0 from duration x fps"
+    },
+    {
+      "check": "frames",
+      "ok": true,
+      "severity": "error",
+      "detail": "90 vs 90"
+    },
+    {
+      "check": "audio",
+      "ok": true,
+      "severity": "error",
+      "detail": "0 audio stream(s), expected none"
+    },
+    {
+      "check": "black_at_edges",
+      "ok": true,
+      "severity": "warning",
+      "detail": "0 black segment(s) touching start/end"
+    },
+    {
+      "check": "black_segments",
+      "ok": true,
+      "severity": "info",
+      "detail": "0 black segment(s) >= 0.1 s (review list)"
+    },
+    {
+      "check": "freeze_segments",
+      "ok": true,
+      "severity": "info",
+      "detail": "0 frozen segment(s) >= 1.0 s (holds are normal on LED)"
+    },
+    {
+      "check": "loop_seam",
+      "ok": true,
+      "severity": "error",
+      "detail": "seam behaves like a normal frame step"
+    }
+  ],
+  "ok": true,
+  "not_verified": [
+    "viewing on the target display",
+    "human listening",
+    "player compatibility"
+  ]
+}

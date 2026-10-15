@@ -3,7 +3,7 @@
 Generate the test card and moving-bar video for the exact profile:
 
 ```bash
-python scripts/led_tool.py testcard --profile pixanova-rollup-1x --out-png card_516x1032.png --out-mp4 card_516x1032.mp4 --seconds 20
+python scripts/led_tool.py testcard --profile led-rollup-516x1032 --out-png card_516x1032.png --out-mp4 card_516x1032.mp4 --seconds 20
 ```
 
 ## What to check on the device

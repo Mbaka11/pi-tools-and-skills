@@ -22,7 +22,7 @@ No client names, project files or media are included.
 | `skills/after-effects/ae-vox-editorial/` | Native AE recipes for the editorial collage look; palette defaults mirror common community practice |
 | `skills/after-effects/ae-expressions-rigs/` | Expressions written for the AE JavaScript engine with index-based control access |
 | `skills/after-effects/ae-vfx-compositing/` | Native-first compositing; model licences checked 2026-10 |
-| `skills/montage/led-signage-content/` | Profiles from PixaNova public specs and sizes delivered in production; text-size method from Nummax's published guide; `led_tool.py` is original |
+| `skills/montage/led-signage-content/` | Generic reference pixel maps, not device certification; confirm hardware dimensions and pitch before use. Text-size method from Nummax's published guide; `led_tool.py` is original |
 | `skills/montage/video-delivery-qc/` | `media_qc.py` is original; platform figures from public platform/broadcast guidance |
 | `skills/montage/sound-design-sfx/` | `sfx_place.py` is original; licence table from each provider's public terms |
 | `skills/montage/montage-editing-craft/` | `srt_check.py` is original; presets resemble common French subtitle style guides |
@@ -30,6 +30,17 @@ No client names, project files or media are included.
 
 The collection is not an exhaustive backup of every agent package or historic
 session; it includes the personal skills found in the inspected local locations.
+
+## Original synthetic examples (0.3.0)
+
+[examples/](examples/README.md) contains original procedural graphics, synthetic
+sounds and fictitious reports, not imported client or upstream demo media.
+`examples/build.py` uses local Pillow/FFmpeg and the toolbox's own helpers.
+The [manifest](examples/manifest.json) records coverage, sizes and SHA-256 hashes;
+[build info](examples/outputs/build-info.json) records the actual engine/font
+versions. Font files are neither copied nor embedded. Native AE/Premiere, REA,
+Remotion and cloud execution are not claimed. The examples retain the original
+material's UNLICENSED policy; vendored MIT files remain byte-identical.
 
 ## Reverse-engineering sources
 
