@@ -12,6 +12,7 @@ third-party engines.
 | [`media_qc.py`](../skills/montage/video-delivery-qc/scripts/media_qc.py) | [90 decoded frames, no audio, measured seam](outputs/media-qc.json) + [contact sheet](media/qc-contact.png). |
 | [`sfx_place.py`](../skills/montage/sound-design-sfx/scripts/sfx_place.py) | [3 s stem](media/sfx.wav), three cues at **0.3 / 1 / 2 s** ([result excerpt](outputs/sfx-cues.json)). |
 | [`srt_check.py`](../skills/montage/montage-editing-craft/scripts/srt_check.py) | [Corrected copy](outputs/captions-fixed.srt); [0 errors after correction](outputs/captions-after.json). |
+| [`sync_map.py`](../skills/montage/montage-multicam-sync/scripts/sync_map.py) | [Two reviewed synthetic anchors](../skills/montage/montage-multicam-sync/assets/anchors.example.json) → [−0.2 s / −6 frames](outputs/sync-map.json); calculation only, no event detection or media changes. |
 
 ## AE helpers
 
@@ -40,6 +41,6 @@ third-party engines.
 | [`check-updates.mjs`](../scripts/check-updates.mjs) | **Illustrative**: “Pinned version unchanged / update available”; no simulated network check is presented as current evidence. |
 | [`fetch-source.mjs`](../scripts/fetch-source.mjs) | `node scripts/fetch-source.mjs vox-editorial` → retrieval plan for the pinned commit; no download without `--fetch`. |
 | [`upstreams.mjs`](../scripts/upstreams.mjs) | Internal library: reads `tools/upstreams.lock.json`, validates pins and safely resolves source paths. |
-| [`examples/build.py`](build.py) | Generates this [gallery](README.md) in a new directory with Pillow/FFmpeg; refuses overwrite, with no cloud use or implicit installation. |
+| [`examples/build.py`](build.py) | `--set montage` produces the [five new examples](README.md#montage-colour-finishing); `all`/`core` include the original gallery. New directories only, no cloud use or implicit installation. |
 
 [Back to the gallery](README.md)

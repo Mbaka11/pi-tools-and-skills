@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "ok": true,
+  "kind": "anchor-calculation-not-sync-certification",
+  "reference_rate": "30",
+  "camera_rate": "30",
+  "equation": "reference_seconds = scale * camera_seconds + offset_seconds",
+  "scale_fraction": "1",
+  "offset_fraction": "-1/5",
+  "scale": 1.0,
+  "offset_seconds": -0.2,
+  "offset_reference_frames": -6.0,
+  "required_playback_speed_percent": 100.0,
+  "drift_estimated": true,
+  "duration_scale_ppm": 0.0,
+  "review_threshold_ppm": 1000,
+  "anchors": [
+    {
+      "reference_s": 0.5,
+      "camera_s": 0.7,
+      "mapped_reference_s": 0.5,
+      "fit_residual_s": 0.0
+    },
+    {
+      "reference_s": 2.5,
+      "camera_s": 2.7,
+      "mapped_reference_s": 2.5,
+      "fit_residual_s": 0.0
+    }
+  ],
+  "warnings": [],
+  "limitations": [
+    "Anchors are supplied by the operator; event identity and confidence are not measured.",
+    "A zero fitting residual is construction, not independent validation.",
+    "Check a separate middle event and every recording break; nonlinear drift is not modeled.",
+    "No media, waveform, lip-sync, channel layout or plugin latency was inspected.",
+    "No media was modified. Review timing, motion and sound before applying any correction."
+  ]
+}

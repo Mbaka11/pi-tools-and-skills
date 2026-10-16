@@ -1,0 +1,24 @@
+{
+  "kind": "measured-synthetic-noise-test",
+  "filter": "highpass=f=80,afftdn=nr=6:nf=-35,apad=whole_len=144000,atrim=end_sample=144000",
+  "sample_rate": 48000,
+  "channels": 1,
+  "bits_per_sample": 16,
+  "samples_per_file": 144000,
+  "noise_window_s": [
+    0.1,
+    0.35
+  ],
+  "before_noise_rms_dbfs": -29.6029,
+  "after_noise_rms_dbfs": -35.8166,
+  "reduction_db": 6.2137,
+  "before_sha256": "8a69e1e9811f235fab82041cc8fb523f66aabfcfde65408ab04cd024210a58c7",
+  "after_sha256": "1d683d1beb20dbd871dd7b6f883ae9da17232ad40ce0650c4ec40ab4b47f2e38",
+  "contains_speech": false,
+  "human_audio_audition": false,
+  "not_verified": [
+    "speech intelligibility or identity",
+    "processing latency",
+    "loudness-matched listening"
+  ]
+}

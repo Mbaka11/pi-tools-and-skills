@@ -130,6 +130,71 @@ the upstream pipelines**. For their own demonstrations, see the
 No external clips were copied and no voice was generated.
 [Skill](../skills/montage/vox-explainer-pipelines/SKILL.md)
 
+## montage-colour-finishing
+
+**Actual filter test** — introduce a known RGB tint, reverse its channel gains
+with FFmpeg, then measure pixel error against the original synthetic chart.
+
+![Reference, tinted and corrected synthetic RGB patches](media/colour-comparison.png)
+
+[Measured pixel errors](outputs/colour-check.json).
+This is RGB arithmetic, **not** a camera log/HDR conversion, creative grade or
+calibrated-monitor test. [Skill](../skills/montage/montage-colour-finishing/SKILL.md).
+
+## montage-proxy-conform
+
+**Actual source/proxy pair · 3 s each · 30 fps · silent** — reduce 640×360 to
+320×180 while retaining 90 decoded frames in each file.
+
+![The same decoded frame in original and proxy files](media/proxy-comparison.png)
+
+[Original MP4](media/proxy-source.mp4) · [Small proxy MP4](media/proxy-small.mp4) ·
+[Pair checks](outputs/proxy-check.json).
+H.264 keeps the example small; it is not a universal editing-proxy recommendation.
+Native attachment/relink, camera timecode and multi-channel audio were not tested.
+[Skill](../skills/montage/montage-proxy-conform/SKILL.md).
+
+## montage-multicam-sync
+
+**Actual calculator and trim output · 3 s** — reference frame 15 corresponds to
+camera B frame 21. `sync_map.py` calculates **−0.2 s / −6 frames**; a second
+anchor gives zero drift for this deliberately synchronized synthetic source.
+
+![Decoded beginning, middle and end alignment frames](media/multicam-contact.png)
+
+[Aligned MP4](media/multicam-sync.mp4) · [Calculator JSON](outputs/sync-map.json) ·
+[Executed trim graph](outputs/multicam-proof.json) ·
+[Anchor input](../skills/montage/montage-multicam-sync/assets/anchors.example.json).
+No waveform detection, confidence estimate or native multicam sequence is claimed.
+A successful fit is arithmetic, not proof that real-world anchors are correct.
+[Skill](../skills/montage/montage-multicam-sync/SKILL.md).
+
+## montage-dialogue-cleanup
+
+**Actual filter test · 3 s** — reduce hum/noise around generated harmonic bursts.
+The measured noise-only interval drops by about **6.2 dB** in this sample.
+
+![Synthetic waveform before and after the local filter](media/dialogue-waveform.png)
+
+[Before WAV](media/dialogue-noisy.wav) · [After WAV](media/dialogue-cleaned.wav) ·
+[Measurements and filter settings](outputs/dialogue-check.json).
+Both are mono, 48 kHz, 16-bit demonstration files. **There is no speech**:
+this does not prove voice quality or word preservation. Not loudness-matched,
+not human-auditioned; processing latency was not measured.
+[Skill](../skills/montage/montage-dialogue-cleanup/SKILL.md).
+
+## montage-time-remapping
+
+**Actual retiming · 3 s** — a 60 fps synthetic source becomes a 30 fps output:
+1 second at 1×, 1 second at 0.5×, then 1 second at 2×.
+
+![Ten-fps preview extracted from the actual retimed video](media/retime.gif)
+
+[30 fps MP4](media/retime.mp4) · [Source/output frame map](outputs/retime-map.json).
+This consumes 3.5 seconds of source and produces exactly 90 output frames.
+The speed changes are piecewise constant, **not** a smooth Bezier ramp. No
+optical flow or native NLE execution. [Skill](../skills/montage/montage-time-remapping/SKILL.md).
+
 ## market-research
 
 **Fictitious example**: “100 venues × 2 purchases/year × €300 = €60,000/year
@@ -168,8 +233,9 @@ one endpoint, two 200 responses, no raw URL published in the summary.
 - [Micro-examples for catalog-only tools](../docs/montage-catalog.md#micro-examples-for-catalog-only-tools)
   — illustrative output briefs, not installed or executed engines.
 - [Example manifest](manifest.json): coverage, provenance, sizes and SHA-256.
-- [Generation environment](outputs/build-info.json): no cloud calls,
-  client media or native AE rendering. System fonts were used for rendering;
+- Generation environments: [original gallery](outputs/build-info.json) and
+  [new montage examples](outputs/montage-build-info.json); [new decoded-media checks](outputs/montage-qc.json).
+  No cloud calls, client media or native Adobe execution. System fonts were used for rendering;
   font files are not redistributed.
 - Original examples follow [RIGHTS.md](../RIGHTS.md) (`UNLICENSED`).
   No third-party media is redistributed; MIT snapshots remain unchanged.
@@ -179,6 +245,9 @@ To recreate media and helper outputs in a **new** directory:
 ```sh
 # Python + Pillow >= 9.2 + FFmpeg/libx264 + Node must be available separately.
 python examples/build.py --out .local/examples-preview
+# Regenerate only the five new montage examples; Node is not needed for this set.
+python examples/build.py --set montage --out .local/montage-examples-preview
+# --set core rebuilds only the original gallery; default is --set all.
 # If needed, add --font /path/to/a-licensed-font.ttf
 npm test
 ```

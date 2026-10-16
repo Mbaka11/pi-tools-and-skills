@@ -3,7 +3,7 @@ name: sound-design-sfx
 description: Sound design for montages and motion graphics - decide whether a piece has sound (LED loops usually do not), spot sync events, build an SFX/ambience/music plan, source or generate effects with commercial-licence checks (Sonniss, Freesound CC0, Pixabay, BBC limits, Higgsfield audio models, ElevenLabs, local models), place cues frame-accurately into a zero-aligned stem with scripts/sfx_place.py, duck music under voice, hit loudness targets (web -14 LUFS, Canadian broadcast -24 LKFS) and deliver mixes and stems. Use for "SFX", "sound effects", "whoosh", "bruitage", "sound design", "music bed", "mix", "foley", or scoring a cut; for full original score-to-picture work it routes to the vendored cinematic-score-and-sfx workflow.
 compatibility: Python 3.9+ and FFmpeg 5+ for scripts/sfx_place.py (FFmpeg via $FFMPEG, PATH or imageio-ffmpeg). Optional providers (Higgsfield credits, ElevenLabs API key) and local models are installed and authorised separately.
 metadata:
-  version: "1.0.0"
+  version: "1.0.1"
   short-description: Licensed, frame-accurate SFX and mixes for client montages
 ---
 
@@ -25,6 +25,11 @@ plays with sound, then design only the sounds that carry meaning.
 
 For a silent LED piece, stop here: put the effort into motion timing and
 reading holds instead.
+
+For dialogue repair, microphone choice and room-tone continuity, use
+[montage-dialogue-cleanup](../montage-dialogue-cleanup/SKILL.md) first. For an
+external recorder or drifting lip sync, start with
+[montage-multicam-sync](../montage-multicam-sync/SKILL.md).
 
 ## 1. Spot the picture
 

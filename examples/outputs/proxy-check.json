@@ -1,0 +1,23 @@
+{
+  "kind": "measured-synthetic-proxy-pair",
+  "source_sha256": "1631b096d308dec89fd473f4f3cb347cbc59bfb21ed196ed5cef8c8f688d6c09",
+  "proxy_sha256": "0cc8ef0a32c8736f13514d7a712e2a441f935877075bc5fc9de512f56a07b983",
+  "source_raster": [
+    640,
+    360
+  ],
+  "proxy_raster": [
+    320,
+    180
+  ],
+  "fps": 30,
+  "decoded_frames_each": 90,
+  "silent": true,
+  "native_attachment_tested": false,
+  "not_verified": [
+    "reel/timecode retention",
+    "multichannel audio",
+    "VFR conform",
+    "native relink/export"
+  ]
+}

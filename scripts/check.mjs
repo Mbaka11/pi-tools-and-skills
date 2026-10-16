@@ -30,6 +30,8 @@ export const EXPECTED_SKILLS = [
   'rea-investigation', 'reverse-api-investigation',
   'ae-production-workflow', 'ae-vox-editorial', 'ae-expressions-rigs', 'ae-vfx-compositing',
   'led-signage-content', 'video-delivery-qc', 'sound-design-sfx', 'montage-editing-craft', 'vox-explainer-pipelines',
+  'montage-colour-finishing', 'montage-proxy-conform', 'montage-multicam-sync',
+  'montage-dialogue-cleanup', 'montage-time-remapping',
 ];
 
 // skills/<skill>/SKILL.md or skills/<category>/<skill>/SKILL.md. A category folder

@@ -1,0 +1,22 @@
+{
+  "kind": "synthetic-anchor-driven-trim",
+  "filter_graph": "[0:v]trim=start_frame=0:end_frame=90,setpts=PTS-STARTPTS[a];[1:v]trim=start_frame=6:end_frame=96,setpts=PTS-STARTPTS[b];[a][b]hstack=inputs=2[v]",
+  "trimmed_camera_b_frames": 6,
+  "output_frames": 90,
+  "known_source_frame_pairs": [
+    [
+      15,
+      21
+    ],
+    [
+      45,
+      51
+    ],
+    [
+      75,
+      81
+    ]
+  ],
+  "native_multicam_sequence": false,
+  "waveform_detection": false
+}

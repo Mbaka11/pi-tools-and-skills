@@ -28,11 +28,11 @@ async function temporary(t) {
 const json = async p => JSON.parse(await readFile(path.join(examples, p), 'utf8'));
 const lf = text => text.replace(/\r\n/g, '\n');
 
-test('gallery covers all 14 skills and every included helper/reference with valid links', async () => {
+test('gallery covers all 19 skills and every included helper/reference with valid links', async () => {
   const result = await validateExamples(ROOT, EXPECTED_SKILLS);
   assert.deepEqual(result.errors, []);
-  assert.equal(manifest.entries.length, 14);
-  assert.equal(result.mediaPaths.size, 12);
+  assert.equal(manifest.entries.length, 19);
+  assert.equal(result.mediaPaths.size, 23);
   assert.ok(Object.values(manifest.media).reduce((n, m) => n + m.bytes, 0) <= MAX_GALLERY_BYTES);
   for (const entry of manifest.entries) {
     const skill = await readFile(path.join(ROOT, entry.skill), 'utf8');

@@ -10,7 +10,14 @@ recursively.
 | [sound-design-sfx](sound-design-sfx/SKILL.md) | spotting, licensed SFX/music, generation options, cue placement, mix targets | `scripts/sfx_place.py` |
 | [montage-editing-craft](montage-editing-craft/SKILL.md) | edit workflow, pacing, Premiere via the bridge, reframes, versions, French captions and client notes | `scripts/srt_check.py` |
 | [vox-explainer-pipelines](vox-explainer-pipelines/SKILL.md) | pinned Remotion/Python Vox pipelines and hosted options, with Windows and LED adaptations | vendored upstream scripts |
+| [montage-colour-finishing](montage-colour-finishing/SKILL.md) | input/working/output colour spaces, shot matching, scopes, export consistency | workflow + synthetic RGB test |
+| [montage-proxy-conform](montage-proxy-conform/SKILL.md) | verified ingest, proxies, VFR decisions, original-media relink and interchange | workflow + decoded source/proxy pair |
+| [montage-multicam-sync](montage-multicam-sync/SKILL.md) | reviewed anchors, fixed offset/drift, reversible multicam and audio routing | `scripts/sync_map.py` |
+| [montage-dialogue-cleanup](montage-dialogue-cleanup/SKILL.md) | conservative noise repair, gain, room tone, listening gates and aligned DX stems | workflow + synthetic filter test |
+| [montage-time-remapping](montage-time-remapping/SKILL.md) | source/output mapping, slow motion, ramps, interpolation and artifact review | workflow + actual speed-change example |
 
 Helpers use only the Python standard library. FFmpeg is located through
 `$FFMPEG`, `PATH`, or the `imageio-ffmpeg` package; nothing is installed by the
-toolbox.
+toolbox. `sync_map.py` needs no media engine and only calculates a plan.
+
+[Short examples for every skill](../../examples/README.md).

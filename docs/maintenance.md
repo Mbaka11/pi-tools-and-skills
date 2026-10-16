@@ -5,7 +5,7 @@
 Install a release at user scope:
 
 ```bash
-pi install git:github.com/Mbaka11/pi-tools-and-skills@v0.3.1
+pi install git:github.com/Mbaka11/pi-tools-and-skills@v0.4.0
 ```
 
 Or clone and run `pi install .` from the checkout. Do not enable both a local and
@@ -82,13 +82,19 @@ adapters tell users to copy a pipeline into their project before running it.
 
 Regenerate with `python examples/build.py --out .local/examples-new` only after
 Pillow, FFmpeg and a licensed local font are available. This never installs
-anything and refuses existing directories. Review all stills/animations, decode
+anything and refuses existing directories. Use `--set core` for the original
+0.3.0 media or `--set montage` for the five 0.4.0 additions (`all` is the default).
+Keep separate build receipts and do not replace older gallery bytes incidentally.
+Review all stills/animations, decode
 MP4/WAV outputs, inspect reports, and distinguish automated audio analysis from
 human listening. Copy only approved media and path-normalized reports to
 `examples/`; update `examples/manifest.json` with the generator's media hashes.
 The validator allows only individually declared synthetic GIF/PNG/MP4/WAV files,
 at most 1 MiB each and 8 MiB total. Other media and private artifacts remain
 forbidden. Keep one example per skill and per included helper/tool reference.
+The montage examples include real filter/calculation output, but the noise test
+contains no speech and the sync calculator does not find or validate events.
+Native attachment, colour monitoring and human listening need separate evidence.
 
 Since 0.3.0, LED profiles use generic IDs: `led-rollup-516x1032`,
 `led-wall-2x-516x1032`, `led-wall-3x-516x1032`. Update older commands/custom

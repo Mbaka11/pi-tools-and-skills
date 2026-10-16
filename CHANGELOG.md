@@ -2,6 +2,22 @@
 
 Versioned releases use Semantic Versioning. Published tags are not moved.
 
+## 0.4.0
+
+- Add five original montage skills, each with English documentation, sources and
+  a short reproducible synthetic example: colour finishing, proxy/online conform,
+  multicamera sync, dialogue cleanup and time remapping (nineteen skills total).
+- Add `sync_map.py`, a bounded standard-library rational anchor calculator with
+  explicit offset/drift conventions, validation and exclusive output creation.
+  It does not detect waveforms, certify sync or modify media.
+- Extend the gallery with actual RGB correction, a decoded source/proxy pair,
+  anchor-driven alignment, noise filtering and piecewise-speed output. Keep
+  native Adobe, calibrated-display and human-listening limitations explicit.
+- Add `examples/build.py --set montage` for isolated regeneration; retain the
+  previous media/reports and byte-identical vendored snapshots.
+- Extend the reference catalog with licence-reviewed editing tools without
+  vendoring or running them; no automatic installs or Pi settings changes.
+
 ## 0.3.1
 
 - Standardize the main README and gallery documentation in English, including

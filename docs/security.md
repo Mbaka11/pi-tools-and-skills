@@ -72,7 +72,11 @@ before publication. A digest proves byte identity, not copyright or privacy.
 
 Mockups and illustrative reports must be labelled as such: they are not proof
 of native Adobe execution, a tested external pipeline or a live investigation.
-No external media was copied into this gallery.
+No external media was copied into this gallery. The dialogue test uses generated
+tone/noise, not a voice recording; no enhancement provider receives audio. The
+sync calculator only maps user-supplied anchors and never reads or changes media.
+Full client ffprobe reports, camera metadata, proxy maps and transcripts belong
+in private projects, even when the tools that create them run locally.
 
 ## Publishing
 

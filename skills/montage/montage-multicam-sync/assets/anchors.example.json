@@ -1,0 +1,9 @@
+{
+  "schema": 1,
+  "reference_rate": "30",
+  "camera_rate": "30",
+  "anchors": [
+    {"reference": "f15", "camera": "f21"},
+    {"reference": "f75", "camera": "f81"}
+  ]
+}

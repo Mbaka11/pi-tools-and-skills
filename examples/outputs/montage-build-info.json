@@ -1,0 +1,14 @@
+{
+  "synthetic": true,
+  "set": "montage",
+  "pillow": "9.3.0",
+  "font_family": "Arial",
+  "ffmpeg": "ffmpeg version 7.1-essentials_build-www.gyan.dev Copyright (c) 2000-2024 the FFmpeg developers",
+  "native_ae_render": false,
+  "native_premiere_execution": false,
+  "upstream_pipeline_executed": false,
+  "cloud_requests": 0,
+  "human_audio_audition": false,
+  "contains_recorded_or_generated_speech": false,
+  "normalization": "Only private/temporary file paths are omitted or made relative."
+}

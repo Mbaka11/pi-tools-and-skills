@@ -1,7 +1,8 @@
 # Montage, After Effects, VFX and SFX tools: reviewed catalog
 
 Research snapshot from **2026-10-14** for LED work (roll-ups, walls)
-and general montage. Listing a project here is **not** an installation,
+and general montage, extended on **2026-10-16** for colour, proxies, multicam,
+dialogue repair and retiming. Listing a project here is **not** an installation,
 endorsement or licence grant. Commits are the revisions that were looked at;
 review again before installing anything, and prefer that exact commit.
 
@@ -87,6 +88,30 @@ RIFE, Real-ESRGAN, Wan) are summarised in
 | [hetpatel-11/Adobe_Premiere_Pro_MCP](https://github.com/hetpatel-11/Adobe_Premiere_Pro_MCP) | `4ad1d9515ed8` | MIT | Premiere MCP | Reference (the bridge already covers Premiere) |
 | [muhammaddadu/ffmpeg-skill](https://github.com/muhammaddadu/ffmpeg-skill) | `f6482b65e7cc` | MIT | FFmpeg recipes and production pipeline | Reference |
 
+### Additional editing references (2026-10-16)
+
+These are metadata/documentation reviews, **not executed integrations**. New
+skills use original instructions and code, not copied third-party workflows.
+
+| Project | Full reviewed commit | Licence finding | Scope and verdict |
+| --- | --- | --- | --- |
+| [maxazure/video-editing-skill](https://github.com/maxazure/video-editing-skill/tree/8750290ad08375411421e727fc101f99d4740792) | `8750290ad08375411421e727fc101f99d4740792` | No published licence reported by repository metadata | Broad automated editing pipeline; **Caution / reference only**, do not vendor or assume redistribution rights; README claims are not independently benchmarked |
+| [Breakthrough/PySceneDetect](https://github.com/Breakthrough/PySceneDetect/tree/7cd1005e8349d8e913d0930fc1750363eb4ddc51) | `7cd1005e8349d8e913d0930fc1750363eb4ddc51` | BSD-3-Clause | Optional scene-boundary candidate tool; detections need editorial review; not installed or run |
+| [AcademySoftwareFoundation/OpenTimelineIO](https://github.com/AcademySoftwareFoundation/OpenTimelineIO/tree/0c07966907f74eb81417099dca1414f7bcbf02ff) | `0c07966907f74eb81417099dca1414f7bcbf02ff` | Apache-2.0 | Optional timeline interchange; adapter support and effect/retime losses require round-trip tests; not installed or run |
+
+Primary guidance for the new personal workflows:
+
+- [Colour pipeline sources](../skills/montage/montage-colour-finishing/references/colour-pipeline.md#sources): input interpretation, tone mapping, matching and FFmpeg RGB arithmetic.
+- [Proxy sources](../skills/montage/montage-proxy-conform/references/proxy-audit.md#sources): attachment constraints, metadata and interchange.
+- [Multicam contract](../skills/montage/montage-multicam-sync/references/sync-contract.md): native sync methods and original anchor-map equations.
+- [Dialogue repair sources](../skills/montage/montage-dialogue-cleanup/references/repair-and-review.md#sources): conservative repair, enhancement and FFmpeg filters.
+- [Retiming sources](../skills/montage/montage-time-remapping/references/timing-and-artifacts.md#sources): source/output mapping and interpolation tradeoffs.
+
+Adobe pages were checked through indexed excerpts where direct fetches returned
+HTTP 403; FFmpeg documentation was retrieved directly. This research does not
+establish native Adobe compatibility. No additional upstream snapshot or model
+weights are bundled, and nothing is automatically installed.
+
 ## LED signage references
 
 - Nummax, *How to create effective content for your LED display* (text height =
@@ -142,6 +167,9 @@ README above for its own demonstrations; no external demo media is copied here.
 | sideshowroberto/vfx-agent-toolkit | Prepare a one-shot compositing scene in a supported host. |
 | hetpatel-11/Adobe_Premiere_Pro_MCP | Three clips assembled with one J-cut. |
 | muhammaddadu/ffmpeg-skill | Three-second clip encoded to the requested dimensions. |
+| maxazure/video-editing-skill | Hypothetical interview cut with reviewed captions; not run or copied, licence unresolved. |
+| PySceneDetect | Candidate cut times for three shots, manually checked against the footage; illustrative, not executed. |
+| OpenTimelineIO | A three-clip timeline exchanged with an adapter-loss checklist; illustrative, not executed. |
 | Nummax text-height method | At 4 m and P1.86, compute an 18 px minimum detail cap height. |
 | Q-lite layout guidance | One high-contrast message, exact pixel map, no fractional-pixel strokes. |
 | NovaStar Taurus / Huidu player references | On-device playback check of a 3 s test card; no device certification implied. |

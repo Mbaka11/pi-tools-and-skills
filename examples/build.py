@@ -52,7 +52,7 @@ def ffmpeg_path():
         raise RuntimeError('FFmpeg unavailable; set FFMPEG or add ffmpeg to PATH. Nothing was installed.')
 
 
-def build(out, ffmpeg, font_path):
+def build(out, ffmpeg, font_path, example_set='all'):
     from PIL import Image, ImageDraw, ImageFont, __version__ as pillow_version
     fonts = {}
 
@@ -196,6 +196,10 @@ def build(out, ffmpeg, font_path):
     scratch = out / 'work'
     for folder in (media, outputs, scratch):
         folder.mkdir(parents=True)
+    if example_set == 'montage':
+        build_montage(out, ffmpeg, font_path)
+        record_media(out)
+        return
     for name, scene in [('ae-vox', vox), ('ae-rig', rig), ('ae-vfx', vfx), ('editing', edit), ('explainer', pipeline)]:
         frames = [scene(n / FPS) for n in range(FPS * SECONDS)]
         # Shared fixed palette avoids GIF colour flicker and keeps previews small.
@@ -297,8 +301,15 @@ def build(out, ffmpeg, font_path):
          'font_family': font(18).getname()[0], 'ffmpeg': run([ffmpeg, '-version']).splitlines()[0],
          'native_ae_render': False, 'upstream_pipeline_executed': False, 'cloud_requests': 0,
          'human_audio_audition': False, 'normalization': 'Only private/temporary file paths are omitted or made relative.'})
+    if example_set == 'all':
+        build_montage(out, ffmpeg, font_path)
+    record_media(out)
+
+
+def record_media(out):
+    from PIL import Image
     media_meta = {}
-    for p in sorted(media.iterdir()):
+    for p in sorted((out / 'media').iterdir()):
         data = p.read_bytes()
         item = {'sha256': hashlib.sha256(data).hexdigest(), 'bytes': len(data), 'origin': 'original-synthetic',
                 'generator': 'examples/build.py', 'license': 'UNLICENSED'}
@@ -319,10 +330,271 @@ def build(out, ffmpeg, font_path):
                       'total_media_bytes': sum(v['bytes'] for v in media_meta.values())}))
 
 
+def build_montage(out, ffmpeg, font_path):
+    """Five original filter/workflow proofs; no native Adobe or speech claims."""
+    from PIL import Image, ImageDraw, ImageFont, __version__ as pillow_version
+    media, outputs, work = out / 'media', out / 'outputs', out / 'work'
+    qc = 'skills/montage/video-delivery-qc/scripts/media_qc.py'
+    fonts = {}
+
+    def text(im, xy, value, size=14, fill=PAPER):
+        if size not in fonts:
+            fonts[size] = ImageFont.truetype(font_path, size)
+        ImageDraw.Draw(im).text(xy, value, font=fonts[size], fill=fill)
+
+    def ff(args):
+        return run([ffmpeg, '-hide_banner', '-loglevel', 'error', '-nostdin', '-n', *args], out)
+
+    def encode(pattern, fps, frames, target):
+        ff(['-framerate', fps, '-i', pattern, '-frames:v', frames, '-an', '-c:v', 'libx264',
+            '-crf', '20', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', target])
+
+    def extracted(source, indices, label):
+        expression = '+'.join(f'eq(n\\,{n})' for n in indices)
+        ff(['-i', source, '-vf', f'select={expression}', '-vsync', '0', f'work/{label}-%02d.png'])
+        result = []
+        for i in range(1, len(indices) + 1):
+            with Image.open(work / f'{label}-{i:02}.png') as image:
+                result.append(image.convert('RGB'))
+        return result
+
+    def sha(file):
+        return hashlib.sha256(file.read_bytes()).hexdigest()
+
+    # Known RGB arithmetic, NOT a camera log/LUT or HDR demonstration.
+    reference = Image.new('RGB', (144, 144))
+    patches = [(32, 32, 32), (80, 80, 80), (160, 160, 160), (180, 90, 70),
+               (50, 150, 175), (145, 100, 165), (180, 165, 70), (65, 100, 170), (110, 145, 100)]
+    d = ImageDraw.Draw(reference)
+    for i, colour in enumerate(patches):
+        x, y = (i % 3) * 48, (i // 3) * 48
+        d.rectangle((x, y, x + 47, y + 47), fill=colour)
+    reference.save(work / 'colour-reference.png')
+    tinted = reference.copy()
+    tinted.putdata([(round(r * 1.2), g, round(b * .8)) for r, g, b in reference.getdata()])
+    tinted.save(work / 'colour-tinted.png')
+    colour_filter = 'format=rgb24,colorchannelmixer=rr=0.833333333333:bb=1.25'
+    ff(['-i', 'work/colour-tinted.png', '-vf', colour_filter, '-frames:v', '1',
+        '-pix_fmt', 'rgb24', 'work/colour-corrected.png'])
+    with Image.open(work / 'colour-corrected.png') as image:
+        corrected = image.convert('RGB')
+
+    def pixel_error(image):
+        errors = [abs(a - b) for p, q in zip(reference.getdata(), image.getdata()) for a, b in zip(p, q)]
+        return {'mean_absolute_error_8bit': round(sum(errors) / len(errors), 6), 'max_error_8bit': max(errors)}
+
+    before, after = pixel_error(tinted), pixel_error(corrected)
+    assert after['mean_absolute_error_8bit'] < before['mean_absolute_error_8bit']
+    assert after['max_error_8bit'] <= 1
+    board = Image.new('RGB', (480, 240), INK)
+    text(board, (16, 12), 'COLOUR / KNOWN RGB GAIN ERROR', 17)
+    for x, image, label in [(16, reference, 'Reference'), (168, tinted, 'Tinted'), (320, corrected, 'Corrected')]:
+        text(board, (x, 42), label)
+        board.paste(image, (x, 64))
+    text(board, (16, 220), 'RGB math only - not a camera LUT or display calibration.', 12)
+    board.save(media / 'colour-comparison.png')
+    dump(outputs / 'colour-check.json', {'kind': 'measured-synthetic-rgb-test', 'filter': colour_filter,
+         'before': before, 'after': after, 'native_grade': False,
+         'not_verified': ['camera log or HDR transform', 'skin tones', 'calibrated monitor accuracy']})
+
+    # Small source/proxy pair. H.264 chosen for gallery size, not universal editing performance.
+    for n in range(90):
+        im = Image.new('RGB', (640, 360), INK)
+        d = ImageDraw.Draw(im)
+        text(im, (24, 20), 'ORIGINAL SYNTHETIC SOURCE', 24)
+        text(im, (24, 60), f'FRAME {n:03d} / 30 fps / 640 x 360', 18)
+        for x in range(24, 617, 16):
+            d.line((x, 115, x, 290), fill='#334958', width=1)
+        cx = round(60 + 520 * n / 89)
+        d.ellipse((cx - 28, 165, cx + 28, 221), fill=TEAL)
+        d.rectangle((24, 290, 616, 294), fill=YELLOW)
+        text(im, (24, 319), 'Same timing, lower raster - not a native attachment test', 16)
+        im.save(work / f'proxy-source-{n:03}.png')
+    encode('work/proxy-source-%03d.png', 30, 90, 'media/proxy-source.mp4')
+    ff(['-i', 'media/proxy-source.mp4', '-vf', 'scale=320:180:flags=lanczos', '-an',
+        '-c:v', 'libx264', '-crf', '26', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', 'media/proxy-small.mp4'])
+    original_frame = extracted('media/proxy-source.mp4', [45], 'source-preview')[0]
+    proxy_frame = extracted('media/proxy-small.mp4', [45], 'proxy-preview')[0]
+    board = Image.new('RGB', (660, 250), INK)
+    text(board, (8, 12), 'SOURCE / 640 x 360', 16)
+    text(board, (338, 12), 'PROXY / 320 x 180', 16)
+    board.paste(original_frame.resize((320, 180), Image.Resampling.LANCZOS), (8, 42))
+    board.paste(proxy_frame, (338, 42))
+    text(board, (8, 231), 'Decoded frame 45 in both files. Native attachment / relink not tested.', 13)
+    board.save(media / 'proxy-comparison.png')
+
+    # Calculator output and an actual zero-offset working preview from synthetic camera frames.
+    anchor_script = 'skills/montage/montage-multicam-sync/scripts/sync_map.py'
+    anchor_fixture = ROOT / 'skills/montage/montage-multicam-sync/assets/anchors.example.json'
+    sync = tool(anchor_script, [anchor_fixture], out)
+    assert sync['offset_fraction'] == '-1/5' and sync['scale_fraction'] == '1'
+    dump(outputs / 'sync-map.json', sync)
+    for camera, count in [('a', 90), ('b', 96)]:
+        for n in range(count):
+            world_frame = n if camera == 'a' else n - 6
+            im = Image.new('RGB', (320, 180), INK)
+            d = ImageDraw.Draw(im)
+            text(im, (12, 10), 'REFERENCE A' if camera == 'a' else 'CAMERA B', 17)
+            text(im, (12, 36), f'Source frame {n:03d}', 13)
+            cx = round(40 + 240 * max(0, min(89, world_frame)) / 89)
+            if camera == 'b':
+                cx = 320 - cx
+            colour = YELLOW if world_frame in (15, 75) else TEAL
+            d.line((15, 133, 305, 133), fill='#60717e', width=2)
+            d.ellipse((cx - 17, 88, cx + 17, 122), fill=colour)
+            text(im, (12, 153), 'Synthetic event' if world_frame in (15, 75) else 'Known shared motion', 13, colour)
+            im.save(work / f'camera-{camera}-{n:03}.png')
+        encode(f'work/camera-{camera}-%03d.png', 30, count, f'work/camera-{camera}.mp4')
+    offset_frames = -round(sync['offset_reference_frames'])
+    sync_graph = (f'[0:v]trim=start_frame=0:end_frame=90,setpts=PTS-STARTPTS[a];'
+                  f'[1:v]trim=start_frame={offset_frames}:end_frame={offset_frames + 90},setpts=PTS-STARTPTS[b];'
+                  '[a][b]hstack=inputs=2[v]')
+    ff(['-i', 'work/camera-a.mp4', '-i', 'work/camera-b.mp4', '-filter_complex', sync_graph,
+        '-map', '[v]', '-an', '-r', '30', '-c:v', 'libx264', '-crf', '20', '-pix_fmt', 'yuv420p',
+        '-movflags', '+faststart', 'media/multicam-sync.mp4'])
+    samples = extracted('media/multicam-sync.mp4', [15, 45, 75], 'sync-preview')
+    board = Image.new('RGB', (640, 594), INK)
+    for i, (frame, image) in enumerate(zip([15, 45, 75], samples)):
+        text(board, (12, i * 198 + 2), f'OUTPUT FRAME {frame:02d} / B advanced by 6 frames', 12)
+        board.paste(image, (0, i * 198 + 18))
+    board.save(media / 'multicam-contact.png')
+    dump(outputs / 'multicam-proof.json', {'kind': 'synthetic-anchor-driven-trim', 'filter_graph': sync_graph,
+         'trimmed_camera_b_frames': offset_frames, 'output_frames': 90,
+         'known_source_frame_pairs': [[15, 21], [45, 51], [75, 81]],
+         'native_multicam_sequence': False, 'waveform_detection': False})
+
+    # Real piecewise retiming: 3.5 seconds at 60 fps -> 3 seconds at 30 fps.
+    segments = [(0, 60, 1), (60, 90, .5), (90, 210, 2)]
+    for n in range(210):
+        im = Image.new('RGB', (480, 270), INK)
+        d = ImageDraw.Draw(im)
+        speed = 1 if n < 60 else .5 if n < 90 else 2
+        text(im, (20, 16), 'TIME REMAP / PIECEWISE SPEED', 20)
+        text(im, (20, 58), f'{speed:g}x SPEED', 30, YELLOW)
+        text(im, (20, 104), f'Source frame {n:03d} / captured at 60 fps', 16)
+        d.line((35, 176, 445, 176), fill='#60717e', width=3)
+        for x in range(35, 446, 41):
+            d.line((x, 166, x, 186), fill='#60717e', width=2)
+        cx = round(35 + 410 * n / 209)
+        d.ellipse((cx - 16, 160, cx + 16, 192), fill=TEAL)
+        text(im, (20, 228), 'Actual FFmpeg retime / no optical flow', 16)
+        im.save(work / f'retime-source-{n:03}.png')
+    encode('work/retime-source-%03d.png', 60, 210, 'work/retime-source.mp4')
+    branches = []
+    for i, (start, end, speed) in enumerate(segments):
+        branches.append(f'[s{i}]trim=start_frame={start}:end_frame={end},'
+                        f'setpts=(PTS-STARTPTS)/{speed:g},fps=30:round=up,setpts=N/(30*TB)[p{i}]')
+    retime_graph = '[0:v]split=3[s0][s1][s2];' + ';'.join(branches) + ';[p0][p1][p2]concat=n=3:v=1:a=0[v]'
+    # Verify source-frame identity BEFORE the final lossy encode. round=up
+    # deliberately keeps each segment's first frame, including source frame 90.
+    def frame_hashes(args):
+        raw = ff([*args, '-an', '-vsync', '0', '-f', 'framehash', '-hash', 'sha256', '-'])
+        return [line.split(',')[-1].strip() for line in raw.splitlines() if line and not line.startswith('#')]
+    source_hashes = frame_hashes(['-i', 'work/retime-source.mp4', '-map', '0:v:0'])
+    mapped_hashes = frame_hashes(['-i', 'work/retime-source.mp4', '-filter_complex', retime_graph, '-map', '[v]'])
+    selected_frames = list(range(0, 60, 2)) + list(range(60, 90)) + list(range(90, 210, 4))
+    assert len(source_hashes) == 210 and len(mapped_hashes) == 90
+    assert mapped_hashes == [source_hashes[n] for n in selected_frames], 'Unexpected retime source-frame phase'
+    # concat uses a neutral timebase; declare the encoder cadence so the final
+    # packet also lasts 1/30 s instead of inheriting an effectively zero duration.
+    ff(['-i', 'work/retime-source.mp4', '-filter_complex', retime_graph, '-map', '[v]', '-an', '-r', '30',
+        '-c:v', 'libx264', '-crf', '20', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', 'media/retime.mp4'])
+    previews = extracted('media/retime.mp4', list(range(0, 90, 3)), 'retime-preview')
+    palette = previews[15].quantize(colors=96)
+    indexed = [im.quantize(palette=palette, dither=Image.Dither.NONE) for im in previews]
+    indexed[0].save(media / 'retime.gif', save_all=True, append_images=indexed[1:], duration=100,
+                    loop=0, optimize=True, disposal=2)
+    dump(outputs / 'retime-map.json', {'kind': 'executed-piecewise-speed-test', 'source_fps': 60,
+         'output_fps': 30, 'source_frames': 210, 'output_frames': 90,
+         'segments': [{'source_frames': [a, b], 'speed': speed, 'output_frames': [i * 30, (i + 1) * 30]}
+                      for i, (a, b, speed) in enumerate(segments)], 'filter_graph': retime_graph,
+         'selected_source_frames': selected_frames,
+         'mapping_verified_with': 'decoded-source-vs-filter-output-framehash-sha256-before-encoding',
+         'smooth_ramp': False, 'optical_flow': False, 'native_nle_execution': False})
+
+    # Generated bursts + hum + seeded noise, NOT human or synthesized speech.
+    sr, sample_count = 48000, 144000
+    rng = random.Random(41)
+    dry = []
+    for n in range(sample_count):
+        t = n / sr
+        envelope = sum(math.sin(math.pi * (t - a) / (b - a)) ** 2
+                       for a, b in [(.5, .95), (1.2, 1.85), (2.1, 2.65)] if a <= t < b)
+        tone = envelope * (.16 * math.sin(2 * math.pi * 220 * t) + .07 * math.sin(2 * math.pi * 440 * t)
+                           + .04 * math.sin(2 * math.pi * 880 * t))
+        noise = .045 * math.sin(2 * math.pi * 60 * t) + .016 * rng.uniform(-1, 1)
+        dry.append(round((tone + noise) * 32767))
+    with wave.open(str(media / 'dialogue-noisy.wav'), 'wb') as wav:
+        wav.setnchannels(1)
+        wav.setsampwidth(2)
+        wav.setframerate(sr)
+        wav.writeframes(struct.pack(f'<{len(dry)}h', *dry))
+    repair_filter = 'highpass=f=80,afftdn=nr=6:nf=-35,apad=whole_len=144000,atrim=end_sample=144000'
+    ff(['-i', 'media/dialogue-noisy.wav', '-af', repair_filter, '-c:a', 'pcm_s16le', 'media/dialogue-cleaned.wav'])
+    with wave.open(str(media / 'dialogue-cleaned.wav'), 'rb') as wav:
+        assert wav.getnframes() == sample_count and wav.getnchannels() == 1 and wav.getframerate() == sr
+        clean = list(struct.unpack(f'<{sample_count}h', wav.readframes(sample_count)))
+
+    def noise_rms(values):
+        window = values[4800:16800]  # 0.10-0.35 s, known noise-only interval.
+        return 20 * math.log10(math.sqrt(sum((v / 32768) ** 2 for v in window) / len(window)))
+
+    noisy_db, clean_db = noise_rms(dry), noise_rms(clean)
+    assert clean_db < noisy_db
+    board = Image.new('RGB', (480, 306), INK)
+    text(board, (18, 12), 'CLEANUP / SYNTHETIC FILTER TEST', 19)
+    for row, values, label, colour in [(0, dry, 'BEFORE', YELLOW), (1, clean, 'AFTER', TEAL)]:
+        center = 100 + row * 112
+        text(board, (18, center - 47), f'{label} / noise-only RMS {noise_rms(values):.1f} dBFS', 14)
+        d = ImageDraw.Draw(board)
+        d.line((18, center, 462, center), fill='#60717e')
+        for x in range(444):
+            chunk = values[x * sample_count // 444:(x + 1) * sample_count // 444]
+            d.line((18 + x, center - round(max(chunk) / 32768 * 110),
+                    18 + x, center - round(min(chunk) / 32768 * 110)), fill=colour)
+    text(board, (18, 270), 'No voice. Not loudness-matched. Not human-auditioned.', 12)
+    text(board, (18, 288), 'Lower noise is not proof of natural speech quality.', 12)
+    board.save(media / 'dialogue-waveform.png')
+    dump(outputs / 'dialogue-check.json', {'kind': 'measured-synthetic-noise-test', 'filter': repair_filter,
+         'sample_rate': sr, 'channels': 1, 'bits_per_sample': 16, 'samples_per_file': sample_count,
+         'noise_window_s': [.1, .35], 'before_noise_rms_dbfs': round(noisy_db, 4),
+         'after_noise_rms_dbfs': round(clean_db, 4), 'reduction_db': round(noisy_db - clean_db, 4),
+         'before_sha256': sha(media / 'dialogue-noisy.wav'), 'after_sha256': sha(media / 'dialogue-cleaned.wav'),
+         'contains_speech': False, 'human_audio_audition': False,
+         'not_verified': ['speech intelligibility or identity', 'processing latency', 'loudness-matched listening']})
+
+    reports = {}
+    for name, width, height in [('proxy-source', 640, 360), ('proxy-small', 320, 180),
+                               ('multicam-sync', 640, 180), ('retime', 480, 270)]:
+        report = tool(qc, [f'media/{name}.mp4', '--expect-width', str(width), '--expect-height', str(height),
+                          '--expect-fps', '30', '--expect-frames', '90', '--expect-duration', '3', '--expect-audio', 'no'], out)
+        assert report['ok'], report['checks']
+        reports[name + '.mp4'] = report
+    for name in ('dialogue-noisy', 'dialogue-cleaned'):
+        report = tool(qc, [f'media/{name}.wav', '--true-peak-max', '-1'], out)
+        assert report['ok'], report['checks']
+        # Also explicitly decode to EOF; measurements are not a playback audition.
+        ff(['-xerror', '-i', f'media/{name}.wav', '-f', 'null', '-'])
+        reports[name + '.wav'] = report
+    dump(outputs / 'montage-qc.json', reports)
+    dump(outputs / 'proxy-check.json', {'kind': 'measured-synthetic-proxy-pair',
+         'source_sha256': reports['proxy-source.mp4']['sha256'], 'proxy_sha256': reports['proxy-small.mp4']['sha256'],
+         'source_raster': [640, 360], 'proxy_raster': [320, 180], 'fps': 30, 'decoded_frames_each': 90,
+         'silent': True, 'native_attachment_tested': False,
+         'not_verified': ['reel/timecode retention', 'multichannel audio', 'VFR conform', 'native relink/export']})
+    dump(outputs / 'montage-build-info.json', {'synthetic': True, 'set': 'montage', 'pillow': pillow_version,
+         'font_family': fonts[14].getname()[0], 'ffmpeg': run([ffmpeg, '-version']).splitlines()[0],
+         'native_ae_render': False, 'native_premiere_execution': False, 'upstream_pipeline_executed': False,
+         'cloud_requests': 0, 'human_audio_audition': False, 'contains_recorded_or_generated_speech': False,
+         'normalization': 'Only private/temporary file paths are omitted or made relative.'})
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--out', required=True, help='NEW output directory, preferably .local/examples-preview')
     ap.add_argument('--font', help='Licensed font available on this machine; not copied or embedded')
+    ap.add_argument('--set', choices=('all', 'core', 'montage'), default='all',
+                    help='all (default), original core gallery, or the five 0.4.0 montage examples')
     args = ap.parse_args()
     out = Path(args.out).resolve()
     if out.exists():
@@ -344,7 +616,7 @@ def main():
                 pass
         if not chosen:
             raise RuntimeError('No usable font. Pass --font with a licensed TTF available locally.')
-        build(out, exe, chosen)
+        build(out, exe, chosen, args.set)
     except (ImportError, RuntimeError) as e:
         ap.exit(2, str(e) + '\n')
 

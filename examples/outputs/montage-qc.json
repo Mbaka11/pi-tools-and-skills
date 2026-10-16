@@ -1,0 +1,506 @@
+{
+  "proxy-source.mp4": {
+    "input": "proxy-source.mp4",
+    "size_bytes": 30547,
+    "sha256": "1631b096d308dec89fd473f4f3cb347cbc59bfb21ed196ed5cef8c8f688d6c09",
+    "probe": {
+      "via": "ffmpeg-banner",
+      "duration_s": 3.0,
+      "video": {
+        "codec": "h264",
+        "pix_fmt": "yuv420p",
+        "width": 640,
+        "height": 360,
+        "fps": 30.0,
+        "color_space": null
+      },
+      "audio": []
+    },
+    "video": {
+      "decoded_frames": 90,
+      "black_segments": [],
+      "freeze_segments": [],
+      "decode_error_lines": 0,
+      "decode_error_sample": [],
+      "ffmpeg_returncode": 0
+    },
+    "audio": null,
+    "loop": null,
+    "contact_sheet": null,
+    "checks": [
+      {
+        "check": "video_stream",
+        "ok": true,
+        "severity": "error",
+        "detail": "video stream present"
+      },
+      {
+        "check": "size",
+        "ok": true,
+        "severity": "error",
+        "detail": "640x360"
+      },
+      {
+        "check": "fps",
+        "ok": true,
+        "severity": "error",
+        "detail": "30.0 fps"
+      },
+      {
+        "check": "full_decode",
+        "ok": true,
+        "severity": "error",
+        "detail": "90 frames decoded, 0 decoder error line(s)"
+      },
+      {
+        "check": "frame_count_vs_duration",
+        "ok": true,
+        "severity": "warning",
+        "detail": "90 decoded vs ~90.0 from duration x fps"
+      },
+      {
+        "check": "frames",
+        "ok": true,
+        "severity": "error",
+        "detail": "90 vs 90"
+      },
+      {
+        "check": "duration",
+        "ok": true,
+        "severity": "error",
+        "detail": "3.0 s vs 3.0 s"
+      },
+      {
+        "check": "audio",
+        "ok": true,
+        "severity": "error",
+        "detail": "0 audio stream(s), expected none"
+      },
+      {
+        "check": "black_at_edges",
+        "ok": true,
+        "severity": "warning",
+        "detail": "0 black segment(s) touching start/end"
+      },
+      {
+        "check": "black_segments",
+        "ok": true,
+        "severity": "info",
+        "detail": "0 black segment(s) >= 0.1 s (review list)"
+      },
+      {
+        "check": "freeze_segments",
+        "ok": true,
+        "severity": "info",
+        "detail": "0 frozen segment(s) >= 1.0 s (holds are normal on LED)"
+      }
+    ],
+    "ok": true,
+    "not_verified": [
+      "viewing on the target display",
+      "human listening",
+      "player compatibility"
+    ]
+  },
+  "proxy-small.mp4": {
+    "input": "proxy-small.mp4",
+    "size_bytes": 11586,
+    "sha256": "0cc8ef0a32c8736f13514d7a712e2a441f935877075bc5fc9de512f56a07b983",
+    "probe": {
+      "via": "ffmpeg-banner",
+      "duration_s": 3.0,
+      "video": {
+        "codec": "h264",
+        "pix_fmt": "yuv420p",
+        "width": 320,
+        "height": 180,
+        "fps": 30.0,
+        "color_space": null
+      },
+      "audio": []
+    },
+    "video": {
+      "decoded_frames": 90,
+      "black_segments": [],
+      "freeze_segments": [],
+      "decode_error_lines": 0,
+      "decode_error_sample": [],
+      "ffmpeg_returncode": 0
+    },
+    "audio": null,
+    "loop": null,
+    "contact_sheet": null,
+    "checks": [
+      {
+        "check": "video_stream",
+        "ok": true,
+        "severity": "error",
+        "detail": "video stream present"
+      },
+      {
+        "check": "size",
+        "ok": true,
+        "severity": "error",
+        "detail": "320x180"
+      },
+      {
+        "check": "fps",
+        "ok": true,
+        "severity": "error",
+        "detail": "30.0 fps"
+      },
+      {
+        "check": "full_decode",
+        "ok": true,
+        "severity": "error",
+        "detail": "90 frames decoded, 0 decoder error line(s)"
+      },
+      {
+        "check": "frame_count_vs_duration",
+        "ok": true,
+        "severity": "warning",
+        "detail": "90 decoded vs ~90.0 from duration x fps"
+      },
+      {
+        "check": "frames",
+        "ok": true,
+        "severity": "error",
+        "detail": "90 vs 90"
+      },
+      {
+        "check": "duration",
+        "ok": true,
+        "severity": "error",
+        "detail": "3.0 s vs 3.0 s"
+      },
+      {
+        "check": "audio",
+        "ok": true,
+        "severity": "error",
+        "detail": "0 audio stream(s), expected none"
+      },
+      {
+        "check": "black_at_edges",
+        "ok": true,
+        "severity": "warning",
+        "detail": "0 black segment(s) touching start/end"
+      },
+      {
+        "check": "black_segments",
+        "ok": true,
+        "severity": "info",
+        "detail": "0 black segment(s) >= 0.1 s (review list)"
+      },
+      {
+        "check": "freeze_segments",
+        "ok": true,
+        "severity": "info",
+        "detail": "0 frozen segment(s) >= 1.0 s (holds are normal on LED)"
+      }
+    ],
+    "ok": true,
+    "not_verified": [
+      "viewing on the target display",
+      "human listening",
+      "player compatibility"
+    ]
+  },
+  "multicam-sync.mp4": {
+    "input": "multicam-sync.mp4",
+    "size_bytes": 25014,
+    "sha256": "234e44d446e339fcd7797fba28e2da8cac443683dde4477e9664955e18f7c9e2",
+    "probe": {
+      "via": "ffmpeg-banner",
+      "duration_s": 3.0,
+      "video": {
+        "codec": "h264",
+        "pix_fmt": "yuv420p",
+        "width": 640,
+        "height": 180,
+        "fps": 30.0,
+        "color_space": null
+      },
+      "audio": []
+    },
+    "video": {
+      "decoded_frames": 90,
+      "black_segments": [],
+      "freeze_segments": [],
+      "decode_error_lines": 0,
+      "decode_error_sample": [],
+      "ffmpeg_returncode": 0
+    },
+    "audio": null,
+    "loop": null,
+    "contact_sheet": null,
+    "checks": [
+      {
+        "check": "video_stream",
+        "ok": true,
+        "severity": "error",
+        "detail": "video stream present"
+      },
+      {
+        "check": "size",
+        "ok": true,
+        "severity": "error",
+        "detail": "640x180"
+      },
+      {
+        "check": "fps",
+        "ok": true,
+        "severity": "error",
+        "detail": "30.0 fps"
+      },
+      {
+        "check": "full_decode",
+        "ok": true,
+        "severity": "error",
+        "detail": "90 frames decoded, 0 decoder error line(s)"
+      },
+      {
+        "check": "frame_count_vs_duration",
+        "ok": true,
+        "severity": "warning",
+        "detail": "90 decoded vs ~90.0 from duration x fps"
+      },
+      {
+        "check": "frames",
+        "ok": true,
+        "severity": "error",
+        "detail": "90 vs 90"
+      },
+      {
+        "check": "duration",
+        "ok": true,
+        "severity": "error",
+        "detail": "3.0 s vs 3.0 s"
+      },
+      {
+        "check": "audio",
+        "ok": true,
+        "severity": "error",
+        "detail": "0 audio stream(s), expected none"
+      },
+      {
+        "check": "black_at_edges",
+        "ok": true,
+        "severity": "warning",
+        "detail": "0 black segment(s) touching start/end"
+      },
+      {
+        "check": "black_segments",
+        "ok": true,
+        "severity": "info",
+        "detail": "0 black segment(s) >= 0.1 s (review list)"
+      },
+      {
+        "check": "freeze_segments",
+        "ok": true,
+        "severity": "info",
+        "detail": "0 frozen segment(s) >= 1.0 s (holds are normal on LED)"
+      }
+    ],
+    "ok": true,
+    "not_verified": [
+      "viewing on the target display",
+      "human listening",
+      "player compatibility"
+    ]
+  },
+  "retime.mp4": {
+    "input": "retime.mp4",
+    "size_bytes": 27745,
+    "sha256": "90ee6a90cd518b4e90450403480bd005e19fa257e8a8918b55ab6799d32a7c1e",
+    "probe": {
+      "via": "ffmpeg-banner",
+      "duration_s": 3.0,
+      "video": {
+        "codec": "h264",
+        "pix_fmt": "yuv420p",
+        "width": 480,
+        "height": 270,
+        "fps": 30.0,
+        "color_space": null
+      },
+      "audio": []
+    },
+    "video": {
+      "decoded_frames": 90,
+      "black_segments": [],
+      "freeze_segments": [],
+      "decode_error_lines": 0,
+      "decode_error_sample": [],
+      "ffmpeg_returncode": 0
+    },
+    "audio": null,
+    "loop": null,
+    "contact_sheet": null,
+    "checks": [
+      {
+        "check": "video_stream",
+        "ok": true,
+        "severity": "error",
+        "detail": "video stream present"
+      },
+      {
+        "check": "size",
+        "ok": true,
+        "severity": "error",
+        "detail": "480x270"
+      },
+      {
+        "check": "fps",
+        "ok": true,
+        "severity": "error",
+        "detail": "30.0 fps"
+      },
+      {
+        "check": "full_decode",
+        "ok": true,
+        "severity": "error",
+        "detail": "90 frames decoded, 0 decoder error line(s)"
+      },
+      {
+        "check": "frame_count_vs_duration",
+        "ok": true,
+        "severity": "warning",
+        "detail": "90 decoded vs ~90.0 from duration x fps"
+      },
+      {
+        "check": "frames",
+        "ok": true,
+        "severity": "error",
+        "detail": "90 vs 90"
+      },
+      {
+        "check": "duration",
+        "ok": true,
+        "severity": "error",
+        "detail": "3.0 s vs 3.0 s"
+      },
+      {
+        "check": "audio",
+        "ok": true,
+        "severity": "error",
+        "detail": "0 audio stream(s), expected none"
+      },
+      {
+        "check": "black_at_edges",
+        "ok": true,
+        "severity": "warning",
+        "detail": "0 black segment(s) touching start/end"
+      },
+      {
+        "check": "black_segments",
+        "ok": true,
+        "severity": "info",
+        "detail": "0 black segment(s) >= 0.1 s (review list)"
+      },
+      {
+        "check": "freeze_segments",
+        "ok": true,
+        "severity": "info",
+        "detail": "0 frozen segment(s) >= 1.0 s (holds are normal on LED)"
+      }
+    ],
+    "ok": true,
+    "not_verified": [
+      "viewing on the target display",
+      "human listening",
+      "player compatibility"
+    ]
+  },
+  "dialogue-noisy.wav": {
+    "input": "dialogue-noisy.wav",
+    "size_bytes": 288044,
+    "sha256": "8a69e1e9811f235fab82041cc8fb523f66aabfcfde65408ab04cd024210a58c7",
+    "probe": {
+      "via": "ffmpeg-banner",
+      "duration_s": 3.0,
+      "video": null,
+      "audio": [
+        {
+          "codec": "pcm_s16le",
+          "sample_rate": 48000,
+          "layout": "mono"
+        }
+      ]
+    },
+    "video": null,
+    "audio": {
+      "integrated_lufs": -24.4,
+      "lra_lu": 20.0,
+      "true_peak_dbfs": -12.1,
+      "silence_segments": []
+    },
+    "loop": null,
+    "contact_sheet": null,
+    "checks": [
+      {
+        "check": "audio_only",
+        "ok": true,
+        "severity": "info",
+        "detail": "no video stream: audio-file checks only"
+      },
+      {
+        "check": "true_peak",
+        "ok": true,
+        "severity": "error",
+        "detail": "-12.1 dBTP vs max -1.0"
+      }
+    ],
+    "ok": true,
+    "not_verified": [
+      "viewing on the target display",
+      "human listening",
+      "player compatibility"
+    ]
+  },
+  "dialogue-cleaned.wav": {
+    "input": "dialogue-cleaned.wav",
+    "size_bytes": 288078,
+    "sha256": "1d683d1beb20dbd871dd7b6f883ae9da17232ad40ce0650c4ec40ab4b47f2e38",
+    "probe": {
+      "via": "ffmpeg-banner",
+      "duration_s": 3.0,
+      "video": null,
+      "audio": [
+        {
+          "codec": "pcm_s16le",
+          "sample_rate": 48000,
+          "layout": "mono"
+        }
+      ]
+    },
+    "video": null,
+    "audio": {
+      "integrated_lufs": -24.0,
+      "lra_lu": 20.0,
+      "true_peak_dbfs": -11.5,
+      "silence_segments": []
+    },
+    "loop": null,
+    "contact_sheet": null,
+    "checks": [
+      {
+        "check": "audio_only",
+        "ok": true,
+        "severity": "info",
+        "detail": "no video stream: audio-file checks only"
+      },
+      {
+        "check": "true_peak",
+        "ok": true,
+        "severity": "error",
+        "detail": "-11.5 dBTP vs max -1.0"
+      }
+    ],
+    "ok": true,
+    "not_verified": [
+      "viewing on the target display",
+      "human listening",
+      "player compatibility"
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "kind": "measured-synthetic-rgb-test",
+  "filter": "format=rgb24,colorchannelmixer=rr=0.833333333333:bb=1.25",
+  "before": {
+    "mean_absolute_error_8bit": 14.962963,
+    "max_error_8bit": 36
+  },
+  "after": {
+    "mean_absolute_error_8bit": 0.0,
+    "max_error_8bit": 0
+  },
+  "native_grade": false,
+  "not_verified": [
+    "camera log or HDR transform",
+    "skin tones",
+    "calibrated monitor accuracy"
+  ]
+}

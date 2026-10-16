@@ -31,7 +31,27 @@ No client names, project files or media are included.
 The collection is not an exhaustive backup of every agent package or historic
 session; it includes the personal skills found in the inspected local locations.
 
-## Original synthetic examples (0.3.0)
+### Additional personal montage skills (0.4.0)
+
+Written for this toolbox, with public Adobe/FFmpeg documentation reviewed on
+2026-10-16. Each skill links to its sources and distinguishes native workflows
+from locally executed synthetic tests. Adobe direct fetches returned HTTP 403;
+indexed documentation excerpts informed the version-dependent guidance.
+
+| Included path | Scope and origin |
+| --- | --- |
+| `skills/montage/montage-colour-finishing/` | Original colour-pipeline and shot-matching workflow; synthetic RGB correction, not a log/HDR LUT |
+| `skills/montage/montage-proxy-conform/` | Original ingest/proxy/conform workflow; no camera cards or client metadata |
+| `skills/montage/montage-multicam-sync/` | Original `sync_map.py` rational anchor calculator; no waveform detection or third-party sync code |
+| `skills/montage/montage-dialogue-cleanup/` | Original dialogue repair workflow; synthetic tone/noise test, no voice recording or cloning |
+| `skills/montage/montage-time-remapping/` | Original timing and interpolation guidance; actual local FFmpeg speed changes |
+
+PySceneDetect and OpenTimelineIO were reviewed as optional references, not
+vendored or executed. The unlicensed `maxazure/video-editing-skill` remains a
+catalog-only caution; none of its code, instructions or media is copied.
+Full commits, licence findings and limits: [montage catalog](docs/montage-catalog.md).
+
+## Original synthetic examples (0.3.0 and 0.4.0)
 
 [examples/](examples/README.md) contains original procedural graphics, synthetic
 sounds and fictitious reports, not imported client or upstream demo media.
@@ -41,6 +61,10 @@ The [manifest](examples/manifest.json) records coverage, sizes and SHA-256 hashe
 versions. Font files are neither copied nor embedded. Native AE/Premiere, REA,
 Remotion and cloud execution are not claimed. The examples retain the original
 material's UNLICENSED policy; vendored MIT files remain byte-identical.
+The 0.4.0 additions have a separate [build receipt](examples/outputs/montage-build-info.json)
+and [decoded-media report](examples/outputs/montage-qc.json); existing 0.3.0
+media and reports remain unchanged. Noise-interval measurements do not establish
+natural speech quality, and the anchor calculator does not certify real-world sync.
 
 ## Reverse-engineering sources
 
