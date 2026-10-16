@@ -1,15 +1,18 @@
 # Pi Tools & Skills
 
-[![Version](https://img.shields.io/badge/version-0.3.0-blue)](https://github.com/Mbaka11/pi-tools-and-skills/releases/latest)
+[![Version](https://img.shields.io/badge/version-0.3.1-blue)](https://github.com/Mbaka11/pi-tools-and-skills/releases/latest)
 [![Checks](https://github.com/Mbaka11/pi-tools-and-skills/actions/workflows/check.yml/badge.svg)](https://github.com/Mbaka11/pi-tools-and-skills/actions/workflows/check.yml)
 
 A personal, cross-project collection of reusable [pi](https://github.com/earendil-works/pi) skills, small offline helpers, pinned reverse-engineering tool references, and an After Effects / montage toolbox for LED-signage and video work.
 
 **Fourteen skills · No automatic tool installation · No credentials or project data**
 
-**[Voir la galerie d'exemples très courts](examples/README.md)** — animations de
-3 secondes, audio, sorties réelles des helpers et mini-rapports fictifs.
-Chaque skill et outil inclus a un exemple, avec ses limites clairement indiquées.
+**[Browse the short-example gallery](examples/README.md)** — 3-second animations,
+audio, actual helper outputs and fictitious mini-reports. Every included skill
+and tool has an example with clearly stated limitations.
+
+Documentation is written in English. Quoted source text and language-specific
+examples retain their original wording.
 
 This is a toolbox, not an ApplyPilot dependency and not a backup of an entire pi
 profile. It contains reusable instructions and helpers, not browser sessions,
@@ -67,7 +70,7 @@ LED, QC, SFX, subtitle and manifest examples include actual helper outputs.
 Requires pi and Git. For an immutable version:
 
 ```bash
-pi install git:github.com/Mbaka11/pi-tools-and-skills@v0.3.0
+pi install git:github.com/Mbaka11/pi-tools-and-skills@v0.3.1
 ```
 
 Restart pi or run `/reload`. Skills are registered at **user scope**, so they are

@@ -1,62 +1,62 @@
-# Exemples de rapports — quelques lignes chacun
+# Report examples — a few lines each
 
-**Tous les scénarios et chiffres ci-dessous sont fictifs.** Ils illustrent le
-format d'un livrable, pas une recherche de marché, une certification ou une
-investigation exécutée. Aucun client, compte, binaire ou service réel n'est visé.
+**All scenarios and figures below are fictitious.** They illustrate deliverable
+formats, not market research, certification or an executed investigation.
+No real client, account, binary or service is targeted.
 
 ## market-research
 
-> **Question :** existe-t-il une opportunité pour un service fictif de location ?
-> **Hypothèse de démonstration :** 100 lieux × 2 achats/an × 300 € = 60 000 €/an.
-> **Fourchette illustrative :** 50–150 lieux → 30 000–90 000 €/an.
-> **À vérifier :** nombre de lieux, fréquence et budget via sources primaires.
-> **Décision :** ne pas traiter cette simulation comme un marché mesuré.
+> **Question:** is there an opportunity for a fictitious rental service?
+> **Demo assumption:** 100 venues × 2 purchases/year × €300 = €60,000/year.
+> **Illustrative range:** 50–150 venues → €30,000–€90,000/year.
+> **To verify:** venue count, purchase frequency and budget using primary sources.
+> **Decision:** do not treat this simulation as a measured market.
 
 ## research-reporting
 
-> **Note de décision — projet fictif**
-> Potentiel modélisé : 60 000 €/an ; données non vérifiées.
-> Sensibilité principale : nombre de lieux acheteurs.
-> Prochaine étape proposée : valider la demande avant de fixer un prix.
-> Source : [hypothèses de démonstration ci-dessus](#market-research).
+> **Decision brief — fictitious project**
+> Modeled potential: €60,000/year; unverified data.
+> Main sensitivity: the number of purchasing venues.
+> Proposed next step: validate demand before setting a price.
+> Source: [demo assumptions above](#market-research).
 
 ## backlog-execution
 
-> **Périmètre autorisé fictif :** deux tâches, aucune publication automatique.
-> ✓ Préparer un brief — preuve attendue : `brief.md` relu.
-> ☐ Produire l'animation — bloqué : texte final non approuvé.
-> **Bilan illustratif :** 1/2 ; pas de pourcentage de production inventé.
+> **Fictitious authorized scope:** two tasks, no automatic publication.
+> ✓ Prepare a brief — expected evidence: reviewed `brief.md`.
+> ☐ Produce the animation — blocked: final copy not approved.
+> **Illustrative status:** 1/2; no invented production-completion percentage.
 
 ## rea-investigation
 
-> **Exemple de restitution, REA non exécuté :**
-> `ouvrir fichier → importDocument() → parseDocument() → aperçu`
-> Artefact supposé : application de test appartenant à l'opérateur.
-> Preuve à collecter : module, offset/ligne et référence de capture autorisée.
-> Hypothèse : le décodage est local ; aucune conclusion réseau sans observation.
+> **Sample report, REA not executed:**
+> `open file → importDocument() → parseDocument() → preview`
+> Assumed artifact: a test application owned by the operator.
+> Evidence to collect: module, offset/line and authorized capture reference.
+> Hypothesis: decoding is local; no network conclusion without observation.
 
-Ce flux inventé montre le niveau de concision attendu. Il ne provient pas d'une
-sortie du moteur REA et ne justifie aucun contournement d'accès.
+This invented flow shows the expected level of concision. It is not REA engine
+output and does not justify bypassing access controls.
 
 ## reverse-api-investigation
 
-> **Carte de contrat fictive :** `GET /v1/items?page=N` → collection paginée.
-> **À confirmer :** schéma des réponses, pagination finale et erreurs.
-> **Client visé :** configuration par environnement, jamais de secret embarqué.
-> **Statut :** pas de requête réseau exécutée, pas de client validé.
+> **Fictitious contract map:** `GET /v1/items?page=N` → paginated collection.
+> **To confirm:** response schema, final-page behavior and errors.
+> **Intended client:** environment-based configuration, never embedded secrets.
+> **Status:** no network request executed, no client validated.
 
-Le [résumé structurel réel](outputs/api-summary.json) a été produit avec
-`har-summary.mjs` à partir de [deux événements synthétiques](fixtures/request-events.json).
-Il contient un hôte opaque, un endpoint et deux réponses HTTP 200. Il ne permet
-**pas** d'inférer la sémantique du contrat ci-dessus : celle-ci est fictive et
-nécessiterait des preuves autorisées supplémentaires.
+The [actual structural summary](outputs/api-summary.json) was produced with
+`har-summary.mjs` from [two synthetic events](fixtures/request-events.json).
+It contains one opaque host, one endpoint and two HTTP 200 responses. It does
+**not** establish the contract semantics above: those are fictitious and would
+require additional authorized evidence.
 
-## Outils de référence
+## Reference tools
 
-- **REA 6.4.0** : [flux de restitution](#rea-investigation), démonstration textuelle,
-  pas une session REA. [Intégration](../tools/rea/README.md).
-- **Reverse API Engineer 0.14.0** : [contrat fictif](#reverse-api-investigation),
-  via notre adaptation ; aucun lancement de l'agent amont ni secret en dur.
-  [Évaluation](../tools/reverse-api-engineer/README.md).
+- **REA 6.4.0**: [sample flow](#rea-investigation), a text illustration,
+  not a REA session. [Integration](../tools/rea/README.md).
+- **Reverse API Engineer 0.14.0**: [fictitious contract](#reverse-api-investigation),
+  through our adaptation; no upstream-agent execution or hardcoded secrets.
+  [Evaluation](../tools/reverse-api-engineer/README.md).
 
-[Retour à la galerie](README.md)
+[Back to the gallery](README.md)

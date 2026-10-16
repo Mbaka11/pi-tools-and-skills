@@ -70,7 +70,7 @@ fully decode animations/audio when FFmpeg is present. This narrow exception is
 not permission to add other project media. Review paths and generated reports
 before publication. A digest proves byte identity, not copyright or privacy.
 
-Maquettes and illustrative reports must be labelled as such: they are not proof
+Mockups and illustrative reports must be labelled as such: they are not proof
 of native Adobe execution, a tested external pipeline or a live investigation.
 No external media was copied into this gallery.
 

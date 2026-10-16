@@ -1,6 +1,6 @@
 {
   "name": "pi-tools-and-skills",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "private": true,
   "description": "Reusable personal Pi skills, pinned reverse-engineering references, and an After Effects / montage toolbox for LED signage and video work.",
   "type": "module",

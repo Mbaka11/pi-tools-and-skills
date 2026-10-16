@@ -1,188 +1,189 @@
-# Galerie — exemples très courts
+# Gallery — very short examples
 
-**Voir ce que chaque skill peut produire**, sans ouvrir un projet client.
-Les animations durent **3 secondes**. Tout a été créé pour cette galerie :
-formes, textes fictifs, textures procédurales et sons synthétiques.
+**See what each skill can produce**, without opening a client project.
+Animations last **3 seconds**. Everything was created for this gallery:
+shapes, fictional copy, procedural textures and synthetic sounds.
 
-- **Sortie réelle** : fichier effectivement produit par le helper indiqué.
-- **Maquette** : aperçu du résultat visé, pas une exécution AE, Premiere,
-  Remotion, REA ou d'un service payant. Aucun AEP natif n'est livré ici.
-- **Exemple fictif** : format de restitution, pas une observation vérifiée.
+- **Actual output**: a file genuinely produced by the named helper.
+- **Mockup**: a preview of the intended result, not an AE, Premiere,
+  Remotion, REA or paid-service execution. No native AEP is included here.
+- **Fictitious example**: a sample reporting format, not a verified observation.
 
-Les GIF sont volontairement petits et à 10 i/s pour GitHub ; ce ne sont pas
-les masters de livraison. Cliquer sur les fichiers MP4/WAV pour les lire ou
-les télécharger si GitHub n'affiche pas de lecteur. Les trois secondes servent
-à démontrer un geste, pas à recommander la durée d'une publicité réelle.
+GIFs are deliberately small and run at 10 fps for GitHub; they are not delivery
+masters. Click MP4/WAV links to play or download the files if GitHub does not
+show a player. Three seconds demonstrate a technique, not a recommended length
+for an actual advertisement. Existing demo artwork retains its original copy;
+French subtitle fixtures intentionally exercise French typography.
 
 ## ae-vox-editorial
 
-**Maquette · 3 s** — papier, surlignage, carte découpée et mouvement décalé.
+**Mockup · 3 s** — paper, highlighting, a cutout card and staggered motion.
 
-![Collage éditorial synthétique](media/ae-vox.gif)
+![Synthetic editorial collage](media/ae-vox.gif)
 
-Demande courte : « Fais apparaître une idée avec un surlignage et une carte papier. »
+Short prompt: “Reveal an idea with a highlighter stroke and a paper card.”
 [Skill](../skills/after-effects/ae-vox-editorial/SKILL.md)
 
 ## ae-expressions-rigs
 
-**Maquette · 3 s** — le cartouche s'adapte lorsque le titre s'allonge.
+**Mockup · 3 s** — the text box resizes when the title becomes longer.
 
-![Boîte redimensionnée autour du texte](media/ae-rig.gif)
+![Box resizing around editable text](media/ae-rig.gif)
 
-Extrait pour **Rectangle Path › Size** dans AE, à valider dans le projet :
+Snippet for **Rectangle Path › Size** in AE, to validate in the target project
+with a text layer named `TITLE`:
 
 ```js
-var b = thisComp.layer("TITRE").sourceRectAtTime(time, false);
+var b = thisComp.layer("TITLE").sourceRectAtTime(time, false);
 [b.width + 36, b.height + 24];
 ```
 
-Le GIF est dessiné avec Pillow : ses métriques ne sont pas celles d'AE.
-Position/parentage du rectangle : suivre la
-[bibliothèque de mise en page](../skills/after-effects/ae-expressions-rigs/references/layout-text-led.md).
+The GIF is drawn with Pillow: its text metrics are not AE's metrics.
+For rectangle positioning and parenting, follow the
+[layout library](../skills/after-effects/ae-expressions-rigs/references/layout-text-led.md).
 
 ## ae-vfx-compositing
 
-**Maquette · 3 s** — avant/après d'un remplacement d'écran sur un décor fictif.
+**Mockup · 3 s** — before/after screen replacement on a fictitious set.
 
-![Aperçu de remplacement d'écran](media/ae-vfx.gif)
+![Screen-replacement preview](media/ae-vfx.gif)
 
-Montre le principe d'incrustation en perspective, pas un tracking exécuté ni
-un test de Keylight ou de Roto Brush.
+This shows the principle of a perspective composite, not an executed tracking
+solve or a Keylight/Roto Brush test.
 [Skill](../skills/after-effects/ae-vfx-compositing/SKILL.md)
 
 ## ae-production-workflow
 
-**Sortie réelle du vérificateur de manifeste**, sur un fichier texte synthétique :
+**Actual manifest-verifier output**, using a synthetic text file:
 
 ```json
 {"ok": true, "entriesChecked": 1, "canonicalOk": true, "failures": []}
 ```
 
-[Rapport](outputs/delivery-check.json) · [Manifeste](outputs/delivery-manifest.json) ·
-[Fixture canonique](outputs/canonical.txt).
-Cela prouve une vérification de taille/hash, **pas** la validité d'un AEP ni une
-inspection native. Exemples checkpoint/RAM : [outils](tools.md#helpers-ae).
+[Report](outputs/delivery-check.json) · [Manifest](outputs/delivery-manifest.json) ·
+[Canonical fixture](outputs/canonical.txt).
+This demonstrates a size/hash check, **not** AEP validity or native inspection.
+Checkpoint/RAM examples: [tools](tools.md#ae-helpers).
 [Skill](../skills/after-effects/ae-production-workflow/SKILL.md)
 
 ## led-signage-content
 
-**Sortie réelle · 3 s · 516×1032 · 30 i/s · sans audio** — un message lisible
-et un élément en mouvement périodique, exportés avec `led_tool.py`.
+**Actual output · 3 s · 516×1032 · 30 fps · silent** — readable copy and an
+element moving periodically, exported with `led_tool.py`.
 
-![Aperçu réduit de la boucle LED](media/led-poster.png)
+![Reduced preview of the LED loop](media/led-poster.png)
 
-[Lire la boucle MP4](media/led-loop.mp4) · [Mire au pixel près](media/led-testcard.png) ·
-[Guides pour trois panneaux](media/led-guides.png) · [Contrôle du profil](outputs/led-check.json).
-La vignette est réduite ; les fichiers de livraison restent à leur taille exacte.
-Le matériel, la luminosité et la synchronisation physique n'ont pas été testés.
+[Play the MP4 loop](media/led-loop.mp4) · [Pixel-exact test card](media/led-testcard.png) ·
+[Three-panel guides](media/led-guides.png) · [Profile check](outputs/led-check.json).
+The thumbnail is reduced; delivery files retain their exact dimensions.
+Hardware, brightness and physical synchronization have not been tested.
 [Skill](../skills/montage/led-signage-content/SKILL.md)
 
 ## video-delivery-qc
 
-**Sortie réelle** — les 90 images de la boucle ci-dessus ont été décodées ;
-la jonction de boucle et l'absence d'audio ont été vérifiées automatiquement.
+**Actual output** — all 90 frames of the loop above were decoded;
+the loop seam and absence of audio were checked automatically.
 
-![Contact sheet extraite du fichier encodé](media/qc-contact.png)
+![Contact sheet extracted from the encoded file](media/qc-contact.png)
 
-[Rapport JSON complet](outputs/media-qc.json), avec hash du MP4, SSIM de jonction,
-contrôles, avertissements et limites. `ok` ne certifie pas un écran réel.
+[Full JSON report](outputs/media-qc.json), including the MP4 hash, seam SSIM,
+checks, warnings and limitations. `ok` does not certify a physical display.
 [Skill](../skills/montage/video-delivery-qc/SKILL.md)
 
 ## sound-design-sfx
 
-**Sortie réelle · 3 s** — souffle court → impact → carillon, placés par
-`sfx_place.py` aux images **9, 30 et 60** d'une timeline à 30 i/s.
+**Actual output · 3 s** — short sweep → impact → chime, placed by
+`sfx_place.py` at frames **9, 30 and 60** on a 30 fps timeline.
 
-[Écouter le WAV 48 kHz / 24 bits stéréo](media/sfx.wav) ·
-[Lire le MP4 avec son](media/sfx-preview.mp4) ·
-[Placement des cues](outputs/sfx-cues.json) · [Mesure audio](outputs/sfx-qc.json).
+[Listen to the 48 kHz / 24-bit stereo WAV](media/sfx.wav) ·
+[Play the MP4 with sound](media/sfx-preview.mp4) ·
+[Cue placement](outputs/sfx-cues.json) · [Audio measurements](outputs/sfx-qc.json).
 
-Sons originaux synthétisés localement, aucun échantillon de bibliothèque.
-Le MP4 ajoute le stem à la maquette de montage : impact sur la coupe à 1 s,
-carillon sur l'arrivée du titre à 2 s.
-Les mesures et le décodage ne remplacent pas une écoute humaine.
+Original sounds synthesized locally, with no library samples.
+The MP4 adds the stem to the editing mockup: impact on the cut at 1 s,
+chime on the title's arrival at 2 s.
+Measurements and decoding do not replace human listening.
 [Skill](../skills/montage/sound-design-sfx/SKILL.md)
 
 ## montage-editing-craft
 
-**Maquette · 3 s** — plan large, détail, titre : trois images, une progression.
+**Mockup · 3 s** — wide shot, detail, title: three images, one progression.
 
-![Mini-montage synthétique en trois plans](media/editing.gif)
+![Synthetic three-shot mini-edit](media/editing.gif)
 
-**Sortie réelle de `srt_check.py`** :
-`Bonjour : une idée !` → espaces insécables avant `:` et `!`, dans une copie.
-[Avant](fixtures/captions.srt) · [Après](outputs/captions-fixed.srt) ·
-[Rapport avant](outputs/captions-before.json) · [Rapport après](outputs/captions-after.json).
-L'original n'est pas modifié. Ce n'est pas un export Premiere.
+**Actual `srt_check.py` output** for a French subtitle:
+`Bonjour : une idée !` → nonbreaking spaces before `:` and `!`, in a new copy.
+[Before](fixtures/captions.srt) · [After](outputs/captions-fixed.srt) ·
+[Before report](outputs/captions-before.json) · [After report](outputs/captions-after.json).
+The original is unchanged. This is not a Premiere export.
 [Skill](../skills/montage/montage-editing-craft/SKILL.md)
 
 ## vox-explainer-pipelines
 
-**Maquette de structure · 3 s** — question → indice → réponse.
+**Structure mockup · 3 s** — question → clue → answer.
 
-![Micro-explainer à trois beats](media/explainer.gif)
+![Three-beat micro-explainer](media/explainer.gif)
 
-Cette prévisualisation originale illustre le beat sheet ; elle **n'a pas été
-rendue avec les pipelines amont**. Pour leurs démonstrations, voir le
-[README amont épinglé](https://github.com/jaredcassoutt/vox-editorial/tree/f394e925f7ccbd6df3e6b3403fcb260194bbece3).
-Aucun extrait externe n'a été recopié ni aucune voix générée.
+This original preview illustrates a beat sheet; it **was not rendered using
+the upstream pipelines**. For their own demonstrations, see the
+[pinned upstream README](https://github.com/jaredcassoutt/vox-editorial/tree/f394e925f7ccbd6df3e6b3403fcb260194bbece3).
+No external clips were copied and no voice was generated.
 [Skill](../skills/montage/vox-explainer-pipelines/SKILL.md)
 
 ## market-research
 
-**Exemple fictif** : « 100 lieux × 2 achats/an × 300 € = 60 000 €/an de potentiel
-modélisé ; trois hypothèses à vérifier. » [Mini-étude](reports.md#market-research) ·
-[Skill](../skills/market-research/SKILL.md).
+**Fictitious example**: “100 venues × 2 purchases/year × €300 = €60,000/year
+in modeled potential; three assumptions to verify.”
+[Mini-study](reports.md#market-research) · [Skill](../skills/market-research/SKILL.md).
 
 ## research-reporting
 
-**Exemple fictif** : « Données non vérifiées ; valider la demande avant de fixer
-le prix. » [Note de décision](reports.md#research-reporting) ·
+**Fictitious example**: “Unverified data; validate demand before setting
+the price.” [Decision brief](reports.md#research-reporting) ·
 [Skill](../skills/research-reporting/SKILL.md).
 
 ## backlog-execution
 
-**Exemple fictif** : « Brief prêt ; animation bloquée par le texte final ;
-1 tâche sur 2. » [Mini-bilan](reports.md#backlog-execution) ·
+**Fictitious example**: “Brief ready; animation blocked by final copy;
+1 of 2 tasks complete.” [Mini-status report](reports.md#backlog-execution) ·
 [Skill](../skills/backlog-execution/SKILL.md).
 
 ## rea-investigation
 
-**Exemple fictif, moteur non exécuté** :
-`ouvrir fichier → importDocument() → parseDocument() → aperçu`.
-[Mini-rapport et limites](reports.md#rea-investigation) ·
+**Fictitious example, engine not executed**:
+`open file → importDocument() → parseDocument() → preview`.
+[Mini-report and limitations](reports.md#rea-investigation) ·
 [Skill](../skills/rea-investigation/SKILL.md).
 
 ## reverse-api-investigation
 
-**Sortie réelle du helper**, sur deux événements fabriqués : un hôte opaque,
-un endpoint, deux réponses 200, aucune URL brute publiée dans le résumé.
-[Résumé JSON](outputs/api-summary.json) · [Contrat fictif](reports.md#reverse-api-investigation) ·
+**Actual helper output** from two fabricated events: one opaque host,
+one endpoint, two 200 responses, no raw URL published in the summary.
+[JSON summary](outputs/api-summary.json) · [Fictitious contract](reports.md#reverse-api-investigation) ·
 [Skill](../skills/reverse-api-investigation/SKILL.md).
 
-## Outils, provenance et reproduction
+## Tools, provenance and reproduction
 
-- [Un micro-exemple par outil/helper inclus](tools.md).
-- [Micro-exemples des outils seulement catalogués](../docs/montage-catalog.md#micro-examples-for-catalog-only-tools)
-  — intentions illustratives, pas des moteurs installés ou exécutés.
-- [Manifeste des exemples](manifest.json) : couverture, provenance, tailles et SHA-256.
-- [Environnement de génération](outputs/build-info.json) : aucun appel cloud,
-  aucun média client, aucun rendu natif AE. Polices système utilisées au rendu,
-  sans redistribution des fichiers de police.
-- Les exemples originaux suivent [RIGHTS.md](../RIGHTS.md) (`UNLICENSED`).
-  Aucun média tiers n'est redistribué ; les snapshots MIT restent inchangés.
+- [One micro-example per included tool/helper](tools.md).
+- [Micro-examples for catalog-only tools](../docs/montage-catalog.md#micro-examples-for-catalog-only-tools)
+  — illustrative output briefs, not installed or executed engines.
+- [Example manifest](manifest.json): coverage, provenance, sizes and SHA-256.
+- [Generation environment](outputs/build-info.json): no cloud calls,
+  client media or native AE rendering. System fonts were used for rendering;
+  font files are not redistributed.
+- Original examples follow [RIGHTS.md](../RIGHTS.md) (`UNLICENSED`).
+  No third-party media is redistributed; MIT snapshots remain unchanged.
 
-Pour recréer les médias et les sorties des helpers dans un **nouveau** dossier :
+To recreate media and helper outputs in a **new** directory:
 
 ```sh
-# Python + Pillow >= 9.2 + FFmpeg/libx264 + Node disponibles séparément.
+# Python + Pillow >= 9.2 + FFmpeg/libx264 + Node must be available separately.
 python examples/build.py --out .local/examples-preview
-# Si nécessaire : ajouter --font /chemin/vers/une-police-autorisee.ttf
+# If needed, add --font /path/to/a-licensed-font.ttf
 npm test
 ```
 
-Le générateur n'installe rien, ne supprime rien et refuse un dossier déjà existant.
-Il n'écrit jamais directement dans la galerie publiée. Les octets des images et
-encodages peuvent varier avec la version des moteurs et de la police ; revoir les
-sorties avant de mettre à jour les hashes. Aucun seuil QC n'est modifié pour faire
-passer une nouvelle génération.
+The generator installs and deletes nothing, and refuses an existing directory.
+It never writes directly into the published gallery. Image and encoded-file
+bytes may vary with engine and font versions; review outputs before updating
+hashes. No QC threshold is changed to make a new generation pass.

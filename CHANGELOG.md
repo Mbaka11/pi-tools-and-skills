@@ -2,6 +2,15 @@
 
 Versioned releases use Semantic Versioning. Published tags are not moved.
 
+## 0.3.1
+
+- Standardize the main README and gallery documentation in English, including
+  tool examples, illustrative reports, image descriptions and reproduction notes.
+- Update translated heading anchors and their manifest links; state the
+  documentation language convention in the main README.
+- Preserve French subtitle fixtures, existing demo artwork, measured outputs
+  and byte-identical third-party snapshots. No runtime behavior changes.
+
 ## 0.3.0
 
 - Replace vendor-specific LED labels with generic, resolution-based reference

@@ -5,7 +5,7 @@
 Install a release at user scope:
 
 ```bash
-pi install git:github.com/Mbaka11/pi-tools-and-skills@v0.3.0
+pi install git:github.com/Mbaka11/pi-tools-and-skills@v0.3.1
 ```
 
 Or clone and run `pi install .` from the checkout. Do not enable both a local and
