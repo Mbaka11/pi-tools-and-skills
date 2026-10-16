@@ -7,6 +7,50 @@ export const MAX_EXAMPLE_BYTES = 1024 * 1024;
 export const MAX_GALLERY_BYTES = 8 * 1024 * 1024;
 const KINDS = new Set(['original-mockup', 'measured-helper-output', 'illustrative-report']);
 
+// GIF delays are encoded in centiseconds. FFmpeg progress out_time can report
+// the final frame's PTS rather than its end (2.9 vs 3.0 s for thirty 100 ms frames).
+// Parse block boundaries, never search compressed pixels for extension markers.
+export function readGifTiming(bytes) {
+  let cursor = 13, delay = null, frames = 0, centiseconds = 0;
+  const need = n => { if (cursor + n > bytes.length) throw new Error('Truncated GIF timing data'); };
+  const blocks = () => {
+    for (;;) {
+      need(1); const size = bytes[cursor++];
+      if (!size) return;
+      need(size); cursor += size;
+    }
+  };
+  if (bytes.length < 13 || !/^GIF8[79]a$/.test(bytes.subarray(0, 6).toString('ascii'))) throw new Error('Invalid GIF header');
+  if (bytes[10] & 0x80) { const size = 3 * (1 << ((bytes[10] & 7) + 1)); need(size); cursor += size; }
+  while (cursor < bytes.length) {
+    const marker = bytes[cursor++];
+    if (marker === 0x3b) {
+      if (!frames || cursor !== bytes.length) throw new Error('Empty GIF or trailing data');
+      return { frames, duration_s: centiseconds / 100 };
+    }
+    if (marker === 0x21) {
+      need(1); const label = bytes[cursor++];
+      if (label === 0xf9) {
+        need(6);
+        if (bytes[cursor] !== 4 || bytes[cursor + 5] !== 0) throw new Error('Invalid GIF control block');
+        delay = bytes.readUInt16LE(cursor + 2); cursor += 6;
+      } else {
+        // This bounded gallery does not admit text-rendering GIF extensions.
+        if (label === 0x01) throw new Error('Unsupported GIF plain-text timing');
+        blocks();
+      }
+    } else if (marker === 0x2c) {
+      need(9); const packed = bytes[cursor + 8]; cursor += 9;
+      if (packed & 0x80) { const size = 3 * (1 << ((packed & 7) + 1)); need(size); cursor += size; }
+      need(1); cursor++; // LZW minimum code size; pixel decoding is FFmpeg's job.
+      blocks();
+      if (delay === null || delay <= 0) throw new Error('GIF frames require explicit positive delays');
+      frames++; centiseconds += delay; delay = null;
+    } else throw new Error('Invalid GIF block marker');
+  }
+  throw new Error('Missing GIF trailer');
+}
+
 export function checkMediaRecord(relative, record, bytes) {
   const errors = [];
   if (!/^examples\/media\/[a-z0-9]+(?:-[a-z0-9]+)*\.(gif|png|mp4|wav)$/.test(relative)) errors.push('Invalid example media path');
@@ -20,10 +64,16 @@ export function checkMediaRecord(relative, record, bytes) {
     : ext === '.mp4' ? bytes.subarray(4, 8).toString('ascii') === 'ftyp' : false;
   if (!magic) errors.push('Example media signature mismatch');
   if (['.gif', '.mp4', '.wav'].includes(ext) && !(Number.isFinite(record?.duration_s) && record.duration_s > 0 && record.duration_s <= 4)) errors.push('Example must last at most four seconds');
+  if (magic && ext === '.gif') {
+    try {
+      const timing = readGifTiming(bytes);
+      if (timing.frames !== record?.frames || timing.duration_s !== record?.duration_s) errors.push('GIF frame count or duration differs from encoded delays');
+    } catch (error) { errors.push(error.message); }
+  }
   if (['.png', '.gif'].includes(ext)) {
     if (!(Number.isSafeInteger(record?.width) && record.width > 0 && record.width <= 1920 && Number.isSafeInteger(record?.height) && record.height > 0 && record.height <= 1920)) errors.push('Invalid example dimensions');
-    if (magic && ext === '.png' && bytes.length >= 24 && (bytes.readUInt32BE(16) !== record.width || bytes.readUInt32BE(20) !== record.height)) errors.push('PNG dimensions differ from manifest');
-    if (magic && ext === '.gif' && bytes.length >= 10 && (bytes.readUInt16LE(6) !== record.width || bytes.readUInt16LE(8) !== record.height)) errors.push('GIF dimensions differ from manifest');
+    if (magic && ext === '.png' && bytes.length >= 24 && (bytes.readUInt32BE(16) !== record?.width || bytes.readUInt32BE(20) !== record?.height)) errors.push('PNG dimensions differ from manifest');
+    if (magic && ext === '.gif' && bytes.length >= 10 && (bytes.readUInt16LE(6) !== record?.width || bytes.readUInt16LE(8) !== record?.height)) errors.push('GIF dimensions differ from manifest');
   }
   return errors;
 }

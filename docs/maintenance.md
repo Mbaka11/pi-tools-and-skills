@@ -114,7 +114,9 @@ human listening. Copy only approved media and path-normalized reports to
 `examples/`; update `examples/manifest.json` with the generator's media hashes.
 The validator allows only individually declared synthetic GIF/PNG/MP4/WAV files,
 at most 1 MiB each and 8 MiB total. Other media and private artifacts remain
-forbidden. Keep one example per skill and per included helper/tool reference.
+forbidden. GIF delays/frame counts are parsed from encoded blocks and checked
+against full decoding, not inferred from FFmpeg's version-dependent progress
+endpoint. Keep one example per skill and per included helper/tool reference.
 The montage examples include real filter/calculation output, but the noise test
 contains no speech and the sync calculator does not find or validate events.
 Native attachment, colour monitoring and human listening need separate evidence.

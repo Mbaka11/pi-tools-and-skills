@@ -7,7 +7,7 @@ import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { ROOT } from '../scripts/upstreams.mjs';
 import { EXPECTED_SKILLS } from '../scripts/check.mjs';
-import { checkMediaRecord, validateExamples, MAX_EXAMPLE_BYTES, MAX_GALLERY_BYTES } from '../scripts/check-examples.mjs';
+import { checkMediaRecord, readGifTiming, validateExamples, MAX_EXAMPLE_BYTES, MAX_GALLERY_BYTES } from '../scripts/check-examples.mjs';
 
 const PY = process.env.PYTHON || 'python';
 const env = { ...process.env, PYTHONIOENCODING: 'utf-8', PYTHONDONTWRITEBYTECODE: '1' };
@@ -57,6 +57,29 @@ test('media exception is exact, hash-pinned, format checked and size/duration bo
   bad.write('NOTGIF', 0);
   assert.ok(checkMediaRecord(name, { ...meta, sha256: createHash('sha256').update(bad).digest('hex') }, bad).some(e => /signature/.test(e)));
   assert.ok(checkMediaRecord(name, { ...meta, width: 123 }, data).some(e => /dimensions/.test(e)));
+});
+
+test('GIF timing comes from encoded frame delays, not a decoder progress endpoint', async () => {
+  const name = 'examples/media/retime.gif';
+  const bytes = await readFile(path.join(ROOT, name));
+  assert.deepEqual(readGifTiming(bytes), { frames: 30, duration_s: 3 });
+  assert.ok(checkMediaRecord(name, { ...manifest.media[name], duration_s: 2.9 }, bytes).some(e => /encoded delays/.test(e)));
+  assert.ok(checkMediaRecord(name, { ...manifest.media[name], frames: 29 }, bytes).some(e => /encoded delays/.test(e)));
+  assert.throws(() => readGifTiming(bytes.subarray(0, 20)), /Truncated/);
+  assert.throws(() => readGifTiming(bytes.subarray(0, bytes.length - 1)), /trailer/);
+  assert.throws(() => readGifTiming(Buffer.from('not a GIF')), /header/);
+  assert.ok(checkMediaRecord(name, null, bytes).length > 0);
+  const paletteEnd = 13 + ((bytes[10] & 0x80) ? 3 * (1 << ((bytes[10] & 7) + 1)) : 0);
+  const firstControl = bytes.indexOf(Buffer.from([0x21, 0xf9, 0x04]), paletteEnd);
+  assert.ok(firstControl >= paletteEnd); // First control precedes any compressed pixels.
+  const longer = Buffer.from(bytes);
+  longer.writeUInt16LE(20, firstControl + 4); // First frame now holds 200 ms, not 100.
+  assert.deepEqual(readGifTiming(longer), { frames: 30, duration_s: 3.1 });
+  const changed = { ...manifest.media[name], sha256: createHash('sha256').update(longer).digest('hex') };
+  assert.ok(checkMediaRecord(name, changed, longer).some(e => /encoded delays/.test(e)));
+  assert.deepEqual(checkMediaRecord(name, { ...changed, duration_s: 3.1 }, longer), []);
+  longer.writeUInt16LE(0, firstControl + 4);
+  assert.throws(() => readGifTiming(longer), /positive delays/);
 });
 
 test('LED calculator, guides and test-card examples reproduce with standard-library Python', async t => {
@@ -153,7 +176,7 @@ const lookup = spawnSync(PY, ['-c', [
 const ffmpeg = lookup.status === 0 ? lookup.stdout.trim() : '';
 if (process.env.REQUIRE_MEDIA_TESTS === '1') assert.ok(ffmpeg, 'Mandatory gallery decoding requires FFmpeg');
 
-test('every gallery animation and audio file fully decodes (optional FFmpeg)', { skip: !ffmpeg && 'FFmpeg unavailable' }, () => {
+test('every gallery animation and audio file fully decodes (optional FFmpeg)', { skip: !ffmpeg && 'FFmpeg unavailable' }, async () => {
   for (const name of Object.keys(manifest.media).filter(p => /\.(?:gif|mp4|wav)$/.test(p))) {
     const r = spawnSync(ffmpeg, ['-hide_banner', '-nostdin', '-nostats', '-v', 'error', '-xerror', '-i', path.join(ROOT, name), '-f', 'null', '-', '-progress', 'pipe:1'], { encoding: 'utf8', timeout: 120000 });
     assert.ifError(r.error);
@@ -161,10 +184,18 @@ test('every gallery animation and audio file fully decodes (optional FFmpeg)', {
     const times = [...r.stdout.matchAll(/^out_time_us=(\d+)$/gm)];
     assert.ok(times.length, `No decoded duration for ${name}`);
     const seconds = Number(times.at(-1)[1]) / 1e6;
-    assert.ok(seconds <= 4 && Math.abs(seconds - manifest.media[name].duration_s) <= 0.06, `${name}: ${seconds} s`);
-    if (name.endsWith('.mp4')) {
-      const counts = [...r.stdout.matchAll(/^frame=(\d+)$/gm)];
-      assert.equal(Number(counts.at(-1)?.[1]), 90, name);
+    const counts = [...r.stdout.matchAll(/^frame=(\d+)$/gm)];
+    if (name.endsWith('.gif')) {
+      // FFmpeg 6 reports the last PTS (2.9 s), while 7 reports its end (3 s).
+      // Require every frame to decode and independently verify actual GIF delays.
+      const timing = readGifTiming(await readFile(path.join(ROOT, name)));
+      assert.equal(Number(counts.at(-1)?.[1]), timing.frames, name);
+      assert.equal(timing.frames, manifest.media[name].frames, name);
+      assert.equal(timing.duration_s, manifest.media[name].duration_s, name);
+      assert.ok(timing.duration_s <= 4, name);
+    } else {
+      assert.ok(seconds <= 4 && Math.abs(seconds - manifest.media[name].duration_s) <= 0.06, `${name}: ${seconds} s`);
+      if (name.endsWith('.mp4')) assert.equal(Number(counts.at(-1)?.[1]), 90, name);
     }
   }
 });

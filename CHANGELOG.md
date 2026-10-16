@@ -18,6 +18,8 @@ Versioned releases use Semantic Versioning. Published tags are not moved.
 - Add `npm run test:media` and a dedicated Ubuntu 24.04 CI job with explicit
   FFmpeg/ffprobe/font setup and a hash-pinned Pillow wheel. Required media tests
   cannot silently skip; lightweight Windows/Linux tests remain available.
+- Verify GIF durations from encoded frame delays plus full decoded frame counts,
+  avoiding FFmpeg 6/7 progress-endpoint differences without loosening limits.
 - Refresh GitHub Actions to reviewed Node-24 commit pins. No package install
   hook, automatic local engine installation or implicit Pi pin/filter upgrade.
 
