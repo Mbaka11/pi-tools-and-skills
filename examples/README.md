@@ -152,6 +152,10 @@ calibrated-monitor test. [Skill](../skills/montage/montage-colour-finishing/SKIL
 [Pair checks](outputs/proxy-check.json).
 H.264 keeps the example small; it is not a universal editing-proxy recommendation.
 Native attachment/relink, camera timecode and multi-channel audio were not tested.
+The separate [proxy-audit result](outputs/proxy-audit.json) is an actual helper
+calculation from [hand-authored source](fixtures/proxy-source-probe.json) and
+[proxy](fixtures/proxy-small-probe.json) metadata snapshots, **not captured probes**.
+It correctly returns **incomplete / exit 3** because timecode/reel IDs are unknown.
 [Skill](../skills/montage/montage-proxy-conform/SKILL.md).
 
 ## montage-multicam-sync
@@ -195,6 +199,58 @@ This consumes 3.5 seconds of source and produces exactly 90 output frames.
 The speed changes are piecewise constant, **not** a smooth Bezier ramp. No
 optical flow or native NLE execution. [Skill](../skills/montage/montage-time-remapping/SKILL.md).
 
+## montage-transcript-editing
+
+**Fictional paper edit with calculated ranges** — keep source `[0,30)` and
+`[60,90)` at 30 fps; the mapped output contains 60 frames / 2 seconds.
+
+![Source-linked paper edit from authored fictional text](media/transcript-plan.png)
+
+[Authored transcript fixture](fixtures/transcript-selects.json) ·
+[Calculated edit map](outputs/paper-edit.json).
+No ASR, speech recording, human context review or native timeline edit occurred.
+The graphic is a layout illustration, not evidence of a truthful real-world cut.
+[Skill](../skills/montage/montage-transcript-editing/SKILL.md).
+
+## montage-scene-selects
+
+**Actual local detection · 3 s · 30 fps · silent** — three synthesized shots,
+encoded to H.264, then analyzed with FFmpeg `scdet` at threshold 12/100.
+
+![Decoded representative frames from the three synthetic shots](media/scene-contact.png)
+
+[MP4](media/scene-selects.mp4) · [Candidates at frames 30 and 60](outputs/scene-candidates.json) ·
+[90-frame decode/QC](outputs/scene-qc.json).
+A controlled hard-cut test, not a benchmark for flashes, pans, dissolves or
+semantic scene recognition. PySceneDetect was not executed; candidates are not
+editorial approval. [Skill](../skills/montage/montage-scene-selects/SKILL.md).
+
+## montage-caption-accessibility
+
+**Actual SRT checks plus a layout mockup** — English and French sound labels
+for the existing [synthetic SFX preview](media/sfx-preview.mp4), at 0.3/1/2 seconds.
+
+![Illustrative English and French caption layouts](media/caption-locales.png)
+
+[EN SRT](outputs/captions-sounds-en.srt) · [FR SRT](outputs/captions-sounds-fr.srt) ·
+[EN WebVTT](outputs/captions-sounds-en.vtt) · [FR WebVTT](outputs/captions-sounds-fr.vtt) ·
+[Timing checks](outputs/caption-access-check.json).
+Labels were assigned by the demo author, not recognized from speech or human
+listening. No native player/RTL test, human translation review or accessibility
+certification is claimed. [Skill](../skills/montage/montage-caption-accessibility/SKILL.md).
+
+## montage-archive-handoff
+
+**Actual four-file copy and checksum restore** — a project note (not a native
+project), the synthetic scene MP4, cut report and contact sheet are copied into
+a new directory and checked with the existing manifest verifier.
+
+[Project note](outputs/handoff-note.txt) · [Manifest](outputs/handoff-manifest.json) ·
+[Before/after verification](outputs/handoff-restore-check.json).
+All four listed files matched. Hashes establish byte integrity, not dependency
+completeness, native project opening or editability. No originals were removed.
+[Skill](../skills/montage/montage-archive-handoff/SKILL.md).
+
 ## market-research
 
 **Fictitious example**: “100 venues × 2 purchases/year × €300 = €60,000/year
@@ -234,7 +290,9 @@ one endpoint, two 200 responses, no raw URL published in the summary.
   — illustrative output briefs, not installed or executed engines.
 - [Example manifest](manifest.json): coverage, provenance, sizes and SHA-256.
 - Generation environments: [original gallery](outputs/build-info.json) and
-  [new montage examples](outputs/montage-build-info.json); [new decoded-media checks](outputs/montage-qc.json).
+  [0.4.0 montage examples](outputs/montage-build-info.json) and
+  [0.5.0 editorial examples](outputs/editorial-build-info.json);
+  [montage decode checks](outputs/montage-qc.json), [scene decode check](outputs/scene-qc.json).
   No cloud calls, client media or native Adobe execution. System fonts were used for rendering;
   font files are not redistributed.
 - Original examples follow [RIGHTS.md](../RIGHTS.md) (`UNLICENSED`).
@@ -245,11 +303,14 @@ To recreate media and helper outputs in a **new** directory:
 ```sh
 # Python + Pillow >= 9.2 + FFmpeg/libx264 + Node must be available separately.
 python examples/build.py --out .local/examples-preview
-# Regenerate only the five new montage examples; Node is not needed for this set.
+# Isolated sets; Node is not needed for either of these.
 python examples/build.py --set montage --out .local/montage-examples-preview
+python examples/build.py --set editorial --out .local/editorial-examples-preview
 # --set core rebuilds only the original gallery; default is --set all.
 # If needed, add --font /path/to/a-licensed-font.ttf
 npm test
+# When FFmpeg + ffprobe + Pillow + a local font are available; never silently skips media tests.
+npm run test:media
 ```
 
 The generator installs and deletes nothing, and refuses an existing directory.

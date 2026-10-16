@@ -2,6 +2,25 @@
 
 Versioned releases use Semantic Versioning. Published tags are not moved.
 
+## 0.5.0
+
+- Add four original English workflows and source references: transcript-led
+  editing, scene detection/selects, accessible/localized captions and archive
+  handoff (twenty-three skills total).
+- Add read-only `proxy_audit.py` with exact metadata comparisons, explicit unknowns,
+  source hashes, bounded JSON input, probe timeout and exclusive report creation.
+  Separate media and supplied-JSON modes; incomplete evidence is exit 3, not a pass.
+- Add four short original media examples, fictional paper-edit mapping, actual
+  FFmpeg hard-cut detection, English/French SRT/WebVTT and a four-file byte restore.
+  No ASR, native project restoration or accessibility certification is implied.
+- Add isolated `--set editorial` regeneration and portable LF text artifacts;
+  retain previous media/reports and unchanged vendor snapshots.
+- Add `npm run test:media` and a dedicated Ubuntu 24.04 CI job with explicit
+  FFmpeg/ffprobe/font setup and a hash-pinned Pillow wheel. Required media tests
+  cannot silently skip; lightweight Windows/Linux tests remain available.
+- Refresh GitHub Actions to reviewed Node-24 commit pins. No package install
+  hook, automatic local engine installation or implicit Pi pin/filter upgrade.
+
 ## 0.4.0
 
 - Add five original montage skills, each with English documentation, sources and

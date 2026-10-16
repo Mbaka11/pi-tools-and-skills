@@ -1,9 +1,9 @@
 ---
 name: montage-proxy-conform
 description: Safe media ingest, proxies and online conform for editing - preserve card structure, verify copies, inventory frame rates/timecode/audio, distinguish proxy media from VFR-to-CFR working masters, attach and audit proxies, relink originals, and check interchange round trips. Use for ingest, rushes, proxies, offline/online editing, relink, missing media, phone VFR, mixed rates or conform. Never deletes camera cards or replaces originals automatically.
-compatibility: Any NLE; Premiere proxy attachment is optional. FFmpeg/ffprobe and copy-verification tools are separate prerequisites, not installed by this skill.
+compatibility: Python 3.9+ standard library for proxy_audit.py; media mode also requires separately installed ffprobe. Any NLE; Premiere proxy attachment is optional. No engine is installed automatically.
 metadata:
-  version: "1.0.0"
+  version: "1.1.0"
   short-description: Verified ingest, proxy identity and original-media conform
 ---
 
@@ -58,6 +58,22 @@ required audio-channel layout. Do not add `-r`, `-ac 2` or `-an` indiscriminatel
   rotation, reframing and colour interpretation.
 - Keep source-media interpretation/audio mapping stable once attached; consult
   the installed Premiere version's restrictions before changing them.
+
+## Read-only metadata audit
+
+```sh
+# From this skill folder. ffprobe must already be available.
+python scripts/proxy_audit.py media original.mov proxy.mov --report audit.json
+# Explicitly compare supplied ffprobe snapshots; this does not inspect media.
+python scripts/proxy_audit.py json original-probe.json proxy-probe.json
+```
+
+The helper compares decoded counts, exact average rates, stream durations/start
+positions, raster/SAR/fielding/rotation, available timecode/reel identifiers and
+audio stream/channel metadata. Unknown fields remain **unknown**, including
+missing timecode on both inputs. See [the helper contract](references/proxy-audit.md#helper-contract).
+It never attaches, relinks, converts or overwrites media. A metadata-compatible
+result is not proof of visual identity, CFR cadence or native attachment.
 
 ## Online conform and delivery
 

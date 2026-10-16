@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "origin": "fictional-text-not-asr",
+  "source_id": "SYNTH_A",
+  "source_rate": "30",
+  "segments": [
+    {"id": "A01", "in_frame": 0, "out_frame": 30, "text": "Set the scene."},
+    {"id": "A02", "in_frame": 30, "out_frame": 60, "text": "An unrelated aside."},
+    {"id": "A03", "in_frame": 60, "out_frame": 90, "text": "Show the detail."}
+  ],
+  "selected_ids": ["A01", "A03"],
+  "human_context_review": false,
+  "contains_recorded_speech": false
+}

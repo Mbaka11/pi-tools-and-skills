@@ -5,7 +5,7 @@
 Install a release at user scope:
 
 ```bash
-pi install git:github.com/Mbaka11/pi-tools-and-skills@v0.4.0
+pi install git:github.com/Mbaka11/pi-tools-and-skills@v0.5.0
 ```
 
 Or clone and run `pi install .` from the checkout. Do not enable both a local and
@@ -78,12 +78,35 @@ avoids local CRLF conversion), recompute SHA-256 hashes, and update the lock,
 SOURCES, notices and adapter together. Vendored scripts are reference copies:
 adapters tell users to copy a pipeline into their project before running it.
 
+## Test matrix
+
+- `npm test`: package/rights/privacy/link checks and standard-library tests on
+  Ubuntu and Windows. Optional engine tests run when prerequisites exist; a
+  green lightweight job alone is not proof that media integration ran.
+- `npm run test:media`: prerequisite preflight, then the same suite with
+  `REQUIRE_MEDIA_TESTS=1`. Requires FFmpeg/libx264 and relevant filters, ffprobe,
+  Pillow >= 9.2 and a local TrueType font. Missing media dependencies fail rather
+  than skip. Set `FFMPEG`, `FFPROBE`, `PYTHON` or `TOOLBOX_FONT` when necessary.
+- The dedicated `media-integration` job uses Ubuntu 24.04, Node 24 and Python
+  3.11. It explicitly installs distribution FFmpeg/ffprobe/DejaVu and the
+  hash-pinned Pillow 12.3.0 Linux x86_64 wheel. Apt versions are distribution
+  managed, not byte-pinned; the runner logs engine versions. No local dependency
+  installation, package hooks or downloads are hidden in the test runner.
+- Mandatory media coverage includes full gallery decoding, montage/editorial
+  regeneration, source-selection/timestamp checks, real proxy probing and scene
+  candidates. It does not test Adobe, calibrated displays or human listening.
+
+Check `node scripts/test-media.mjs --preflight-only` to inspect readiness without
+running the suite. Nothing is installed by this command. For native evidence,
+follow [the separate validation checklist](native-validation.md).
+
 ## Example gallery maintenance
 
 Regenerate with `python examples/build.py --out .local/examples-new` only after
 Pillow, FFmpeg and a licensed local font are available. This never installs
 anything and refuses existing directories. Use `--set core` for the original
-0.3.0 media or `--set montage` for the five 0.4.0 additions (`all` is the default).
+0.3.0 media, `--set montage` for the five 0.4.0 additions, or `--set editorial`
+for the four 0.5.0 workflows (`all` is the default).
 Keep separate build receipts and do not replace older gallery bytes incidentally.
 Review all stills/animations, decode
 MP4/WAV outputs, inspect reports, and distinguish automated audio analysis from
@@ -95,6 +118,11 @@ forbidden. Keep one example per skill and per included helper/tool reference.
 The montage examples include real filter/calculation output, but the noise test
 contains no speech and the sync calculator does not find or validate events.
 Native attachment, colour monitoring and human listening need separate evidence.
+The editorial batch uses fictional transcript text, authored sound labels and a
+file-integrity restore, not ASR, accessibility certification or a native project
+restore. Keep generated text at LF so archive hashes survive standard checkouts.
+The JSON-mode proxy example uses hand-authored snapshots; actual ffprobe mode is
+separately exercised in mandatory media CI.
 
 Since 0.3.0, LED profiles use generic IDs: `led-rollup-516x1032`,
 `led-wall-2x-516x1032`, `led-wall-3x-516x1032`. Update older commands/custom

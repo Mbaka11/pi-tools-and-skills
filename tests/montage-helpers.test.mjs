@@ -34,6 +34,7 @@ function ffmpegPath() {
   return viaPy.status === 0 ? viaPy.stdout.trim() : null;
 }
 const FFMPEG = ffmpegPath();
+if (process.env.REQUIRE_MEDIA_TESTS === '1') assert.ok(FFMPEG, 'Mandatory media integration requires FFmpeg');
 
 async function wav(file, seconds, channels = 1, rate = 48000) {
   const code = `import wave,struct,math,sys\nw=wave.open(sys.argv[1],'wb');w.setnchannels(${channels});w.setsampwidth(2);w.setframerate(${rate})\n` +

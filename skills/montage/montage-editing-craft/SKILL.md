@@ -3,7 +3,7 @@ name: montage-editing-craft
 description: Editing craft and workflow for client montages from brief to delivery - ingest and bins, selects, transcript-based speech cuts, cut plans, pacing by format (ads, testimonials, event recaps, social, LED loops), J/L cuts, music editing on bars, B-roll coverage, transitions ladder, reframing 16:9 to 9:16/1:1/4:5/1:2 LED, colour normalisation, French captions with scripts/srt_check.py, versioning, French client review notes and deliverable matrices. Works with Premiere through the Higgsfield bridge (pr_* tools) or by hand. Use for "montage", "edit", "cut", "reel", "recap", "testimonial", "captions/sous-titres", "versions", or client revision rounds.
 compatibility: Premiere Pro through the Higgsfield bridge is optional; any NLE works. Python 3.9+ for scripts/srt_check.py (standard library).
 metadata:
-  version: "1.0.1"
+  version: "1.0.2"
   short-description: Professional edit workflow, pacing, captions and client versions
 ---
 
@@ -20,6 +20,10 @@ choices about what to keep, how long to hold and where to cut are the job.
 | --- | --- |
 | LED roll-up / wall loop | [led-signage-content](../led-signage-content/SKILL.md) (silent, reading holds, exact pixels) |
 | Motion graphics, titles, editorial collage | [ae-vox-editorial](../../after-effects/ae-vox-editorial/SKILL.md), [ae-production-workflow](../../after-effects/ae-production-workflow/SKILL.md) |
+| Interview paper edits and source-linked radio cuts | [montage-transcript-editing](../montage-transcript-editing/SKILL.md) |
+| Shot boundaries, contact sheets and selects | [montage-scene-selects](../montage-scene-selects/SKILL.md) |
+| Accessible captions and language versions | [montage-caption-accessibility](../montage-caption-accessibility/SKILL.md) |
+| Archive, collect and restoration testing | [montage-archive-handoff](../montage-archive-handoff/SKILL.md) |
 | Ingest, proxies, relink, online conform | [montage-proxy-conform](../montage-proxy-conform/SKILL.md) |
 | Multicam or external recorder synchronization | [montage-multicam-sync](../montage-multicam-sync/SKILL.md) |
 | Dialogue repair and voice balancing | [montage-dialogue-cleanup](../montage-dialogue-cleanup/SKILL.md) |

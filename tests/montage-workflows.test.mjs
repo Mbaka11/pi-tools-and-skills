@@ -188,6 +188,7 @@ const lookup = py(['-c', [
   'print(p or "")',
 ].join('\n')]);
 const ffmpeg = lookup.status === 0 ? lookup.stdout.trim() : '';
+if (process.env.REQUIRE_MEDIA_TESTS === '1') assert.ok(ffmpeg, 'Mandatory timestamp checks require FFmpeg');
 
 test('new MP4s have 90 monotonic 30-fps decoded timestamps (optional FFmpeg)', { skip: !ffmpeg && 'FFmpeg unavailable' }, () => {
   for (const name of ['proxy-source', 'proxy-small', 'multicam-sync', 'retime']) {
@@ -201,13 +202,15 @@ test('new MP4s have 90 monotonic 30-fps decoded timestamps (optional FFmpeg)', {
 });
 
 const renderDeps = py(['-c', [
+  'import os',
   'from PIL import Image, ImageFont',
-  'for font in ("DejaVuSans.ttf", "arial.ttf"):',
+  'for font in ([os.environ["TOOLBOX_FONT"]] if os.environ.get("TOOLBOX_FONT") else ["DejaVuSans.ttf", "arial.ttf"]):',
   ' try:',
   '  ImageFont.truetype(font, 18); print(font); break',
   ' except OSError: pass',
 ].join('\n')]);
 const font = renderDeps.status === 0 ? renderDeps.stdout.trim() : '';
+if (process.env.REQUIRE_MEDIA_TESTS === '1') assert.ok(font, 'Mandatory regeneration requires Pillow and a local font');
 
 test('montage examples regenerate in isolation when optional rendering dependencies exist', { skip: !(ffmpeg && font) && 'FFmpeg/Pillow/local font unavailable' }, async t => {
   const dir = await temporary(t);

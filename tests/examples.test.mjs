@@ -28,11 +28,11 @@ async function temporary(t) {
 const json = async p => JSON.parse(await readFile(path.join(examples, p), 'utf8'));
 const lf = text => text.replace(/\r\n/g, '\n');
 
-test('gallery covers all 19 skills and every included helper/reference with valid links', async () => {
+test('gallery covers all 23 skills and every included helper/reference with valid links', async () => {
   const result = await validateExamples(ROOT, EXPECTED_SKILLS);
   assert.deepEqual(result.errors, []);
-  assert.equal(manifest.entries.length, 19);
-  assert.equal(result.mediaPaths.size, 23);
+  assert.equal(manifest.entries.length, 23);
+  assert.equal(result.mediaPaths.size, 27);
   assert.ok(Object.values(manifest.media).reduce((n, m) => n + m.bytes, 0) <= MAX_GALLERY_BYTES);
   for (const entry of manifest.entries) {
     const skill = await readFile(path.join(ROOT, entry.skill), 'utf8');
@@ -151,6 +151,7 @@ const lookup = spawnSync(PY, ['-c', [
   'print(p or "")',
 ].join('\n')], { encoding: 'utf8', timeout: 30000 });
 const ffmpeg = lookup.status === 0 ? lookup.stdout.trim() : '';
+if (process.env.REQUIRE_MEDIA_TESTS === '1') assert.ok(ffmpeg, 'Mandatory gallery decoding requires FFmpeg');
 
 test('every gallery animation and audio file fully decodes (optional FFmpeg)', { skip: !ffmpeg && 'FFmpeg unavailable' }, () => {
   for (const name of Object.keys(manifest.media).filter(p => /\.(?:gif|mp4|wav)$/.test(p))) {

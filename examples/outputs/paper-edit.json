@@ -1,0 +1,39 @@
+{
+  "kind": "calculated-fictional-paper-edit",
+  "fixture_sha256": "7faf6ef78b00424486567d759229420f0b834fe29932f5350ffed3b6c12fc1e6",
+  "source_id": "SYNTH_A",
+  "fps": 30,
+  "ranges": "start-inclusive/end-exclusive",
+  "selected": [
+    {
+      "segment_id": "A01",
+      "source_frames": [
+        0,
+        30
+      ],
+      "output_frames": [
+        0,
+        30
+      ],
+      "text": "Set the scene."
+    },
+    {
+      "segment_id": "A03",
+      "source_frames": [
+        60,
+        90
+      ],
+      "output_frames": [
+        30,
+        60
+      ],
+      "text": "Show the detail."
+    }
+  ],
+  "output_frames": 60,
+  "output_duration_s": 2.0,
+  "asr_executed": false,
+  "recorded_speech": false,
+  "native_edit_executed": false,
+  "human_context_review": false
+}

@@ -51,7 +51,24 @@ vendored or executed. The unlicensed `maxazure/video-editing-skill` remains a
 catalog-only caution; none of its code, instructions or media is copied.
 Full commits, licence findings and limits: [montage catalog](docs/montage-catalog.md).
 
-## Original synthetic examples (0.3.0 and 0.4.0)
+### Editorial workflows and proxy audit (0.5.0)
+
+Four original workflows: `montage-transcript-editing`, `montage-scene-selects`,
+`montage-caption-accessibility` and `montage-archive-handoff`. Their references
+link Adobe indexed documentation, FFmpeg, PySceneDetect and W3C guidance reviewed
+2026-10-16. No upstream workflow text, detector implementation or recordings were
+copied. `proxy_audit.py` is original standard-library code; it does not certify
+native attachment, content identity or cadence. Supplied probe fixtures are
+explicitly hand-authored illustrations, not captured ffprobe reports.
+
+The separate CI media job uses distribution FFmpeg/ffprobe, DejaVu fonts and a
+[PyPI Pillow 12.3.0](https://pypi.org/project/pillow/12.3.0/) CPython 3.11 Linux
+x86_64 wheel (SHA-256 in `.github/media-requirements.txt`, licence MIT-CMU).
+These are installed only in the explicitly configured CI environment, not
+vendored or installed by package hooks. GitHub checkout/setup-node/setup-python
+Node-24 actions are pinned by reviewed commits in the workflow.
+
+## Original synthetic examples (0.3.0 through 0.5.0)
 
 [examples/](examples/README.md) contains original procedural graphics, synthetic
 sounds and fictitious reports, not imported client or upstream demo media.
@@ -65,6 +82,11 @@ The 0.4.0 additions have a separate [build receipt](examples/outputs/montage-bui
 and [decoded-media report](examples/outputs/montage-qc.json); existing 0.3.0
 media and reports remain unchanged. Noise-interval measurements do not establish
 natural speech quality, and the anchor calculator does not certify real-world sync.
+The 0.5.0 [editorial build receipt](examples/outputs/editorial-build-info.json)
+records a separate four-media-file batch. Transcript copy is fictional; scene
+scores are measured from the actual encode; caption labels are authored, not
+ASR/listening results. Archive restoration checks listed bytes, not an NLE
+project. Older media, fixtures and reports are not replaced by this batch.
 
 ## Reverse-engineering sources
 

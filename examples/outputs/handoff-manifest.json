@@ -1,0 +1,26 @@
+{
+  "canonical": "outputs/handoff-note.txt",
+  "canonical_sha256": "0c3ab21316685ae91ba6781aa1023a23f3a8e7afaf77c1320472b2beb9a9e2f7",
+  "files": [
+    {
+      "path": "outputs/handoff-note.txt",
+      "size": 214,
+      "sha256": "0c3ab21316685ae91ba6781aa1023a23f3a8e7afaf77c1320472b2beb9a9e2f7"
+    },
+    {
+      "path": "media/scene-selects.mp4",
+      "size": 20595,
+      "sha256": "87b57282dc6359780d85dd1361979de7ea571b138b75fed2e4623cf9786f5bef"
+    },
+    {
+      "path": "outputs/scene-candidates.json",
+      "size": 718,
+      "sha256": "d4723cfc5d71c3fb812a4dc2d7bceae4c7e442b7fa832305ec4468954787263f"
+    },
+    {
+      "path": "media/scene-contact.png",
+      "size": 31178,
+      "sha256": "645dc91fa84811a9bdb8891c7985950323baec75f4a2a8ca3b458fb4e5e32dfd"
+    }
+  ]
+}

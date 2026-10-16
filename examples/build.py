@@ -25,7 +25,8 @@ PAPER, INK, YELLOW, TEAL = '#eee8db', '#1c2934', '#f6c945', '#63c6c4'
 
 
 def dump(path, data):
-    path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
+    # Stable LF bytes also make file-integrity examples portable across checkouts.
+    path.write_bytes((json.dumps(data, indent=2, ensure_ascii=False) + '\n').encode('utf-8'))
 
 
 def run(command, cwd=None, expected=(0,)):
@@ -196,8 +197,8 @@ def build(out, ffmpeg, font_path, example_set='all'):
     scratch = out / 'work'
     for folder in (media, outputs, scratch):
         folder.mkdir(parents=True)
-    if example_set == 'montage':
-        build_montage(out, ffmpeg, font_path)
+    if example_set in ('montage', 'editorial'):
+        (build_montage if example_set == 'montage' else build_editorial)(out, ffmpeg, font_path)
         record_media(out)
         return
     for name, scene in [('ae-vox', vox), ('ae-rig', rig), ('ae-vfx', vfx), ('editing', edit), ('explainer', pipeline)]:
@@ -303,6 +304,7 @@ def build(out, ffmpeg, font_path, example_set='all'):
          'human_audio_audition': False, 'normalization': 'Only private/temporary file paths are omitted or made relative.'})
     if example_set == 'all':
         build_montage(out, ffmpeg, font_path)
+        build_editorial(out, ffmpeg, font_path)
     record_media(out)
 
 
@@ -589,12 +591,176 @@ def build_montage(out, ffmpeg, font_path):
          'normalization': 'Only private/temporary file paths are omitted or made relative.'})
 
 
+def build_editorial(out, ffmpeg, font_path):
+    """Four original editorial examples plus explicit JSON-only proxy analysis."""
+    import re
+    from PIL import Image, ImageDraw, ImageFont, __version__ as pillow_version
+    media, outputs, work = out / 'media', out / 'outputs', out / 'work'
+    fonts = {}
+
+    def text(im, xy, value, size=16, fill=INK):
+        if size not in fonts:
+            fonts[size] = ImageFont.truetype(font_path, size)
+        ImageDraw.Draw(im).text(xy, value, font=fonts[size], fill=fill)
+
+    def ff(args):
+        return run([ffmpeg, '-hide_banner', '-loglevel', 'error', '-nostdin', '-n', *args], out)
+
+    def sha(file):
+        return hashlib.sha256(file.read_bytes()).hexdigest()
+
+    # Authored text, not transcription, speech alignment or an executed NLE edit.
+    fixture = ROOT / 'examples/fixtures/transcript-selects.json'
+    transcript = json.loads(fixture.read_text(encoding='utf-8'))
+    mapping, cursor = [], 0
+    for key in transcript['selected_ids']:
+        segment = next(s for s in transcript['segments'] if s['id'] == key)
+        length = segment['out_frame'] - segment['in_frame']
+        mapping.append({'segment_id': key, 'source_frames': [segment['in_frame'], segment['out_frame']],
+                        'output_frames': [cursor, cursor + length], 'text': segment['text']})
+        cursor += length
+    dump(outputs / 'paper-edit.json', {'kind': 'calculated-fictional-paper-edit', 'fixture_sha256': sha(fixture),
+         'source_id': transcript['source_id'], 'fps': 30, 'ranges': 'start-inclusive/end-exclusive',
+         'selected': mapping, 'output_frames': cursor, 'output_duration_s': cursor / 30,
+         'asr_executed': False, 'recorded_speech': False, 'native_edit_executed': False,
+         'human_context_review': False})
+    board = Image.new('RGB', (640, 360), PAPER)
+    d = ImageDraw.Draw(board)
+    text(board, (20, 16), '20 / SOURCE-LINKED PAPER EDIT', 22)
+    text(board, (20, 48), 'Fictional text. No speech recording. No NLE cut.', 14)
+    for i, segment in enumerate(transcript['segments']):
+        x = 20 + 205 * i
+        selected = segment['id'] in transcript['selected_ids']
+        d.rounded_rectangle((x, 90, x + 190, 205), radius=8, fill=YELLOW if selected else '#c8c7c1')
+        text(board, (x + 10, 100), segment['id'] + (' / KEEP' if selected else ' / OMIT'), 16)
+        text(board, (x + 10, 138), segment['text'], 16)
+        text(board, (x + 10, 174), f"source [{segment['in_frame']},{segment['out_frame']})", 14)
+    text(board, (20, 236), 'A01 -> output [0,30)     A03 -> output [30,60)', 20)
+    text(board, (20, 274), '60 output frames / 30 fps = 2.0 seconds', 18)
+    text(board, (20, 324), 'Calculation only. Meaning and listening review remain human tasks.', 13)
+    board.save(media / 'transcript-plan.png')
+
+    # Three original hard-cut shots; detection happens on the encoded MP4.
+    for n in range(90):
+        shot = n // 30
+        bg, fg = [(TEAL, INK), (PAPER, INK), (INK, PAPER)][shot]
+        im = Image.new('RGB', (480, 270), bg)
+        draw = ImageDraw.Draw(im)
+        text(im, (20, 16), f'SYNTHETIC SHOT {shot + 1}', 22, fg)
+        if shot == 0:
+            draw.ellipse((180, 78, 300, 198), fill=INK)
+        elif shot == 1:
+            draw.polygon([(240, 74), (316, 200), (164, 200)], fill=INK)
+        else:
+            draw.rectangle((178, 78, 302, 202), fill=YELLOW)
+        text(im, (20, 236), f'source frame {n:02} / 30 fps / silent', 14, fg)
+        im.save(work / f'scene-{n:03}.png')
+    ff(['-framerate', '30', '-i', 'work/scene-%03d.png', '-frames:v', '90', '-r', '30', '-an',
+        '-c:v', 'libx264', '-crf', '20', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', 'media/scene-selects.mp4'])
+    raw = ff(['-i', 'media/scene-selects.mp4', '-an', '-vf', 'scdet=t=12,metadata=mode=print:file=-', '-f', 'null', '-'])
+    candidates, frame, score = [], None, None
+    for line in raw.splitlines():
+        match = re.match(r'frame:\s*(\d+)\s+.*pts_time:', line)
+        if match:
+            frame = int(match.group(1))
+        if line.startswith('lavfi.scd.score='):
+            score = float(line.split('=', 1)[1])
+        if line.startswith('lavfi.scd.time='):
+            candidates.append({'frame': frame, 'time_s': float(line.split('=', 1)[1]), 'score': score})
+    assert [c['frame'] for c in candidates] == [30, 60], candidates
+    assert [c['time_s'] for c in candidates] == [1, 2], candidates
+    selected_frames = [15, 45, 75]
+    expression = '+'.join(f'eq(n\\,{n})' for n in selected_frames)
+    ff(['-i', 'media/scene-selects.mp4', '-vf', f'select={expression}', '-vsync', '0', 'work/scene-contact-%02d.png'])
+    contact = Image.new('RGB', (720, 187), PAPER)
+    for i, n in enumerate(selected_frames):
+        with Image.open(work / f'scene-contact-{i + 1:02}.png') as im:
+            contact.paste(im.convert('RGB').resize((240, 135), Image.Resampling.LANCZOS), (240 * i, 0))
+        text(contact, (240 * i + 10, 141), f'SYNTH_A / frame {n}', 13)
+    text(contact, (10, 166), 'Decoded representatives; candidates at frames 30 and 60 are not editorial approval.', 12)
+    contact.save(media / 'scene-contact.png')
+    dump(outputs / 'scene-candidates.json', {'kind': 'measured-synthetic-hard-cut-detection',
+         'source': 'media/scene-selects.mp4', 'sha256': sha(media / 'scene-selects.mp4'), 'fps': 30,
+         'filter': 'scdet=t=12,metadata=mode=print:file=-', 'threshold_scale': '0-100',
+         'expected_boundary_frames': [30, 60], 'candidates': candidates,
+         'representative_frames': selected_frames, 'human_editorial_review': False,
+         'pyscenedetect_executed': False, 'not_tested': ['dissolves', 'flashes', 'camera motion', 'semantic scenes']})
+    qc = tool('skills/montage/video-delivery-qc/scripts/media_qc.py',
+              ['media/scene-selects.mp4', '--expect-width', '480', '--expect-height', '270', '--expect-fps', '30',
+               '--expect-frames', '90', '--expect-duration', '3', '--expect-audio', 'no'], out)
+    assert qc['ok'], qc['checks']
+    dump(outputs / 'scene-qc.json', qc)
+
+    # Labels are known by synthesis design, not speech recognition or audition.
+    caption_reports = {}
+    spans = [('00:00:00.300', '00:00:01.000'), ('00:00:01.000', '00:00:02.000'), ('00:00:02.000', '00:00:03.000')]
+    for language, labels in [('en', ['[Sweep]', '[Impact]', '[Chime]']), ('fr', ['[Balayage]', '[Impact]', '[Carillon]'])]:
+        blocks = [f'{i + 1}\n{start} --> {end}\n{label}\n' for i, ((start, end), label) in enumerate(zip(spans, labels))]
+        srt_text = '\n'.join(blocks).replace('.', ',')
+        vtt_text = 'WEBVTT\n\nNOTE Synthetic author-assigned sound labels; not ASR.\n\n' + '\n'.join(blocks)
+        (outputs / f'captions-sounds-{language}.srt').write_bytes(srt_text.encode('utf-8'))
+        (outputs / f'captions-sounds-{language}.vtt').write_bytes(vtt_text.encode('utf-8'))
+        caption_reports[language] = tool('skills/montage/montage-editing-craft/scripts/srt_check.py',
+             [f'outputs/captions-sounds-{language}.srt', '--preset', 'social-landscape',
+              *(['--french', 'fr-CA'] if language == 'fr' else [])], out)
+    dump(outputs / 'caption-access-check.json', {'kind': 'measured-sidecar-timing-with-authored-sound-labels',
+         'audio_reference': 'examples/media/sfx-preview.mp4', 'audio_reference_sha256': sha(ROOT / 'examples/media/sfx-preview.mp4'),
+         'srt_checks': caption_reports, 'spoken_dialogue': False, 'asr_executed': False,
+         'human_audio_audition': False, 'human_translation_review': False, 'native_player_tested': False,
+         'accessibility_certified': False, 'cue_start_seconds': [.3, 1, 2]})
+    board = Image.new('RGB', (640, 300), INK)
+    draw = ImageDraw.Draw(board)
+    text(board, (20, 18), '22 / CAPTION SIDECARS + LOCALES', 22, PAPER)
+    text(board, (20, 58), 'Authored labels for synthetic sounds; no spoken dialogue.', 15, PAPER)
+    for x, language, label in [(20, 'EN', '[Chime]'), (330, 'FR-CA', '[Carillon]')]:
+        draw.rounded_rectangle((x, 112, x + 290, 213), radius=10, fill=PAPER)
+        text(board, (x + 15, 124), language + ' / 2.000-3.000 s', 16)
+        text(board, (x + 15, 163), label, 27)
+    text(board, (20, 247), 'Layout mockup. Not a player, RTL or accessibility certification test.', 14, PAPER)
+    text(board, (20, 273), 'Separate UTF-8 SRT + WebVTT tracks; keep the unburned master.', 14, TEAL)
+    board.save(media / 'caption-locales.png')
+
+    # File-integrity proof with a real new-directory restore, no fake native file.
+    note = b'SYNTHETIC HANDOFF NOTE - NOT AN NLE PROJECT\nMedia: media/scene-selects.mp4\nAnalysis: outputs/scene-candidates.json\nContact: media/scene-contact.png\nOnly byte integrity is tested. No native project has been opened.\n'
+    (outputs / 'handoff-note.txt').write_bytes(note)
+    files = ['outputs/handoff-note.txt', 'media/scene-selects.mp4', 'outputs/scene-candidates.json', 'media/scene-contact.png']
+    manifest = {'canonical': files[0], 'canonical_sha256': sha(out / files[0]),
+                'files': [{'path': name, 'size': (out / name).stat().st_size, 'sha256': sha(out / name)} for name in files]}
+    dump(outputs / 'handoff-manifest.json', manifest)
+    verifier = 'skills/after-effects/ae-production-workflow/scripts/verify-delivery-manifest.py'
+    before = tool(verifier, ['outputs/handoff-manifest.json', '--root', '.'], out)
+    before.update(manifest='outputs/handoff-manifest.json', root='.')
+    restored = work / 'restored'
+    restored.mkdir()
+    for name in files:
+        target = restored / name
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(out / name, target)
+    shutil.copy2(outputs / 'handoff-manifest.json', restored / 'handoff-manifest.json')
+    after = tool(verifier, ['handoff-manifest.json', '--root', '.'], restored)
+    after.update(manifest='handoff-manifest.json', root='restored-copy')
+    assert before['ok'] and after['ok']
+    dump(outputs / 'handoff-restore-check.json', {'kind': 'measured-file-copy-and-integrity-check', 'before': before,
+         'restored': after, 'restored_into_new_directory': True, 'source_deleted': False,
+         'native_project_opened': False, 'dependency_discovery_performed': False})
+
+    proxy = tool('skills/montage/montage-proxy-conform/scripts/proxy_audit.py',
+                 ['json', ROOT / 'examples/fixtures/proxy-source-probe.json', ROOT / 'examples/fixtures/proxy-small-probe.json'],
+                 out, expected=(3,))
+    dump(outputs / 'proxy-audit.json', proxy)
+    dump(outputs / 'editorial-build-info.json', {'synthetic': True, 'set': 'editorial', 'pillow': pillow_version,
+         'font_family': fonts[16].getname()[0], 'ffmpeg': run([ffmpeg, '-version']).splitlines()[0],
+         'native_premiere_execution': False, 'native_project_restore': False, 'asr_executed': False,
+         'pyscenedetect_executed': False, 'cloud_requests': 0, 'human_audio_audition': False,
+         'normalization': 'Temporary paths omitted or made relative; text artifacts use LF.'})
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--out', required=True, help='NEW output directory, preferably .local/examples-preview')
     ap.add_argument('--font', help='Licensed font available on this machine; not copied or embedded')
-    ap.add_argument('--set', choices=('all', 'core', 'montage'), default='all',
-                    help='all (default), original core gallery, or the five 0.4.0 montage examples')
+    ap.add_argument('--set', choices=('all', 'core', 'montage', 'editorial'), default='all',
+                    help='all (default), original core, 0.4.0 montage, or 0.5.0 editorial examples')
     args = ap.parse_args()
     out = Path(args.out).resolve()
     if out.exists():

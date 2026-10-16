@@ -9,11 +9,11 @@ import { readLock, rejectSymlinks, isPinnedVersion, ROOT, LOCK_PATH } from '../s
 import { latestVersions } from '../scripts/check-updates.mjs';
 import { sourcePlan } from '../scripts/fetch-source.mjs';
 
-test('package, all nineteen skills, local links, rights and vendored digests validate', async () => {
+test('package, all twenty-three skills, local links, rights and vendored digests validate', async () => {
   const report = await validate();
   assert.deepEqual(report.errors, []);
   assert.equal(report.ok, true);
-  assert.equal(report.skills.length, 19);
+  assert.equal(report.skills.length, 23);
   assert.deepEqual([...report.skills].sort(), [...EXPECTED_SKILLS].sort());
 });
 

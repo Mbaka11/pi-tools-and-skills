@@ -112,6 +112,21 @@ HTTP 403; FFmpeg documentation was retrieved directly. This research does not
 establish native Adobe compatibility. No additional upstream snapshot or model
 weights are bundled, and nothing is automatically installed.
 
+## Editorial workflow references (0.5.0)
+
+Reviewed 2026-10-16; original instructions and synthetic examples, not imported
+third-party skills. Adobe indexed excerpts were used where direct retrieval was
+blocked; W3C and PySceneDetect documentation was retrieved directly.
+
+- [Transcript editing sources](../skills/montage/montage-transcript-editing/references/paper-edit.md#sources): source versus sequence transcripts, ripple editing and context preservation.
+- [Detector guidance](../skills/montage/montage-scene-selects/references/detectors-and-review.md#sources): FFmpeg `scdet` 0–100 thresholds, PySceneDetect adaptive rolling averages and human review.
+- [Caption sources](../skills/montage/montage-caption-accessibility/references/formats-and-review.md#sources): W3C prerecorded captions, meaningful sound/speaker information and UTF-8 WebVTT.
+- [Archive sources](../skills/montage/montage-archive-handoff/references/restore-checklist.md#sources): copy versus consolidate/transcode, dependency limits and restoration evidence.
+
+The local example executes FFmpeg, not PySceneDetect. Transcript editing and
+Premiere Project Manager have not been natively validated by these examples.
+No new external agent, ASR model, cloud workflow or font file is bundled.
+
 ## LED signage references
 
 - Nummax, *How to create effective content for your LED display* (text height =

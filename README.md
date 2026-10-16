@@ -1,11 +1,11 @@
 # Pi Tools & Skills
 
-[![Version](https://img.shields.io/badge/version-0.4.0-blue)](https://github.com/Mbaka11/pi-tools-and-skills/releases/latest)
+[![Version](https://img.shields.io/badge/version-0.5.0-blue)](https://github.com/Mbaka11/pi-tools-and-skills/releases/latest)
 [![Checks](https://github.com/Mbaka11/pi-tools-and-skills/actions/workflows/check.yml/badge.svg)](https://github.com/Mbaka11/pi-tools-and-skills/actions/workflows/check.yml)
 
 A personal, cross-project collection of reusable [pi](https://github.com/earendil-works/pi) skills, small offline helpers, pinned reverse-engineering tool references, and an After Effects / montage toolbox for LED-signage and video work.
 
-**Nineteen skills · No automatic tool installation · No credentials or project data**
+**Twenty-three skills · No automatic tool installation · No credentials or project data**
 
 **[Browse the short-example gallery](examples/README.md)** — 3-second animations,
 audio, actual helper outputs and fictitious mini-reports. Every included skill
@@ -42,10 +42,14 @@ Skills live in `skills/`; related skills are grouped in category folders
 | `montage-editing-craft` | Edit workflow, pacing, Premiere via the Higgsfield bridge, reframes, versions, French captions and client notes | New personal skill + `srt_check.py` |
 | `vox-explainer-pipelines` | Pinned Remotion and Python Vox pipelines plus hosted options, with Windows, licence and LED adaptations | Personal adapter + unchanged MIT upstream snapshot |
 | `montage-colour-finishing` | Colour management, input/output transforms, scopes, shot matching and export consistency | Original workflow + synthetic RGB correction example |
-| `montage-proxy-conform` | Verified ingest, proxies, VFR decisions, relink and online/interchange checks | Original workflow + actual source/proxy pair |
+| `montage-proxy-conform` | Verified ingest, proxies, VFR decisions, relink and online/interchange checks | Original workflow + read-only `proxy_audit.py` |
 | `montage-multicam-sync` | Reviewed anchors, fixed offset/drift, reversible multicam and continuous master audio | Original workflow + `sync_map.py` |
 | `montage-dialogue-cleanup` | Conservative repair, gain, room tone, enhancement limits and dialogue-stem QA | Original workflow + actual synthetic noise filter test |
 | `montage-time-remapping` | Source/output timing, slow motion, speed ramps, interpolation and artifact review | Original workflow + actual piecewise-speed example |
+| `montage-transcript-editing` | Source-linked paper edits, radio cuts and meaning preservation | Original workflow + fictional cut map |
+| `montage-scene-selects` | Shot-boundary candidates, contact sheets and reviewed selects | Original workflow + actual local cut detection |
+| `montage-caption-accessibility` | Meaningful sound/speaker captions, localization and player checks | Original workflow + English/French SRT/WebVTT examples |
+| `montage-archive-handoff` | Dependency inventory, collection, hashes and isolated restoration | Original workflow + actual four-file restore |
 
 ### Research and investigation — `skills/`
 
@@ -65,19 +69,21 @@ Researched After Effects, Vox, motion, SFX, VFX and editing tools (with pins, li
 
 [![Original editorial-collage mockup, 3 seconds](examples/media/ae-vox.gif)](examples/README.md#ae-vox-editorial)
 
-[Full gallery: all 19 skills](examples/README.md) ·
+[Full gallery: all 23 skills](examples/README.md) ·
 [One micro-example per included tool](examples/tools.md).
 Original synthetic media only. AE previews are explicitly labelled mockups;
 LED, QC, SFX, subtitle, sync and manifest examples include actual helper outputs.
 The new colour, proxy, cleanup and retiming examples execute local filters;
 they do not claim native Adobe tests, calibrated colour or human voice quality.
+Editorial examples add real cut candidates, caption timing and byte restoration;
+the transcript is fictional and accessibility/native restoration are not certified.
 
 ## Recover on another machine
 
 Requires pi and Git. For an immutable version:
 
 ```bash
-pi install git:github.com/Mbaka11/pi-tools-and-skills@v0.4.0
+pi install git:github.com/Mbaka11/pi-tools-and-skills@v0.5.0
 ```
 
 Restart pi or run `/reload`. Skills are registered at **user scope**, so they are
@@ -95,7 +101,11 @@ pi install .
 
 `npm test` requires Node.js 22.19+ and Python 3.9+; it installs nothing. Node 24 LTS
 is recommended. Windows-specific checkpoint tests also use PowerShell. There are
-no npm dependencies and no package install hooks.
+no npm dependencies and no package install hooks. Optional media tests may skip
+in this lightweight suite. `npm run test:media` instead **requires** FFmpeg,
+ffprobe, Pillow and a local font; missing prerequisites fail immediately. The
+separate Ubuntu media CI installs its declared dependencies explicitly, not on
+your machine. See [the test matrix](docs/maintenance.md#test-matrix).
 
 If `ae-production-workflow` already exists as a standalone personal skill, review
 which copy should stay enabled with `pi config`. Disable the old resource before
@@ -124,6 +134,10 @@ Ask pi normally, or select a workflow explicitly:
 /skill:montage-multicam-sync Calculate the offset from these two reviewed slates.
 /skill:montage-dialogue-cleanup Make a reversible dialogue repair test, preserving words.
 /skill:montage-time-remapping Land this action at frame 60 with reviewed source handles.
+/skill:montage-transcript-editing Build a source-linked paper edit without changing meaning.
+/skill:montage-scene-selects Find cut candidates and make a reviewed contact sheet.
+/skill:montage-caption-accessibility Review English/French captions for meaningful sounds.
+/skill:montage-archive-handoff Package a project copy and test an isolated restore.
 ```
 
 Skills are instructions, not access grants. Unavailable host tools and engines
@@ -133,7 +147,7 @@ must be established for each project.
 If your pi settings narrow this package with a `skills` filter, add the new
 paths explicitly (for example `skills/montage/led-signage-content/SKILL.md` or
 `skills/after-effects/ae-vox-editorial/SKILL.md`), or remove the filter to load
-all nineteen. Run `/reload` afterwards. Publishing a new release does not
+all twenty-three. Run `/reload` afterwards. Publishing a new release does not
 upgrade an existing pinned installation or expand its resource filter.
 
 ## After Effects and montage toolbox
@@ -144,6 +158,10 @@ found through `$FFMPEG`, `PATH`, or the `imageio-ffmpeg` Python package. Each
 media-rendering helper supports a JSON plan with `--dry-run`. Helpers preserve
 inputs and refuse output overwrite. The subtitle checker and `sync_map.py`
 produce analysis/calculation JSON directly; the sync helper never opens media.
+`proxy_audit.py` performs a read-only metadata audit. Its `media` mode needs
+ffprobe (`--ffprobe`, `$FFPROBE` or PATH); `json` mode only compares provided
+snapshots. Exit 3 means incomplete evidence, not a pass. No mode tests native
+proxy attachment or certifies matching picture/audio.
 
 ```bash
 # LED: text sizes, guide overlay, pixel-exact export, wall split, device test card
@@ -162,6 +180,9 @@ python skills/montage/montage-editing-craft/scripts/srt_check.py captions.srt --
 
 # Reviewed source anchors -> rational camera-to-reference map; no media mutation
 python skills/montage/montage-multicam-sync/scripts/sync_map.py skills/montage/montage-multicam-sync/assets/anchors.example.json
+
+# Read-only source/proxy audit; new report only, no relink or media changes
+python skills/montage/montage-proxy-conform/scripts/proxy_audit.py media original.mov proxy.mov --report audit.json
 ```
 
 Two MIT-licensed upstream skill sets are vendored unchanged at pinned commits

@@ -32,6 +32,7 @@ export const EXPECTED_SKILLS = [
   'led-signage-content', 'video-delivery-qc', 'sound-design-sfx', 'montage-editing-craft', 'vox-explainer-pipelines',
   'montage-colour-finishing', 'montage-proxy-conform', 'montage-multicam-sync',
   'montage-dialogue-cleanup', 'montage-time-remapping',
+  'montage-transcript-editing', 'montage-scene-selects', 'montage-caption-accessibility', 'montage-archive-handoff',
 ];
 
 // skills/<skill>/SKILL.md or skills/<category>/<skill>/SKILL.md. A category folder

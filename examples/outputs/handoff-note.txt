@@ -1,0 +1,5 @@
+SYNTHETIC HANDOFF NOTE - NOT AN NLE PROJECT
+Media: media/scene-selects.mp4
+Analysis: outputs/scene-candidates.json
+Contact: media/scene-contact.png
+Only byte integrity is tested. No native project has been opened.

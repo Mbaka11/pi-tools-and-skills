@@ -1,0 +1,18 @@
+{
+  "fixture_note": "Hand-authored illustrative ffprobe-shaped metadata, not a captured probe report.",
+  "streams": [
+    {
+      "index": 0,
+      "codec_type": "video",
+      "width": 640,
+      "height": 360,
+      "avg_frame_rate": "30/1",
+      "nb_read_frames": "90",
+      "duration": "3.000000",
+      "start_time": "0.000000",
+      "sample_aspect_ratio": "1:1",
+      "field_order": "progressive"
+    }
+  ],
+  "format": {"duration": "3.000000"}
+}

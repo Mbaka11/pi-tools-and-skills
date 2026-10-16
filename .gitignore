@@ -30,6 +30,7 @@ browser-profiles/
 !/examples/media/proxy-small.mp4
 !/examples/media/multicam-sync.mp4
 !/examples/media/retime.mp4
+!/examples/media/scene-selects.mp4
 *.pdf
 *.log
 *.tgz

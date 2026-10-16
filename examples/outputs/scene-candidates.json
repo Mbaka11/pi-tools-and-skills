@@ -1,0 +1,37 @@
+{
+  "kind": "measured-synthetic-hard-cut-detection",
+  "source": "media/scene-selects.mp4",
+  "sha256": "87b57282dc6359780d85dd1361979de7ea571b138b75fed2e4623cf9786f5bef",
+  "fps": 30,
+  "filter": "scdet=t=12,metadata=mode=print:file=-",
+  "threshold_scale": "0-100",
+  "expected_boundary_frames": [
+    30,
+    60
+  ],
+  "candidates": [
+    {
+      "frame": 30,
+      "time_s": 1.0,
+      "score": 22.011
+    },
+    {
+      "frame": 60,
+      "time_s": 2.0,
+      "score": 61.249
+    }
+  ],
+  "representative_frames": [
+    15,
+    45,
+    75
+  ],
+  "human_editorial_review": false,
+  "pyscenedetect_executed": false,
+  "not_tested": [
+    "dissolves",
+    "flashes",
+    "camera motion",
+    "semantic scenes"
+  ]
+}

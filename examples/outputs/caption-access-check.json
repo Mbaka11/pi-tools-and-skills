@@ -1,0 +1,54 @@
+{
+  "kind": "measured-sidecar-timing-with-authored-sound-labels",
+  "audio_reference": "examples/media/sfx-preview.mp4",
+  "audio_reference_sha256": "ada5c445e85bbd33be5867fbf0de65c0031325a789a3a18d6be75a90e983af06",
+  "srt_checks": {
+    "en": {
+      "file": "captions-sounds-en.srt",
+      "preset": "social-landscape",
+      "rules": {
+        "max_chars": 42,
+        "max_lines": 2,
+        "max_cps": 17.0,
+        "min_dur": 0.7,
+        "max_dur": 6.0,
+        "min_gap": 0.0
+      },
+      "french": null,
+      "subtitles": 3,
+      "errors": 0,
+      "warnings": 0,
+      "issues": [],
+      "fixed_copy": null
+    },
+    "fr": {
+      "file": "captions-sounds-fr.srt",
+      "preset": "social-landscape",
+      "rules": {
+        "max_chars": 42,
+        "max_lines": 2,
+        "max_cps": 17.0,
+        "min_dur": 0.7,
+        "max_dur": 6.0,
+        "min_gap": 0.0
+      },
+      "french": "fr-CA",
+      "subtitles": 3,
+      "errors": 0,
+      "warnings": 0,
+      "issues": [],
+      "fixed_copy": null
+    }
+  },
+  "spoken_dialogue": false,
+  "asr_executed": false,
+  "human_audio_audition": false,
+  "human_translation_review": false,
+  "native_player_tested": false,
+  "accessibility_certified": false,
+  "cue_start_seconds": [
+    0.3,
+    1,
+    2
+  ]
+}

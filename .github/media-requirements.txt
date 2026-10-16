@@ -1,0 +1,3 @@
+# CI-only CPython 3.11 / Linux x86_64 wheel, verified against PyPI 2026-10-16.
+# No runtime installation hook; not vendored. Pillow uses MIT-CMU licensing.
+Pillow==12.3.0 --hash=sha256:23d27a3e0307ec2244cc51e7287b919aa68d097504ebe19df4e76a98a3eea5bd

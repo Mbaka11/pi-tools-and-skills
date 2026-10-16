@@ -13,6 +13,7 @@ third-party engines.
 | [`sfx_place.py`](../skills/montage/sound-design-sfx/scripts/sfx_place.py) | [3 s stem](media/sfx.wav), three cues at **0.3 / 1 / 2 s** ([result excerpt](outputs/sfx-cues.json)). |
 | [`srt_check.py`](../skills/montage/montage-editing-craft/scripts/srt_check.py) | [Corrected copy](outputs/captions-fixed.srt); [0 errors after correction](outputs/captions-after.json). |
 | [`sync_map.py`](../skills/montage/montage-multicam-sync/scripts/sync_map.py) | [Two reviewed synthetic anchors](../skills/montage/montage-multicam-sync/assets/anchors.example.json) → [−0.2 s / −6 frames](outputs/sync-map.json); calculation only, no event detection or media changes. |
+| [`proxy_audit.py`](../skills/montage/montage-proxy-conform/scripts/proxy_audit.py) | [Actual result from illustrative probe snapshots](outputs/proxy-audit.json): `incomplete`, exit 3, missing timecode/reel IDs. JSON mode does not inspect media or prove attachment. |
 
 ## AE helpers
 
@@ -41,6 +42,7 @@ third-party engines.
 | [`check-updates.mjs`](../scripts/check-updates.mjs) | **Illustrative**: “Pinned version unchanged / update available”; no simulated network check is presented as current evidence. |
 | [`fetch-source.mjs`](../scripts/fetch-source.mjs) | `node scripts/fetch-source.mjs vox-editorial` → retrieval plan for the pinned commit; no download without `--fetch`. |
 | [`upstreams.mjs`](../scripts/upstreams.mjs) | Internal library: reads `tools/upstreams.lock.json`, validates pins and safely resolves source paths. |
-| [`examples/build.py`](build.py) | `--set montage` produces the [five new examples](README.md#montage-colour-finishing); `all`/`core` include the original gallery. New directories only, no cloud use or implicit installation. |
+| [`test-media.mjs`](../scripts/test-media.mjs) | `npm run test:media` requires FFmpeg/ffprobe/Pillow/font and runs the tests with mandatory-media guards; missing prerequisites fail, nothing is installed by the runner. |
+| [`examples/build.py`](build.py) | `--set montage` builds the [0.4.0 set](README.md#montage-colour-finishing), `--set editorial` the [0.5.0 set](README.md#montage-transcript-editing); `all`/`core` include the original gallery. New directories only, no cloud use or implicit installation. |
 
 [Back to the gallery](README.md)

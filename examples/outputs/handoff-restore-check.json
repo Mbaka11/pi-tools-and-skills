@@ -1,0 +1,23 @@
+{
+  "kind": "measured-file-copy-and-integrity-check",
+  "before": {
+    "ok": true,
+    "manifest": "outputs/handoff-manifest.json",
+    "root": ".",
+    "entriesChecked": 4,
+    "canonicalOk": true,
+    "failures": []
+  },
+  "restored": {
+    "ok": true,
+    "manifest": "handoff-manifest.json",
+    "root": "restored-copy",
+    "entriesChecked": 4,
+    "canonicalOk": true,
+    "failures": []
+  },
+  "restored_into_new_directory": true,
+  "source_deleted": false,
+  "native_project_opened": false,
+  "dependency_discovery_performed": false
+}

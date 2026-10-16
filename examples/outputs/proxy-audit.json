@@ -1,0 +1,109 @@
+{
+  "schema": 1,
+  "verdict": "incomplete",
+  "failures": 0,
+  "unknowns": 2,
+  "checks": [
+    {
+      "check": "one_video_stream_each",
+      "status": "pass",
+      "source": 1,
+      "proxy": 1
+    },
+    {
+      "check": "video.average_frame_rate",
+      "status": "pass",
+      "source": "30",
+      "proxy": "30"
+    },
+    {
+      "check": "video.decoded_frame_count",
+      "status": "pass",
+      "source": 90,
+      "proxy": 90
+    },
+    {
+      "check": "video.duration",
+      "status": "pass",
+      "source": "3",
+      "proxy": "3"
+    },
+    {
+      "check": "video.start_time",
+      "status": "pass",
+      "source": "0",
+      "proxy": "0"
+    },
+    {
+      "check": "video.uniform_integer_downscale",
+      "status": "pass",
+      "source": [
+        640,
+        360
+      ],
+      "proxy": [
+        320,
+        180
+      ]
+    },
+    {
+      "check": "video.sample_aspect_ratio",
+      "status": "pass",
+      "source": "1",
+      "proxy": "1"
+    },
+    {
+      "check": "video.field_order",
+      "status": "pass",
+      "source_known": true,
+      "proxy_known": true
+    },
+    {
+      "check": "video.declared_rotation",
+      "status": "pass",
+      "source": "0",
+      "proxy": "0"
+    },
+    {
+      "check": "video.timecode",
+      "status": "unknown",
+      "source_known": false,
+      "proxy_known": false
+    },
+    {
+      "check": "video.reel_id",
+      "status": "unknown",
+      "source_known": false,
+      "proxy_known": false
+    },
+    {
+      "check": "audio.stream_count",
+      "status": "pass",
+      "source": 0,
+      "proxy": 0
+    }
+  ],
+  "policy": "Exact decoded counts/rates; uniform integer raster reduction; conservative metadata comparison.",
+  "native_attachment_tested": false,
+  "not_verified": [
+    "frame-by-frame cadence/VFR",
+    "visual content correspondence or pre-rotated pixels",
+    "audio content, sample-level sync or human listening",
+    "native attachment/relink/export",
+    "rights, complete media integrity or all decoder errors"
+  ],
+  "mode": "json",
+  "media_inspected": false,
+  "inputs": {
+    "source": {
+      "kind": "provided-probe-json",
+      "bytes": 458,
+      "sha256": "3563057a589a901b4d27cf5a356cb559303622a709b029951cb26f8ee2709fd6"
+    },
+    "proxy": {
+      "kind": "provided-probe-json",
+      "bytes": 458,
+      "sha256": "c28e62db55c2c159edb370ab013b7893a73690badfedd197fc9938ebcd84e05c"
+    }
+  }
+}

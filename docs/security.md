@@ -66,7 +66,8 @@ assets or saved browser evidence. The only permitted committed media are exact
 paths declared in `examples/manifest.json`, with provenance, a size limit and
 SHA-256. GIF/PNG/MP4/WAV signatures are checked; each file is limited to 1 MiB,
 the collection to 8 MiB, and animated/audio examples to four seconds. Tests
-fully decode animations/audio when FFmpeg is present. This narrow exception is
+fully decode animations/audio when FFmpeg is present; the separate mandatory
+media CI fails when its declared prerequisites are absent. This narrow exception is
 not permission to add other project media. Review paths and generated reports
 before publication. A digest proves byte identity, not copyright or privacy.
 
@@ -77,6 +78,21 @@ tone/noise, not a voice recording; no enhancement provider receives audio. The
 sync calculator only maps user-supplied anchors and never reads or changes media.
 Full client ffprobe reports, camera metadata, proxy maps and transcripts belong
 in private projects, even when the tools that create them run locally.
+
+`proxy_audit.py` only reads inputs; its optional report uses exclusive creation.
+JSON mode handles supplied metadata and never opens media. Media mode invokes a
+separately available ffprobe with a timeout and file-only protocol whitelist;
+it is **not a decoder sandbox**. Isolate unfamiliar/malicious media. Raw input
+paths, timecode/reel strings and arbitrary tags are not emitted; hashes and
+numeric metadata can still be sensitive. A metadata-compatible verdict is not
+proof of cadence, picture/audio identity, rights or native attachment.
+
+The transcript example is fictional, and caption labels were authored rather
+than transcribed or human-auditioned. Archive copying uses a new destination and
+never deletes originals. Collection/trim/transcode, provider uploads, paid ASR,
+font/plugin redistribution and source deletion still require deliberate scope
+and authorization. Checksums do not discover missing dependencies or prove that
+an NLE project opens.
 
 ## Publishing
 

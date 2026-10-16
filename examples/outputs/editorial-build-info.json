@@ -1,0 +1,14 @@
+{
+  "synthetic": true,
+  "set": "editorial",
+  "pillow": "9.3.0",
+  "font_family": "Arial",
+  "ffmpeg": "ffmpeg version 7.1-essentials_build-www.gyan.dev Copyright (c) 2000-2024 the FFmpeg developers",
+  "native_premiere_execution": false,
+  "native_project_restore": false,
+  "asr_executed": false,
+  "pyscenedetect_executed": false,
+  "cloud_requests": 0,
+  "human_audio_audition": false,
+  "normalization": "Temporary paths omitted or made relative; text artifacts use LF."
+}
