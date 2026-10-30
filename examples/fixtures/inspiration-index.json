@@ -1,0 +1,38 @@
+[
+  {
+    "slug": "synthetic-type-loop",
+    "title": "Seamless Typography Loop",
+    "author": "Fictional Demo A",
+    "category": "motion",
+    "tech_tags": ["svg", "gsap"],
+    "prompt": "Original fictional fixture: a seamless loop of kinetic typography for a small display.",
+    "prompt_partial": false,
+    "has_remake": false,
+    "post_url": null,
+    "skillry_url": null
+  },
+  {
+    "slug": "synthetic-particle-loop",
+    "title": "Particle Loop",
+    "author": "Fictional Demo B",
+    "category": "3d",
+    "tech_tags": ["threejs", "particles"],
+    "prompt": "Original fictional fixture: orbiting particles form a periodic loop.",
+    "prompt_partial": true,
+    "has_remake": false,
+    "post_url": null,
+    "skillry_url": null
+  },
+  {
+    "slug": "synthetic-product-launch",
+    "title": "Product Launch Cards",
+    "author": "Fictional Demo C",
+    "category": "motion",
+    "tech_tags": ["canvas"],
+    "prompt": "Original fictional fixture: introduce a product with animated interface cards.",
+    "prompt_partial": false,
+    "has_remake": false,
+    "post_url": null,
+    "skillry_url": null
+  }
+]
