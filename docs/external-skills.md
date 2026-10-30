@@ -29,3 +29,5 @@ or creator) are also not treated as user-authored content and are not redistribu
 
 Researched but not installed After Effects, Vox, motion, SFX, VFX and editing
 tools are reviewed separately in [the montage catalog](montage-catalog.md).
+Research, ML, health-AI and Flutter skills and MCP servers (with pinned commits and
+install snippets) are reviewed in [the dev research catalog](dev-research-catalog.md).

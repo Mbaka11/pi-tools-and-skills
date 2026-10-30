@@ -64,6 +64,7 @@ Skills live in `skills/`; related skills are grouped in category folders
 Original sources and exact revisions: [SOURCES.md](SOURCES.md).
 Other installed third-party skills are listed in [the external catalog](docs/external-skills.md), not copied or presented as personal creations.
 Researched After Effects, Vox, motion, SFX, VFX and editing tools (with pins, licences and verdicts) are in [the montage tools catalog](docs/montage-catalog.md).
+Researched research/ML, health-AI and Flutter skills, MCP servers and libraries are in [the dev research catalog](docs/dev-research-catalog.md).
 
 ## Short examples
 
